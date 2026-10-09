@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450"><rect width="800" height="450" fill="#f4f0f2"/><rect x="0" y="0" width="800" height="6" fill="#b24a7c"/><rect x="40" y="18" width="139.6" height="46" rx="23" fill="#ffffff" stroke="#e0d9cc"/><svg x="49" y="26" width="30" height="30" viewBox="0 0 96 96">
+<g clip-path="url(#v225-clip0_4303_1230)">
+<g clip-path="url(#v225-clip1_4303_1230)">
+<g clip-path="url(#v225-clip2_4303_1230)">
+<path d="M13.8776 21.8242C29.1033 8.13791 49.7501 8.1861 62.955 18.9134C74.9816 28.6836 77.4697 44.3159 70.851 55.7801C64.2321 67.2443 52.5277 70.1455 39.5011 62.6247L31.7286 76.087L31.7234 76.0862C27.4181 83.5324 17.8937 86.0828 10.4437 81.7817C7.45394 80.0556 5.25322 77.4879 3.96665 74.551L3.96096 74.5511C-4.07832 55.7804 0.200745 34.1184 13.8776 21.8242Z" fill="url(#v225-paint0_radial_4303_1230)"/>
+<path d="M13.8776 21.8242C29.1033 8.13791 49.7501 8.1861 62.955 18.9134C74.9816 28.6836 77.4697 44.3159 70.851 55.7801C64.2321 67.2443 52.5277 70.1455 39.5011 62.6247L31.7286 76.087L31.7234 76.0862C27.4181 83.5324 17.8937 86.0828 10.4437 81.7817C7.45394 80.0556 5.25322 77.4879 3.96665 74.551L3.96096 74.5511C-4.07832 55.7804 0.200745 34.1184 13.8776 21.8242Z" fill="url(#v225-paint1_radial_4303_1230)" fill-opacity="0.8"/>
+<path d="M85.4327 14.2231C88.4528 15.9668 90.6686 18.569 91.9494 21.5433L91.9533 21.5444C99.9406 40.2943 95.6533 61.9068 81.9983 74.1814C66.7726 87.8677 46.1257 87.8196 32.9209 77.0923C20.8945 67.3221 18.4062 51.6897 25.0249 40.2256C31.6438 28.7614 43.3482 25.8601 56.3748 33.381L64.1434 19.9255L64.1482 19.9249C68.4516 12.4736 77.9805 9.92084 85.4327 14.2231Z" fill="url(#v225-paint2_radial_4303_1230)"/>
+<path d="M85.4327 14.2231C88.4528 15.9668 90.6686 18.569 91.9494 21.5433L91.9533 21.5444C99.9406 40.2943 95.6533 61.9068 81.9983 74.1814C66.7726 87.8677 46.1257 87.8196 32.9209 77.0923C20.8945 67.3221 18.4062 51.6897 25.0249 40.2256C31.6438 28.7614 43.3482 25.8601 56.3748 33.381L64.1434 19.9255L64.1482 19.9249C68.4516 12.4736 77.9805 9.92084 85.4327 14.2231Z" fill="url(#v225-paint3_radial_4303_1230)" fill-opacity="0.9"/>
+<path d="M39.5041 62.6261C52.5307 70.1469 64.2352 67.2456 70.8541 55.7814C77.2488 44.7055 75.1426 29.7389 64.147 19.9271L56.3791 33.3814L39.5041 62.6261Z" fill="url(#v225-paint4_radial_4303_1230)"/>
+<path d="M56.3794 33.3815C43.3528 25.8607 31.6482 28.762 25.0294 40.2262C18.6347 51.3021 20.7409 66.2687 31.7364 76.0806L39.5043 62.6262L56.3794 33.3815Z" fill="url(#v225-paint5_radial_4303_1230)"/>
+<path d="M33.3215 56.4453C37.9837 64.5204 48.3094 67.2872 56.3846 62.625C64.4598 57.9628 67.2266 47.6371 62.5643 39.5619C57.9021 31.4867 47.5764 28.72 39.5013 33.3822C31.4261 38.0444 28.6593 48.3701 33.3215 56.4453Z" fill="url(#v225-paint6_radial_4303_1230)"/>
+</g>
+</g>
+</g>
+<defs>
+<radialGradient id="v225-paint0_radial_4303_1230" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(46.0001 49.4996) rotate(-148.717) scale(46.2195 47.5359)">
+<stop offset="0.465088" stop-color="#09442A"/>
+<stop offset="0.70088" stop-color="#136C6C"/>
+<stop offset="1" stop-color="#22918B"/>
+</radialGradient>
+<radialGradient id="v225-paint1_radial_4303_1230" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(50.0001 32.4996) rotate(123.57) scale(66.0095 46.5498)">
+<stop offset="0.718705" stop-color="#1A7F7C" stop-opacity="0"/>
+<stop offset="1" stop-color="#16BBDA"/>
+</radialGradient>
+<radialGradient id="v225-paint2_radial_4303_1230" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(50.4999 44.5001) rotate(30.75) scale(45.9618 44.5095)">
+<stop offset="0.358097" stop-color="#136C6C"/>
+<stop offset="0.789474" stop-color="#42B870"/>
+<stop offset="1" stop-color="#76D45E"/>
+</radialGradient>
+<radialGradient id="v225-paint3_radial_4303_1230" cx="0" cy="0" r="1" gradientTransform="matrix(42.5 -36.0002 31.1824 36.8127 49.4998 55.5001)" gradientUnits="userSpaceOnUse">
+<stop offset="0.583166" stop-color="#76D45E" stop-opacity="0"/>
+<stop offset="1" stop-color="#C8F5B7"/>
+</radialGradient>
+<radialGradient id="v225-paint4_radial_4303_1230" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(47.5 48) rotate(-58.9042) scale(32.6898)">
+<stop offset="0.486266" stop-color="#22918B"/>
+<stop offset="0.729599" stop-color="#42B870"/>
+<stop offset="1" stop-color="#43E5CA"/>
+</radialGradient>
+<radialGradient id="v225-paint5_radial_4303_1230" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(47.3833 49.0077) rotate(119.859) scale(31.1328 29.4032)">
+<stop offset="0.459553" stop-color="#08494E"/>
+<stop offset="0.742242" stop-color="#1A7F7C"/>
+<stop offset="1" stop-color="#309C61"/>
+</radialGradient>
+<radialGradient id="v225-paint6_radial_4303_1230" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(52.5 40) rotate(120.784) scale(27.3542)">
+<stop stop-color="#C8F5B7"/>
+<stop offset="0.24583" stop-color="#98F0B0"/>
+<stop offset="0.643961" stop-color="#52D17C"/>
+<stop offset="1" stop-color="#119FC5"/>
+</radialGradient>
+<clipPath id="v225-clip0_4303_1230">
+<rect width="96" height="96" fill="white"/>
+</clipPath>
+<clipPath id="v225-clip1_4303_1230">
+<rect width="96" height="96" fill="white"/>
+</clipPath>
+<clipPath id="v225-clip2_4303_1230">
+<rect width="95.9998" height="96" fill="white"/>
+</clipPath>
+</defs>
+</svg><text x="88" y="47" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="600" fill="#1d1a16">Dataverse</text><rect x="189.6" y="18" width="181.6" height="46" rx="23" fill="#ffffff" stroke="#e0d9cc"/><svg x="198.6" y="26" width="30" height="30" viewBox="0 0 96 96">
+<path d="M64.3242 4.77449C52.3121 0.77044 46.3052 -1.23042 42.1523 1.76277C38.0001 4.75619 38 11.0874 38 23.7491V33.9991L28.3242 30.7745C16.3121 26.7705 10.3052 24.7696 6.15234 27.7628C1.99998 30.7562 2 37.0874 2 49.7491V67.585C2 74.5417 1.9996 78.0209 3.88672 80.6397C5.7743 83.2586 9.07559 84.3596 15.6758 86.5596L20.002 87.9991L20 88.0011L33.8906 92.63C41.0527 95.0173 44.634 96.2117 48.2168 95.6612C51.7998 95.1105 54.8577 92.8959 60.9727 88.4678L79.5957 74.9835C84.6242 71.3421 87.5709 69.2032 89.3691 66.7569C89.551 66.5194 89.7213 66.2697 89.8789 66.005C90.0501 65.7303 90.212 65.4518 90.3594 65.1632C91.9996 61.9502 92 58.1948 92 50.6846V28.4151C92 21.4583 92.0007 17.9792 90.1133 15.3604C88.2257 12.7416 84.9244 11.6425 78.3242 9.44246L64.3242 4.77449Z" fill="url(#v226-paint0_linear_4303_1230)"/>
+<path d="M64.3242 4.77449C52.3121 0.77044 46.3052 -1.23042 42.1523 1.76277C38.0001 4.75619 38 11.0874 38 23.7491V33.9991L28.3242 30.7745C16.3121 26.7705 10.3052 24.7696 6.15234 27.7628C1.99998 30.7562 2 37.0874 2 49.7491V67.585C2 74.5417 1.9996 78.0209 3.88672 80.6397C5.7743 83.2586 9.07559 84.3596 15.6758 86.5596L20.002 87.9991L20 88.0011L33.8906 92.63C41.0527 95.0173 44.634 96.2117 48.2168 95.6612C51.7998 95.1105 54.8577 92.8959 60.9727 88.4678L79.5957 74.9835C84.6242 71.3421 87.5709 69.2032 89.3691 66.7569C89.551 66.5194 89.7213 66.2697 89.8789 66.005C90.0501 65.7303 90.212 65.4518 90.3594 65.1632C91.9996 61.9502 92 58.1948 92 50.6846V28.4151C92 21.4583 92.0007 17.9792 90.1133 15.3604C88.2257 12.7416 84.9244 11.6425 78.3242 9.44246L64.3242 4.77449Z" fill="url(#v226-paint1_radial_4303_1230)"/>
+<path d="M64.3242 4.77449C52.3121 0.77044 46.3052 -1.23042 42.1523 1.76277C38.0001 4.75619 38 11.0874 38 23.7491V33.9991L28.3242 30.7745C16.3121 26.7705 10.3052 24.7696 6.15234 27.7628C1.99998 30.7562 2 37.0874 2 49.7491V67.585C2 74.5417 1.9996 78.0209 3.88672 80.6397C5.7743 83.2586 9.07559 84.3596 15.6758 86.5596L20.002 87.9991L20 88.0011L33.8906 92.63C41.0527 95.0173 44.634 96.2117 48.2168 95.6612C51.7998 95.1105 54.8577 92.8959 60.9727 88.4678L79.5957 74.9835C84.6242 71.3421 87.5709 69.2032 89.3691 66.7569C89.551 66.5194 89.7213 66.2697 89.8789 66.005C90.0501 65.7303 90.212 65.4518 90.3594 65.1632C91.9996 61.9502 92 58.1948 92 50.6846V28.4151C92 21.4583 92.0007 17.9792 90.1133 15.3604C88.2257 12.7416 84.9244 11.6425 78.3242 9.44246L64.3242 4.77449Z" fill="url(#v226-paint2_radial_4303_1230)"/>
+<path d="M56 54.4151C56 47.4579 56 43.9793 54.1124 41.3604C52.2248 38.7415 48.9247 37.6415 42.3246 35.4414L28.3246 30.7748C16.312 26.7706 10.3058 24.7685 6.1529 27.7617C2 30.755 2 37.0861 2 49.7484V67.5847C2 74.5419 2 78.0206 3.88758 80.6394C5.77516 83.2583 9.07525 84.3583 15.6754 86.5584L29.6754 91.2251C41.688 95.2292 47.6942 97.2313 51.8471 94.2381C56 91.2448 56 84.9137 56 72.2514V54.4151Z" fill="url(#v226-paint3_radial_4303_1230)"/>
+<path d="M56 54.4151C56 47.4579 56 43.9793 54.1124 41.3604C52.2248 38.7415 48.9247 37.6415 42.3246 35.4414L28.3246 30.7748C16.312 26.7706 10.3058 24.7685 6.1529 27.7617C2 30.755 2 37.0861 2 49.7484V67.5847C2 74.5419 2 78.0206 3.88758 80.6394C5.77516 83.2583 9.07525 84.3583 15.6754 86.5584L29.6754 91.2251C41.688 95.2292 47.6942 97.2313 51.8471 94.2381C56 91.2448 56 84.9137 56 72.2514V54.4151Z" fill="url(#v226-paint4_linear_4303_1230)"/>
+<path d="M92 50.6846C92 58.1947 91.9996 61.9501 90.3594 65.1631C90.212 65.4517 90.0501 65.7302 89.8789 66.0049C89.7213 66.2696 89.551 66.5193 89.3691 66.7568C87.5709 69.2031 84.6242 71.3421 79.5957 74.9834L60.9727 88.4678C54.8577 92.8959 51.7998 95.1105 48.2168 95.6611C44.634 96.2116 41.0527 95.0172 33.8906 92.6299L25.2158 89.7393L20 88L20.002 87.999L16.7822 86.9277L15.2217 86.4072C8.92337 84.3067 5.73047 83.1977 3.88672 80.6396C1.99964 78.0208 2 74.5416 2 67.585V49.749C2 48.4323 2.00119 47.1841 2.00586 46.001L56 61.501L92 35.001V50.6846Z" fill="url(#v226-paint5_radial_4303_1230)"/>
+<path d="M38.0742 15.1036C31.3033 13.0668 27.2217 12.5497 24.1523 14.7618C21.0793 16.9767 20.281 21.0195 20.0732 28.1026C22.4635 28.8216 25.1889 29.7306 28.3232 30.7754L37.999 34V23.7491C37.999 20.4569 38.0012 17.5925 38.0742 15.1036Z" fill="url(#v226-paint6_linear_4303_1230)"/>
+<path d="M38.0742 15.1036C31.3033 13.0668 27.2217 12.5497 24.1523 14.7618C21.0793 16.9767 20.281 21.0195 20.0732 28.1026C22.4635 28.8216 25.1889 29.7306 28.3232 30.7754L37.999 34V23.7491C37.999 20.4569 38.0012 17.5925 38.0742 15.1036Z" fill="url(#v226-paint7_linear_4303_1230)" fill-opacity="0.7"/>
+<path d="M38.0742 15.1035C38.0012 17.5922 38 20.4561 38 23.748V41.585C38 48.5419 38.0002 52.0208 39.8877 54.6396C41.7753 57.2583 45.0758 58.3586 51.6758 60.5586L56 62C64.0027 64.6676 68.0041 66.0014 70.84 64.1408C71.0112 64.0284 71.1774 63.9086 71.3381 63.7817C74 61.6798 74 57.462 74 49.0263V41.415C74 34.4579 73.9999 30.9792 72.1123 28.3604C70.2247 25.7416 66.9243 24.6414 60.3242 22.4414L46.3242 17.7744C43.1901 16.7297 40.4644 15.8225 38.0742 15.1035Z" fill="url(#v226-paint8_linear_4303_1230)"/>
+<path d="M38.0742 15.1035C38.0012 17.5922 38 20.4561 38 23.748V41.585C38 48.5419 38.0002 52.0208 39.8877 54.6396C41.7753 57.2583 45.0758 58.3586 51.6758 60.5586L56 62C64.0027 64.6676 68.0041 66.0014 70.84 64.1408C71.0112 64.0284 71.1774 63.9086 71.3381 63.7817C74 61.6798 74 57.462 74 49.0263V41.415C74 34.4579 73.9999 30.9792 72.1123 28.3604C70.2247 25.7416 66.9243 24.6414 60.3242 22.4414L46.3242 17.7744C43.1901 16.7297 40.4644 15.8225 38.0742 15.1035Z" fill="url(#v226-paint9_radial_4303_1230)"/>
+<path d="M20.0742 28.1035C20.0012 30.5922 20 33.4561 20 36.748V54.585C20 61.5421 20.0001 65.0208 21.8877 67.6396C23.7753 70.2584 27.0757 71.3586 33.6758 73.5586L37.975 74.9917C46.0014 77.6671 50.0146 79.0049 52.855 77.1309C53.0159 77.0247 53.1724 76.9119 53.324 76.7928C56 74.6909 56 70.4606 56 62V54.415C56 47.4579 55.9999 43.9792 54.1123 41.3604C52.2247 38.7416 48.9243 37.6414 42.3242 35.4414L28.3242 30.7744C25.1901 29.7297 22.4644 28.8225 20.0742 28.1035Z" fill="url(#v226-paint10_linear_4303_1230)"/>
+<path d="M38 41.585C38 48.5422 38.0001 52.0208 39.8877 54.6397C41.7753 57.2585 45.0756 58.3585 51.6758 60.5586L56 62V54.415C56 47.4581 55.9998 43.9792 54.1123 41.3604C52.2247 38.7417 48.9242 37.6414 42.3242 35.4414L38 34V41.585Z" fill="url(#v226-paint11_linear_4303_1230)"/>
+<defs>
+<linearGradient id="v226-paint0_linear_4303_1230" x1="53.5" y1="77" x2="80.9999" y2="9.99998" gradientUnits="userSpaceOnUse">
+<stop stop-color="#2764E7"/>
+<stop offset="0.307475" stop-color="#8B52F4"/>
+<stop offset="0.544627" stop-color="#BB45EA"/>
+<stop offset="0.803866" stop-color="#DB56C6"/>
+<stop offset="1" stop-color="#F462AB"/>
+</linearGradient>
+<radialGradient id="v226-paint1_radial_4303_1230" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(52.5 45) rotate(43.8065) scale(33.9485 21.4653)">
+<stop offset="0.549399" stop-color="#5B2AB5"/>
+<stop offset="1" stop-color="#A931D8" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="v226-paint2_radial_4303_1230" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(44 34) rotate(17.7004) scale(49.3356 24.5964)">
+<stop offset="0.527929" stop-color="#9529C2"/>
+<stop offset="1" stop-color="#DD3CE2" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="v226-paint3_radial_4303_1230" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(61.3922 89.3373) rotate(-124.89) scale(82.0935 82.0935)">
+<stop stop-color="#2764E7"/>
+<stop offset="0.225228" stop-color="#0094F0"/>
+<stop offset="0.443437" stop-color="#19B2CE"/>
+<stop offset="0.6999" stop-color="#52D17C"/>
+<stop offset="1" stop-color="#FFD638"/>
+</radialGradient>
+<linearGradient id="v226-paint4_linear_4303_1230" x1="19.5444" y1="82.7096" x2="53.8452" y2="82.7096" gradientUnits="userSpaceOnUse">
+<stop stop-color="#16BBDA" stop-opacity="0"/>
+<stop offset="0.535279" stop-color="#0094F0"/>
+<stop offset="1" stop-color="#2764E7"/>
+</linearGradient>
+<radialGradient id="v226-paint5_radial_4303_1230" cx="0" cy="0" r="1" gradientTransform="matrix(23 12.9998 8.90874 -13.0499 43 67.9995)" gradientUnits="userSpaceOnUse">
+<stop stop-color="#1B44B1"/>
+<stop offset="1" stop-color="#367AF2" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="v226-paint6_linear_4303_1230" x1="33.5" y1="32.5" x2="34" y2="13" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FF9C70"/>
+<stop offset="1" stop-color="#FFD394"/>
+</linearGradient>
+<linearGradient id="v226-paint7_linear_4303_1230" x1="28.5" y1="24.5" x2="26.5" y2="33" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFB357" stop-opacity="0"/>
+<stop offset="1" stop-color="#F24A9D"/>
+</linearGradient>
+<linearGradient id="v226-paint8_linear_4303_1230" x1="58" y1="20" x2="58.5" y2="64.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFB357"/>
+<stop offset="0.380259" stop-color="#FB6F7B"/>
+<stop offset="0.659779" stop-color="#F24A9D"/>
+<stop offset="1" stop-color="#DD3CE2"/>
+</linearGradient>
+<radialGradient id="v226-paint9_radial_4303_1230" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(40 54) rotate(12.702) scale(24.0895 24.0895)">
+<stop offset="0.567938" stop-color="#D7257D"/>
+<stop offset="1" stop-color="#F462AB" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="v226-paint10_linear_4303_1230" x1="50.03" y1="77.3707" x2="20" y2="25.6869" gradientUnits="userSpaceOnUse">
+<stop stop-color="#0FAFFF"/>
+<stop offset="0.54828" stop-color="#2BDABE"/>
+<stop offset="0.765945" stop-color="#88E06C"/>
+<stop offset="1" stop-color="#FFD638"/>
+</linearGradient>
+<linearGradient id="v226-paint11_linear_4303_1230" x1="36" y1="44.5" x2="53" y2="50.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#76EB95"/>
+<stop offset="1" stop-color="#3BD5FF" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg><text x="237.6" y="47" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="600" fill="#1d1a16">Copilot Studio</text><text x="760" y="47" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="700" fill="#56243c" text-anchor="end" letter-spacing="2">ARCHITECTURE</text><rect x="40" y="86" width="720" height="68.5" rx="12" fill="#e3d3db" stroke="#d0aabc" stroke-width="1.5"/><text x="58" y="125.3" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" fill="#56243c" letter-spacing="1.2">APP PACKAGE (ZIP)</text><rect x="216" y="96" width="125" height="48.5" rx="8" fill="#ffffff" stroke="#b96e92" stroke-width="1.2"/><text x="278.5" y="125.3" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">manifest.json…</text><rect x="351" y="96" width="125" height="48.5" rx="8" fill="#ffffff" stroke="#b96e92" stroke-width="1.2"/><text x="413.5" y="125.3" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">declarativeAge…</text><rect x="486" y="96" width="125" height="48.5" rx="8" fill="#ffffff" stroke="#b96e92" stroke-width="1.2"/><text x="548.5" y="125.3" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">ai-plugin.json…</text><rect x="621" y="96" width="125" height="48.5" rx="8" fill="#ffffff" stroke="#b96e92" stroke-width="1.2"/><text x="683.5" y="125.3" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">Icons</text><path d="M400 156.5V166.5" stroke="#d26a3c" stroke-width="2.5" fill="none"/><path d="M393 164.5L400 175.5L407 164.5Z" fill="#d26a3c"/><rect x="40" y="176.5" width="720" height="68.5" rx="12" fill="#f4f0f2" stroke="#d0aabc" stroke-width="1.5"/><text x="58" y="215.8" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" fill="#56243c" letter-spacing="1.2">AGENT DEFINITION</text><rect x="216" y="186.5" width="125" height="48.5" rx="8" fill="#ffffff" stroke="#b96e92" stroke-width="1.2"/><text x="278.5" y="215.8" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">Name</text><rect x="351" y="186.5" width="125" height="48.5" rx="8" fill="#ffffff" stroke="#b96e92" stroke-width="1.2"/><text x="413.5" y="215.8" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">description</text><rect x="486" y="186.5" width="125" height="48.5" rx="8" fill="#ffffff" stroke="#b96e92" stroke-width="1.2"/><text x="548.5" y="215.8" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">Instructions</text><rect x="621" y="186.5" width="125" height="48.5" rx="8" fill="#ffffff" stroke="#b96e92" stroke-width="1.2"/><text x="683.5" y="215.8" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">Conversation s…</text><path d="M400 247V257" stroke="#d26a3c" stroke-width="2.5" fill="none"/><path d="M393 255L400 266L407 255Z" fill="#d26a3c"/><rect x="40" y="267" width="720" height="68.5" rx="12" fill="#e3d3db" stroke="#d0aabc" stroke-width="1.5"/><text x="58" y="306.3" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" fill="#56243c" letter-spacing="1.2">API PLUGIN</text><rect x="216" y="277" width="170" height="48.5" rx="8" fill="#ffffff" stroke="#b96e92" stroke-width="1.2"/><text x="301" y="306.3" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">OpenAPI description…</text><rect x="396" y="277" width="170" height="48.5" rx="8" fill="#ffffff" stroke="#b96e92" stroke-width="1.2"/><text x="481" y="306.3" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">Auth: OAuth (Entra)…</text><rect x="576" y="277" width="170" height="48.5" rx="8" fill="#ffffff" stroke="#b96e92" stroke-width="1.2"/><text x="661" y="306.3" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">Response semantics (…</text><path d="M400 337.5V347.5" stroke="#d26a3c" stroke-width="2.5" fill="none"/><path d="M393 345.5L400 356.5L407 345.5Z" fill="#d26a3c"/><rect x="40" y="357.5" width="720" height="68.5" rx="12" fill="#f4f0f2" stroke="#d0aabc" stroke-width="1.5"/><text x="58" y="396.8" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" fill="#56243c" letter-spacing="1.2">MICROSOFT 365 COP…</text><rect x="216" y="367.5" width="170" height="48.5" rx="8" fill="#ffffff" stroke="#b96e92" stroke-width="1.2"/><text x="301" y="396.8" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">Copilot orchestrator…</text><rect x="396" y="367.5" width="170" height="48.5" rx="8" fill="#ffffff" stroke="#b96e92" stroke-width="1.2"/><text x="481" y="396.8" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">User permissions</text><rect x="576" y="367.5" width="170" height="48.5" rx="8" fill="#ffffff" stroke="#b96e92" stroke-width="1.2"/><text x="661" y="396.8" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">Teams / Copilot app</text></svg>

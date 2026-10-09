@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450"><rect width="800" height="450" fill="#f4f1f4"/><rect x="0" y="0" width="800" height="6" fill="#8e4a8f"/><rect x="40" y="18" width="148" height="46" rx="23" fill="#ffffff" stroke="#e0d9cc"/><rect x="49" y="26" width="30" height="30" rx="8" fill="#036c70"/><g transform="translate(53 30) scale(.92)" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></g><text x="88" y="47" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="600" fill="#1d1a16">SharePoint</text><rect x="198" y="18" width="148" height="46" rx="23" fill="#ffffff" stroke="#e0d9cc"/><svg x="207" y="26" width="30" height="30" viewBox="0 0 96 96">
+<g clip-path="url(#v81-clip0_4303_1230)">
+<g clip-path="url(#v81-clip1_4303_1230)">
+<path d="M44.1553 9.77196L62.9254 42.6196C64.8305 45.9536 64.8305 50.0464 62.9254 53.3804L44.1553 86.228C38.7808 95.6334 25.219 95.6335 19.8445 86.228L2.2525 55.4421C-0.382637 50.8306 -0.382645 45.1694 2.25249 40.5579L19.8445 9.77196C25.219 0.366551 38.7808 0.366549 44.1553 9.77196Z" fill="url(#v81-paint0_linear_4303_1230)"/>
+<path d="M44.1553 9.77196L62.9254 42.6196C64.8305 45.9536 64.8305 50.0464 62.9254 53.3804L44.1553 86.228C38.7808 95.6334 25.219 95.6335 19.8445 86.228L2.2525 55.4421C-0.382637 50.8306 -0.382645 45.1694 2.25249 40.5579L19.8445 9.77196C25.219 0.366551 38.7808 0.366549 44.1553 9.77196Z" fill="url(#v81-paint1_radial_4303_1230)"/>
+<path d="M65.9999 48L44.1553 86.228C38.7808 95.6334 25.219 95.6334 19.8445 86.228L1.99988 55C7.30568 64.2852 20.6941 64.2852 25.9999 55L47.9999 16.5L65.9999 48Z" fill="url(#v81-paint2_linear_4303_1230)"/>
+<path d="M65.9999 48L44.1553 86.228C38.7808 95.6334 25.219 95.6334 19.8445 86.228L1.99988 55C7.30568 64.2852 20.6941 64.2852 25.9999 55L47.9999 16.5L65.9999 48Z" fill="url(#v81-paint3_linear_4303_1230)"/>
+<path d="M54.9458 28.6554L81.9999 76L93.3881 56.0705C96.2458 51.0696 96.2458 44.9304 93.3881 39.9295L76.1553 9.77196C70.7808 0.366554 57.219 0.366554 51.8445 9.77197L41.0539 28.6554C44.1251 23.2809 51.8747 23.2809 54.9458 28.6554Z" fill="url(#v81-paint4_linear_4303_1230)"/>
+<path d="M54.9458 28.6554L81.9999 76L93.3881 56.0705C96.2458 51.0696 96.2458 44.9304 93.3881 39.9295L76.1553 9.77196C70.7808 0.366554 57.219 0.366554 51.8445 9.77197L41.0539 28.6554C44.1251 23.2809 51.8747 23.2809 54.9458 28.6554Z" fill="url(#v81-paint5_linear_4303_1230)"/>
+<path d="M79.7318 23.9691L47.9999 79.5L51.8445 86.228C57.219 95.6334 70.7808 95.6335 76.1553 86.228L94.0308 54.9459C96.4902 50.6419 96.4902 45.3581 94.0308 41.0541L79.7318 16.0309C81.1372 18.4903 81.1372 21.5096 79.7318 23.9691Z" fill="url(#v81-paint6_linear_4303_1230)"/>
+<path d="M51.8445 86.228L47.9999 79.5L65.9999 48L81.9999 76L76.1553 86.228C70.7808 95.6334 57.219 95.6334 51.8445 86.228Z" fill="url(#v81-paint7_linear_4303_1230)"/>
+</g>
+</g>
+<defs>
+<linearGradient id="v81-paint0_linear_4303_1230" x1="15.9999" y1="60.5" x2="27.9994" y2="5.00001" gradientUnits="userSpaceOnUse">
+<stop stop-color="#520B56"/>
+<stop offset="1" stop-color="#742774"/>
+</linearGradient>
+<radialGradient id="v81-paint1_radial_4303_1230" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(31.4999 8.00002) rotate(123.811) scale(65.5935 20.3157)">
+<stop offset="0.512391" stop-color="#4C1E4C" stop-opacity="0"/>
+<stop offset="1" stop-color="#4C1E4C"/>
+</radialGradient>
+<linearGradient id="v81-paint2_linear_4303_1230" x1="11.9999" y1="71" x2="59.4999" y2="41.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D467B9"/>
+<stop offset="0.308079" stop-color="#982F90"/>
+<stop offset="1" stop-color="#742774"/>
+</linearGradient>
+<linearGradient id="v81-paint3_linear_4303_1230" x1="43.9999" y1="53.4998" x2="67.5" y2="50.9998" gradientUnits="userSpaceOnUse">
+<stop stop-color="#742774" stop-opacity="0"/>
+<stop offset="1" stop-color="#520B56"/>
+</linearGradient>
+<linearGradient id="v81-paint4_linear_4303_1230" x1="42.9999" y1="29" x2="82.4999" y2="56" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E9A1CB"/>
+<stop offset="0.40829" stop-color="#D467B9"/>
+<stop offset="1" stop-color="#BB35A4"/>
+</linearGradient>
+<linearGradient id="v81-paint5_linear_4303_1230" x1="67.4999" y1="23.5" x2="80.9999" y2="26.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E48CC7" stop-opacity="0"/>
+<stop offset="1" stop-color="#BB35A4"/>
+</linearGradient>
+<linearGradient id="v81-paint6_linear_4303_1230" x1="89.2565" y1="77.1621" x2="76.4515" y2="41.3836" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E48CC7"/>
+<stop offset="1" stop-color="#F7C4E2"/>
+</linearGradient>
+<linearGradient id="v81-paint7_linear_4303_1230" x1="75.1999" y1="77.5801" x2="54.869" y2="32.0777" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E48CC7" stop-opacity="0"/>
+<stop offset="0.67724" stop-color="#D467B9" stop-opacity="0.5"/>
+<stop offset="1" stop-color="#BB35A4"/>
+</linearGradient>
+<clipPath id="v81-clip0_4303_1230">
+<rect width="96" height="96" fill="white"/>
+</clipPath>
+<clipPath id="v81-clip1_4303_1230">
+<rect width="96" height="96" fill="white"/>
+</clipPath>
+</defs>
+</svg><text x="246" y="47" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="600" fill="#1d1a16">Power Apps</text><text x="760" y="47" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="700" fill="#502a51" text-anchor="end" letter-spacing="2">ARCHITECTURE</text><rect x="40" y="86" width="720" height="70" rx="12" fill="#e1d5e2" stroke="#cbaecb" stroke-width="1.5"/><text x="58" y="126" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" fill="#502a51" letter-spacing="1.2">INPUT PROPERTIES</text><rect x="216" y="96" width="125" height="50" rx="8" fill="#ffffff" stroke="#b077b1" stroke-width="1.2"/><text x="278.5" y="126" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">Title (Text)</text><rect x="351" y="96" width="125" height="50" rx="8" fill="#ffffff" stroke="#b077b1" stroke-width="1.2"/><text x="413.5" y="126" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">Message (Text)</text><rect x="486" y="96" width="125" height="50" rx="8" fill="#ffffff" stroke="#b077b1" stroke-width="1.2"/><text x="548.5" y="126" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">Visible (Boole…</text><rect x="621" y="96" width="125" height="50" rx="8" fill="#ffffff" stroke="#b077b1" stroke-width="1.2"/><text x="683.5" y="126" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">ConfirmText (T…</text><path d="M400 158V168" stroke="#d26a3c" stroke-width="2.5" fill="none"/><path d="M393 166L400 177L407 166Z" fill="#d26a3c"/><rect x="40" y="178" width="720" height="70" rx="12" fill="#f4f1f4" stroke="#cbaecb" stroke-width="1.5"/><text x="58" y="218" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" fill="#502a51" letter-spacing="1.2">INSIDE THE COMPON…</text><rect x="216" y="188" width="170" height="50" rx="8" fill="#ffffff" stroke="#b077b1" stroke-width="1.2"/><text x="301" y="218" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">Container + labels +…</text><rect x="396" y="188" width="170" height="50" rx="8" fill="#ffffff" stroke="#b077b1" stroke-width="1.2"/><text x="481" y="218" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">Theme from input rec…</text><path d="M400 250V260" stroke="#d26a3c" stroke-width="2.5" fill="none"/><path d="M393 258L400 269L407 258Z" fill="#d26a3c"/><rect x="40" y="270" width="720" height="70" rx="12" fill="#e1d5e2" stroke="#cbaecb" stroke-width="1.5"/><text x="58" y="310" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" fill="#502a51" letter-spacing="1.2">OUTPUT &amp; EVENTS</text><rect x="216" y="280" width="170" height="50" rx="8" fill="#ffffff" stroke="#b077b1" stroke-width="1.2"/><text x="301" y="310" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">OnConfirm (behaviour…</text><rect x="396" y="280" width="170" height="50" rx="8" fill="#ffffff" stroke="#b077b1" stroke-width="1.2"/><text x="481" y="310" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">OnCancel (event)</text><rect x="576" y="280" width="170" height="50" rx="8" fill="#ffffff" stroke="#b077b1" stroke-width="1.2"/><text x="661" y="310" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#1d1a16" text-anchor="middle">Result (output Text)</text></svg>

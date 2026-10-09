@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Provider-Hosted Add-in CRUD – Read, Create, Update &amp; Delete Code Templates (MVC + CSOM) · SP Codex</title>
+<meta name="description" content="Copy-ready templates for a provider-hosted add-in, covering an MVC controller with SharePointContext, a repository with full CSOM CRUD, REST and app-only variants, Razor views, validation, paging and error handling.">
+<meta name="author" content="Vishnu Muralikrishnan">
+<meta name="theme-color" content="#faf8f3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Provider-Hosted Add-in CRUD – Read, Create, Update &amp; Delete Code Templates (MVC + CSOM) · SP Codex">
+<meta property="og:description" content="Copy-ready templates for a provider-hosted add-in, covering an MVC controller with SharePointContext, a repository with full CSOM CRUD, REST and app-only variants, Razor views, validation, paging and error handling.">
+<meta property="og:site_name" content="SP Codex">
+<link rel="icon" type="image/svg+xml" href="../../assets/img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&display=swap">
+<link rel="stylesheet" href="../../assets/css/main.css">
+<script>(function(){var t=null;try{t=localStorage.getItem('spc-theme')}catch(e){}var q=location.search.match(/[?&]theme=(light|dark)/);if(q)t=q[1];if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)})()</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Provider-Hosted Add-in CRUD – Read, Create, Update & Delete Code Templates (MVC + CSOM)","description":"Copy-ready templates for a provider-hosted add-in, covering an MVC controller with SharePointContext, a repository with full CSOM CRUD, REST and app-only variants, Razor views, validation, paging and error handling.","author":{"@type":"Person","name":"Vishnu Muralikrishnan"},"dateModified":"2026-10-08T11:20:43.254Z","keywords":"provider-hosted, crud, csom, mvc, csharp, rest, tokenhelper, app-only","articleSection":"SharePoint On-Premises"}</script>
+</head>
+<body class="page-article">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head" data-header>
+  <div class="mast">
+    <div class="container mast-inner">
+      <a class="brand" href="../../index.html" aria-label="SP Codex home"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect class="logo-bg" width="32" height="32" rx="8"/><path class="logo-fg" d="M11.5 10.5 7 16l4.5 5.5M20.5 10.5 25 16l-4.5 5.5" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path class="logo-slash" d="M17.6 8.5l-3.2 15" fill="none" stroke-width="2.4" stroke-linecap="round"/></svg><span class="brand-name">SP Codex</span></a>
+      <span class="mast-tag">SharePoint, Power Platform &amp; Microsoft 365, from 2001 to 2026</span>
+      <nav class="util-nav" aria-label="Site"><a href="../../paths.html">Learning paths</a><a href="../../library.html">Library</a><a href="../../about.html">About</a></nav>
+      <div class="mast-actions">
+        <button class="search-btn" type="button" data-open-search aria-label="Search articles"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="sb-label">Search</span><kbd>Ctrl K</kbd></button>
+        <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch between light and dark theme"><svg class="i i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="i i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+        <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-label="Open menu" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      </div>
+    </div>
+  </div>
+  <nav class="sections" aria-label="Topics">
+    <div class="container"><ul class="sec-list"><li class="nav-mega"><button class="sec-link active" type="button" aria-expanded="false" data-mega-toggle>SharePoint<svg class="i i-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button><div class="dd" data-mega><div class="dd-list"><a class="dd-item" href="../../categories/history/index.html" style="--c:#a8781a"><span class="dd-t"><span class="dot"></span>History &amp; Roadmap<b>6</b></span><span class="dd-d">25 years of SharePoint and its ecosystem: every version, every platform shift, and what Microsoft retired along the way.</span></a><a class="dd-item active" href="../../categories/sharepoint-onprem/index.html" style="--c:#2f7d72"><span class="dd-t"><span class="dot"></span>SharePoint On-Premises<b>29</b></span><span class="dd-d">Farm architecture, service applications, SSOM/CSOM, event receivers, add-ins, workflows, upgrades and Subscription Edition.</span></a><a class="dd-item" href="../../categories/sharepoint-online/index.html" style="--c:#2b6f9e"><span class="dd-t"><span class="dot"></span>SharePoint Online &amp; Microsoft 365<b>31</b></span><span class="dd-d">Modern sites, hubs, web parts, lists, formatting JSON, provisioning, permissions, search, governance and tenant administration.</span></a><a class="dd-item" href="../../categories/spfx/index.html" style="--c:#4f56a6"><span class="dd-t"><span class="dot"></span>SharePoint Framework (SPFx)<b>32</b></span><span class="dd-d">Web parts, extensions, ACEs, PnPjs, Graph, and SPFx connected to Dataverse, Azure Functions, Table Storage and SQL, plus CI/CD and upgrades.</span></a></div><a class="dd-feat" href="../../articles/history/sharepoint-timeline.html"><span class="dd-media"><img class="cover" src="../../assets/covers/history/sharepoint-timeline.svg" alt="" width="800" height="450" loading="lazy" decoding="async"></span><span class="kicker">Featured</span><span class="dd-ft">SharePoint &amp; Microsoft 365 Timeline, 2001–2026</span></a></div></li><li class="nav-mega"><button class="sec-link" type="button" aria-expanded="false" data-mega-toggle>Power Platform<svg class="i i-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button><div class="dd" data-mega><div class="dd-list"><a class="dd-item" href="../../categories/power-apps/index.html" style="--c:#8e4a8f"><span class="dd-t"><span class="dot"></span>Power Apps<b>26</b></span><span class="dd-d">Canvas apps, model-driven apps, Power Fx, delegation, components, PCF, custom pages, Power Pages and ALM.</span></a><a class="dd-item" href="../../categories/power-automate/index.html" style="--c:#2f62b0"><span class="dd-t"><span class="dot"></span>Power Automate<b>22</b></span><span class="dd-d">Cloud flows, SharePoint automation, approvals, expressions, error handling, Graph via HTTP, desktop flows and enterprise ALM.</span></a><a class="dd-item" href="../../categories/dataverse/index.html" style="--c:#2f8059"><span class="dd-t"><span class="dot"></span>Dataverse<b>16</b></span><span class="dd-d">Tables, relationships, the security model, Web API and SDK CRUD, plug-ins, formula columns, solutions and integration.</span></a><a class="dd-item" href="../../categories/dataflows/index.html" style="--c:#5a7f2b"><span class="dd-t"><span class="dot"></span>Dataflows &amp; Power Query<b>8</b></span><span class="dd-d">Power Query M, standard and analytical dataflows, loading SharePoint and on-prem data into Dataverse, gateways, incremental refresh and Fabric Gen2.</span></a></div><a class="dd-feat" href="../../articles/power-apps/overview.html"><span class="dd-media"><img class="cover" src="../../assets/covers/power-apps/overview.svg" alt="" width="800" height="450" loading="lazy" decoding="async"></span><span class="kicker">Featured</span><span class="dd-ft">What is Power Apps? Canvas, Model-Driven, Power Pages and How They Fit Together</span></a></div></li><li class="nav-mega"><button class="sec-link" type="button" aria-expanded="false" data-mega-toggle>Workflow &amp; Forms<svg class="i i-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button><div class="dd" data-mega><div class="dd-list"><a class="dd-item" href="../../categories/nintex/index.html" style="--c:#c0622b"><span class="dd-t"><span class="dot"></span>Nintex<b>18</b></span><span class="dd-d">Nintex Workflow &amp; Forms on-prem, Nintex for Office 365, Nintex Automation Cloud (NAC), Xtensions, DocGen and migration to NAC.</span></a><a class="dd-item" href="../../categories/infopath-legacy/index.html" style="--c:#7a5aa6"><span class="dd-t"><span class="dot"></span>InfoPath &amp; Legacy Workflows<b>11</b></span><span class="dd-d">InfoPath forms, data connections and code-behind, SharePoint 2010/2013 workflows, SharePoint Designer, retirement dates and migration paths.</span></a></div><a class="dd-feat" href="../../articles/nintex/history-platforms.html"><span class="dd-media"><img class="cover" src="../../assets/covers/nintex/history-platforms.svg" alt="" width="800" height="450" loading="lazy" decoding="async"></span><span class="kicker">Featured</span><span class="dd-ft">Nintex Explained – History and Product Family from Workflow 2007 to Nintex Automation Cloud</span></a></div></li><li><a class="sec-link" href="../../categories/migration/index.html">Migration</a></li><li class="nav-mega"><button class="sec-link" type="button" aria-expanded="false" data-mega-toggle>Azure &amp; APIs<svg class="i i-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button><div class="dd" data-mega><div class="dd-list"><a class="dd-item" href="../../categories/azure/index.html" style="--c:#1f7fa8"><span class="dd-t"><span class="dot"></span>Azure for Microsoft 365 Devs<b>15</b></span><span class="dd-d">Entra ID app registrations, Sites.Selected, Azure Functions, webhooks, Table and Blob storage, SQL, Key Vault, APIM, messaging and monitoring.</span></a><a class="dd-item" href="../../categories/apis/index.html" style="--c:#8f7414"><span class="dd-t"><span class="dot"></span>Graph, REST &amp; PnP<b>12</b></span><span class="dd-d">SSOM vs CSOM vs REST vs Graph, REST and Graph cheat sheets, batching, delta, change notifications, auth flows, throttling and the PnP ecosystem.</span></a></div><a class="dd-feat" href="../../articles/azure/entra-app-registration.html"><span class="dd-media"><img class="cover" src="../../assets/covers/azure/entra-app-registration.svg" alt="" width="800" height="450" loading="lazy" decoding="async"></span><span class="kicker">Featured</span><span class="dd-ft">Microsoft Entra ID App Registrations – Delegated vs Application Permissions, Certificates and Consent</span></a></div></li><li><a class="sec-link" href="../../categories/ai-copilot/index.html">Copilot &amp; AI</a></li><li><a class="sec-link" href="../../categories/architecture-docs/index.html">Design &amp; Docs</a></li><li><a class="sec-link" href="../../categories/interview/index.html">Interview Q&amp;A</a></li></ul><ul class="sec-flat"><li><a class="sec-link" href="../../categories/history/index.html">History</a></li><li><a class="sec-link active" href="../../categories/sharepoint-onprem/index.html">SP On-Prem</a></li><li><a class="sec-link" href="../../categories/sharepoint-online/index.html">SP Online</a></li><li><a class="sec-link" href="../../categories/spfx/index.html">SPFx</a></li><li><a class="sec-link" href="../../categories/power-apps/index.html">Power Apps</a></li><li><a class="sec-link" href="../../categories/power-automate/index.html">Power Automate</a></li><li><a class="sec-link" href="../../categories/dataverse/index.html">Dataverse</a></li><li><a class="sec-link" href="../../categories/dataflows/index.html">Dataflows</a></li><li><a class="sec-link" href="../../categories/nintex/index.html">Nintex</a></li><li><a class="sec-link" href="../../categories/infopath-legacy/index.html">InfoPath &amp; Legacy</a></li><li><a class="sec-link" href="../../categories/migration/index.html">Migration</a></li><li><a class="sec-link" href="../../categories/azure/index.html">Azure</a></li><li><a class="sec-link" href="../../categories/apis/index.html">APIs &amp; PnP</a></li><li><a class="sec-link" href="../../categories/ai-copilot/index.html">Copilot &amp; AI</a></li><li><a class="sec-link" href="../../categories/architecture-docs/index.html">Design &amp; Docs</a></li><li><a class="sec-link" href="../../categories/interview/index.html">Interview</a></li></ul></div>
+  </nav>
+</header>
+<div class="mnav" data-mnav>
+  <div class="container">
+    <ul class="mnav-links"><li><a href="../../paths.html">Learning paths</a></li><li><a href="../../library.html">Library</a></li><li><a href="../../about.html">About</a></li><li><a href="../../search.html">Search</a></li></ul>
+    <div class="mnav-g"><p class="mnav-h">SharePoint</p><ul><li><a href="../../categories/history/index.html" style="--c:#a8781a"><span class="dot"></span>History &amp; Roadmap<b>6</b></a></li><li><a href="../../categories/sharepoint-onprem/index.html" style="--c:#2f7d72"><span class="dot"></span>SharePoint On-Premises<b>29</b></a></li><li><a href="../../categories/sharepoint-online/index.html" style="--c:#2b6f9e"><span class="dot"></span>SharePoint Online &amp; Microsoft 365<b>31</b></a></li><li><a href="../../categories/spfx/index.html" style="--c:#4f56a6"><span class="dot"></span>SharePoint Framework (SPFx)<b>32</b></a></li></ul></div><div class="mnav-g"><p class="mnav-h">Power Platform</p><ul><li><a href="../../categories/power-apps/index.html" style="--c:#8e4a8f"><span class="dot"></span>Power Apps<b>26</b></a></li><li><a href="../../categories/power-automate/index.html" style="--c:#2f62b0"><span class="dot"></span>Power Automate<b>22</b></a></li><li><a href="../../categories/dataverse/index.html" style="--c:#2f8059"><span class="dot"></span>Dataverse<b>16</b></a></li><li><a href="../../categories/dataflows/index.html" style="--c:#5a7f2b"><span class="dot"></span>Dataflows &amp; Power Query<b>8</b></a></li></ul></div><div class="mnav-g"><p class="mnav-h">Workflow &amp; Forms</p><ul><li><a href="../../categories/nintex/index.html" style="--c:#c0622b"><span class="dot"></span>Nintex<b>18</b></a></li><li><a href="../../categories/infopath-legacy/index.html" style="--c:#7a5aa6"><span class="dot"></span>InfoPath &amp; Legacy Workflows<b>11</b></a></li></ul></div><div class="mnav-g"><p class="mnav-h">Migration</p><ul><li><a href="../../categories/migration/index.html" style="--c:#b8434b"><span class="dot"></span>Migration &amp; ShareGate<b>20</b></a></li></ul></div><div class="mnav-g"><p class="mnav-h">Azure &amp; APIs</p><ul><li><a href="../../categories/azure/index.html" style="--c:#1f7fa8"><span class="dot"></span>Azure for Microsoft 365 Devs<b>15</b></a></li><li><a href="../../categories/apis/index.html" style="--c:#8f7414"><span class="dot"></span>Graph, REST &amp; PnP<b>12</b></a></li></ul></div><div class="mnav-g"><p class="mnav-h">Copilot &amp; AI</p><ul><li><a href="../../categories/ai-copilot/index.html" style="--c:#b24a7c"><span class="dot"></span>Copilot &amp; AI<b>6</b></a></li></ul></div><div class="mnav-g"><p class="mnav-h">Design &amp; Docs</p><ul><li><a href="../../categories/architecture-docs/index.html" style="--c:#5d5aa0"><span class="dot"></span>Solution Design &amp; Documentation<b>14</b></a></li></ul></div><div class="mnav-g"><p class="mnav-h">Interview Q&amp;A</p><ul><li><a href="../../categories/interview/index.html" style="--c:#5f7f1f"><span class="dot"></span>Interview Q&amp;A<b>13</b></a></li></ul></div>
+  </div>
+</div>
+<main id="main">
+
+<div class="read-progress" aria-hidden="true"><i data-read-progress></i></div>
+<header class="post-head">
+  <div class="container narrow">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span>/</span><a href="../../categories/sharepoint-onprem/index.html">SharePoint On-Premises</a><span>/</span><span>Client-Side &amp; Add-in Development</span></nav>
+    <p class="kicker" style="--c:#2f7d72">SP On-Prem<span class="kicker-sub">20 of 29</span></p>
+    <h1 class="post-title">Provider-Hosted Add-in CRUD – Read, Create, Update &amp; Delete Code Templates (MVC + CSOM)</h1>
+    <p class="post-dek">Copy-ready templates for a provider-hosted add-in, covering an MVC controller with SharePointContext, a repository with full CSOM CRUD, REST and app-only variants, Razor views, validation, paging and error handling.</p>
+    <div class="byline">
+      <span class="avatar sm" aria-hidden="true">VM</span>
+      <span class="by-text"><span class="by-name">By <a href="../../about.html">Vishnu Muralikrishnan</a></span><span class="by-meta">Updated 8 Oct 2026 · 8 min read</span></span>
+      <span class="by-facts"><span class="lvl lvl-advanced">Advanced</span><span><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><polyline points="12 7 12 12 15 15"/></svg>2013–2026</span><span><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="9" y="15" width="6" height="6" rx="1"/><path d="M6 9v3h12V9M12 12v3"/></svg>1 diagram</span><span><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>6 code samples</span><span><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>3 Q&amp;As</span></span>
+    </div>
+  </div>
+  <div class="container"><figure class="post-cover"><img class="cover" src="../../assets/covers/sharepoint-onprem/provider-hosted-crud.svg" alt="" width="800" height="450" decoding="async"></figure></div>
+</header>
+<div class="container post-layout" data-article="sharepoint-onprem/provider-hosted-crud">
+  <aside class="toc-wrap"><nav class="toc" aria-label="On this page"><p class="rail-h">On this page</p><ul><li class="toc-l2"><a href="#request-flow-in-the-template">Request flow in the template</a></li><li class="toc-l2"><a href="#1-the-model">1. The model</a></li><li class="toc-l2"><a href="#2-the-repository-all-csom-crud-in-one-place">2. The repository (all CSOM CRUD in one place)</a></li><li class="toc-l2"><a href="#3-the-controller">3. The controller</a></li><li class="toc-l2"><a href="#4-a-razor-view-index">4. A Razor view (Index)</a></li><li class="toc-l2"><a href="#5-the-same-crud-with-rest-from-the-remote-web">5. The same CRUD with REST from the remote web</a></li><li class="toc-l2"><a href="#6-app-only-context-no-user-e-g-for-a-nightly-job">6. App-only context (no user), e.g. for a nightly job</a></li><li class="toc-l2"><a href="#testing-checklist">Testing checklist</a></li><li class="toc-l2"><a href="#interview-questions">Interview questions</a></li><li class="toc-l2"><a href="#references">Sources &amp; further reading</a></li><li class="toc-l2"><a href="#watch">Watch &amp; learn</a></li></ul></nav></aside>
+  <article class="post-body art-body" data-art-body>
+    <div class="art-tools">
+      <button type="button" class="tool-btn" data-toggle-sidenav><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg><span>Topic contents</span></button>
+      <button type="button" class="tool-btn" data-qa-toggle><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Expand all answers</span></button>
+      <button type="button" class="tool-btn" data-copy-link><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span>Copy link</span></button>
+      <button type="button" class="tool-btn" data-print><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span>Print / PDF</span></button>
+    </div>
+    <details class="toc-m"><summary>On this page <span>11 sections</span></summary><ul><li class="toc-l2"><a href="#request-flow-in-the-template">Request flow in the template</a></li><li class="toc-l2"><a href="#1-the-model">1. The model</a></li><li class="toc-l2"><a href="#2-the-repository-all-csom-crud-in-one-place">2. The repository (all CSOM CRUD in one place)</a></li><li class="toc-l2"><a href="#3-the-controller">3. The controller</a></li><li class="toc-l2"><a href="#4-a-razor-view-index">4. A Razor view (Index)</a></li><li class="toc-l2"><a href="#5-the-same-crud-with-rest-from-the-remote-web">5. The same CRUD with REST from the remote web</a></li><li class="toc-l2"><a href="#6-app-only-context-no-user-e-g-for-a-nightly-job">6. App-only context (no user), e.g. for a nightly job</a></li><li class="toc-l2"><a href="#testing-checklist">Testing checklist</a></li><li class="toc-l2"><a href="#interview-questions">Interview questions</a></li><li class="toc-l2"><a href="#references">Sources &amp; further reading</a></li><li class="toc-l2"><a href="#watch">Watch &amp; learn</a></li></ul></details>
+    <div class="prose">
+<p>This article gives you a working <strong>CRUD template</strong> for a provider-hosted add-in built with <strong>ASP.NET MVC (.NET Framework 4.x)</strong> and <strong>CSOM</strong>. It manages a host-web list called <strong>Deviations</strong> (<code>Title</code>, <code>Area</code> choice, <code>Status</code> choice, <code>DueDate</code> date, <code>Owner</code> person). Read <a href="../../articles/sharepoint-onprem/provider-hosted-addins.html">how provider-hosted add-ins work</a> first if the token flow is new to you.</p>
+<h2 id="request-flow-in-the-template"><a class="h-anchor" href="#request-flow-in-the-template" aria-hidden="true" tabindex="-1">#</a>Request flow in the template</h2>
+<figure class="diagram mermaid-fig reveal"><button class="zoom-btn" type="button" aria-label="Open diagram full screen" title="Full screen"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button><div class="diagram-scroll"><pre class="mermaid">flowchart LR
+  B[Browser] --&gt;|GET /Deviations?SPHostUrl=...| F[SharePointContextFilter]
+  F --&gt;|no context → redirect to SharePoint&lt;br/&gt;to get a context token| SP[(SharePoint)]
+  F --&gt;|context OK| C[DeviationsController]
+  C --&gt; R[DeviationRepository]
+  R --&gt;|CSOM + Bearer token| SP
+  C --&gt; V[Razor views&lt;br/&gt;Index / Create / Edit / Delete]</pre></div></figure>
+<h2 id="1-the-model"><a class="h-anchor" href="#1-the-model" aria-hidden="true" tabindex="-1">#</a>1. The model</h2>
+<div class="code-block"><div class="code-head"><span class="code-title">Models/Deviation.cs</span><span class="code-lang">C#</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><pre><code class="hljs language-csharp"><span class="hljs-keyword">using</span> System;
+<span class="hljs-keyword">using</span> System.ComponentModel.DataAnnotations;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Deviation</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> Id { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    [<span class="hljs-meta">Required, StringLength(255, MinimumLength = 5)</span>]
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Title { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    [<span class="hljs-meta">Required</span>]
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Area { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }            <span class="hljs-comment">// Production | Warehouse | Lab</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Status { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-string">&quot;Submitted&quot;</span>;
+
+    [<span class="hljs-meta">DataType(DataType.Date)</span>]
+    <span class="hljs-keyword">public</span> DateTime? DueDate { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> OwnerEmail { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }      <span class="hljs-comment">// resolved to a SharePoint user</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> OwnerName { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">public</span> DateTime Modified { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+}</code></pre></div>
+<h2 id="2-the-repository-all-csom-crud-in-one-place"><a class="h-anchor" href="#2-the-repository-all-csom-crud-in-one-place" aria-hidden="true" tabindex="-1">#</a>2. The repository (all CSOM CRUD in one place)</h2>
+<div class="code-block"><div class="code-head"><span class="code-title">Data/DeviationRepository.cs</span><span class="code-lang">C#</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><pre><code class="hljs language-csharp"><span class="hljs-keyword">using</span> System;
+<span class="hljs-keyword">using</span> System.Collections.Generic;
+<span class="hljs-keyword">using</span> System.Linq;
+<span class="hljs-keyword">using</span> Microsoft.SharePoint.Client;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">DeviationRepository</span>
+{
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span> ListTitle = <span class="hljs-string">&quot;Deviations&quot;</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> ClientContext _ctx;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">DeviationRepository</span>(<span class="hljs-params">ClientContext ctx</span>)</span> =&gt; _ctx = ctx;
+
+    <span class="hljs-keyword">private</span> List List =&gt; _ctx.Web.Lists.GetByTitle(ListTitle);
+
+    <span class="hljs-comment">// READ (paged) ---------------------------------------------------------</span>
+    <span class="hljs-keyword">public</span> (IList&lt;Deviation&gt; Items, <span class="hljs-built_in">string</span> NextPage) GetPage(<span class="hljs-built_in">string</span> status, <span class="hljs-built_in">string</span> pagingInfo, <span class="hljs-built_in">int</span> pageSize = <span class="hljs-number">30</span>)
+    {
+        <span class="hljs-built_in">string</span> <span class="hljs-keyword">where</span> = <span class="hljs-built_in">string</span>.IsNullOrEmpty(status) ? <span class="hljs-string">&quot;&quot;</span> :
+            <span class="hljs-string">$&quot;&lt;Where&gt;&lt;Eq&gt;&lt;FieldRef Name=&#x27;Status&#x27;/&gt;&lt;Value Type=&#x27;Choice&#x27;&gt;<span class="hljs-subst">{System.Security.SecurityElement.Escape(status)}</span>&lt;/Value&gt;&lt;/Eq&gt;&lt;/Where&gt;&quot;</span>;
+
+        <span class="hljs-keyword">var</span> q = <span class="hljs-keyword">new</span> CamlQuery
+        {
+            ViewXml = <span class="hljs-string">$&quot;&lt;View&gt;&lt;Query&gt;<span class="hljs-subst">{<span class="hljs-keyword">where</span>}</span>&lt;OrderBy&gt;&lt;FieldRef Name=&#x27;ID&#x27; Ascending=&#x27;FALSE&#x27;/&gt;&lt;/OrderBy&gt;&lt;/Query&gt;&quot;</span> +
+                      <span class="hljs-string">$&quot;&lt;ViewFields&gt;&lt;FieldRef Name=&#x27;Title&#x27;/&gt;&lt;FieldRef Name=&#x27;Area&#x27;/&gt;&lt;FieldRef Name=&#x27;Status&#x27;/&gt;&quot;</span> +
+                      <span class="hljs-string">$&quot;&lt;FieldRef Name=&#x27;DueDate&#x27;/&gt;&lt;FieldRef Name=&#x27;Owner&#x27;/&gt;&lt;FieldRef Name=&#x27;Modified&#x27;/&gt;&lt;/ViewFields&gt;&quot;</span> +
+                      <span class="hljs-string">$&quot;&lt;RowLimit Paged=&#x27;TRUE&#x27;&gt;<span class="hljs-subst">{pageSize}</span>&lt;/RowLimit&gt;&lt;/View&gt;&quot;</span>,
+            ListItemCollectionPosition = <span class="hljs-built_in">string</span>.IsNullOrEmpty(pagingInfo) ? <span class="hljs-literal">null</span>
+                : <span class="hljs-keyword">new</span> ListItemCollectionPosition { PagingInfo = pagingInfo }
+        };
+
+        ListItemCollection items = List.GetItems(q);
+        _ctx.Load(items, c =&gt; c.ListItemCollectionPosition);
+        _ctx.Load(items);
+        _ctx.ExecuteQuery();
+
+        <span class="hljs-keyword">var</span> result = items.Select(Map).ToList();
+        <span class="hljs-keyword">return</span> (result, items.ListItemCollectionPosition?.PagingInfo);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Deviation <span class="hljs-title">Get</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> id</span>)</span>
+    {
+        ListItem item = List.GetItemById(id);
+        _ctx.Load(item);
+        _ctx.ExecuteQuery();
+        <span class="hljs-keyword">return</span> Map(item);
+    }
+
+    <span class="hljs-comment">// CREATE ---------------------------------------------------------------</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> <span class="hljs-title">Create</span>(<span class="hljs-params">Deviation d</span>)</span>
+    {
+        ListItem item = List.AddItem(<span class="hljs-keyword">new</span> ListItemCreationInformation());
+        Apply(item, d);
+        item.Update();
+        _ctx.Load(item, i =&gt; i.Id);
+        _ctx.ExecuteQuery();
+        <span class="hljs-keyword">return</span> item.Id;
+    }
+
+    <span class="hljs-comment">// UPDATE (with optimistic concurrency) ---------------------------------</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Update</span>(<span class="hljs-params">Deviation d, DateTime expectedModified</span>)</span>
+    {
+        ListItem item = List.GetItemById(d.Id);
+        _ctx.Load(item, i =&gt; i[<span class="hljs-string">&quot;Modified&quot;</span>]);
+        _ctx.ExecuteQuery();
+
+        <span class="hljs-keyword">var</span> current = ((DateTime)item[<span class="hljs-string">&quot;Modified&quot;</span>]).ToUniversalTime();
+        <span class="hljs-keyword">if</span> (Math.Abs((current - expectedModified.ToUniversalTime()).TotalSeconds) &gt; <span class="hljs-number">1</span>)
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidOperationException(<span class="hljs-string">&quot;This deviation was changed by someone else. Reload and try again.&quot;</span>);
+
+        Apply(item, d);
+        item.Update();
+        _ctx.ExecuteQuery();
+    }
+
+    <span class="hljs-comment">// DELETE (to recycle bin) ------------------------------------------------</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Delete</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> id</span>)</span>
+    {
+        List.GetItemById(id).Recycle();
+        _ctx.ExecuteQuery();
+    }
+
+    <span class="hljs-comment">// helpers -----------------------------------------------------------------</span>
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Apply</span>(<span class="hljs-params">ListItem item, Deviation d</span>)</span>
+    {
+        item[<span class="hljs-string">&quot;Title&quot;</span>] = d.Title;
+        item[<span class="hljs-string">&quot;Area&quot;</span>] = d.Area;
+        item[<span class="hljs-string">&quot;Status&quot;</span>] = d.Status;
+        item[<span class="hljs-string">&quot;DueDate&quot;</span>] = d.DueDate;
+        <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">string</span>.IsNullOrWhiteSpace(d.OwnerEmail))
+        {
+            User owner = _ctx.Web.EnsureUser(d.OwnerEmail);   <span class="hljs-comment">// resolves &amp; adds to site if needed</span>
+            _ctx.Load(owner, u =&gt; u.Id);
+            _ctx.ExecuteQuery();
+            item[<span class="hljs-string">&quot;Owner&quot;</span>] = <span class="hljs-keyword">new</span> FieldUserValue { LookupId = owner.Id };
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Deviation <span class="hljs-title">Map</span>(<span class="hljs-params">ListItem i</span>)</span>
+    {
+        <span class="hljs-keyword">var</span> owner = i[<span class="hljs-string">&quot;Owner&quot;</span>] <span class="hljs-keyword">as</span> FieldUserValue;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Deviation
+        {
+            Id = i.Id,
+            Title = i[<span class="hljs-string">&quot;Title&quot;</span>] <span class="hljs-keyword">as</span> <span class="hljs-built_in">string</span>,
+            Area = i[<span class="hljs-string">&quot;Area&quot;</span>] <span class="hljs-keyword">as</span> <span class="hljs-built_in">string</span>,
+            Status = i[<span class="hljs-string">&quot;Status&quot;</span>] <span class="hljs-keyword">as</span> <span class="hljs-built_in">string</span>,
+            DueDate = i[<span class="hljs-string">&quot;DueDate&quot;</span>] <span class="hljs-keyword">as</span> DateTime?,
+            OwnerName = owner?.LookupValue,
+            OwnerEmail = owner?.Email,
+            Modified = (DateTime)i[<span class="hljs-string">&quot;Modified&quot;</span>]
+        };
+    }
+}</code></pre></div>
+<h2 id="3-the-controller"><a class="h-anchor" href="#3-the-controller" aria-hidden="true" tabindex="-1">#</a>3. The controller</h2>
+<div class="code-block"><div class="code-head"><span class="code-title">Controllers/DeviationsController.cs</span><span class="code-lang">C#</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><pre><code class="hljs language-csharp"><span class="hljs-keyword">using</span> System;
+<span class="hljs-keyword">using</span> System.Web.Mvc;
+
+[<span class="hljs-meta">SharePointContextFilter</span>]                 <span class="hljs-comment">// ensures a valid SharePoint context/token</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">DeviationsController</span> : <span class="hljs-title">Controller</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">private</span> ClientContext <span class="hljs-title">CreateContext</span>()</span>
+    {
+        <span class="hljs-keyword">var</span> spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
+        <span class="hljs-comment">// User + add-in token for the HOST web</span>
+        <span class="hljs-keyword">return</span> spContext.CreateUserClientContextForSPHost();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ActionResult <span class="hljs-title">Index</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> status, <span class="hljs-built_in">string</span> page</span>)</span>
+    {
+        <span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> ctx = CreateContext())
+        {
+            <span class="hljs-keyword">var</span> (items, next) = <span class="hljs-keyword">new</span> DeviationRepository(ctx).GetPage(status, page);
+            ViewBag.NextPage = next;
+            ViewBag.Status = status;
+            <span class="hljs-keyword">return</span> View(items);
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ActionResult <span class="hljs-title">Create</span>()</span> =&gt; View(<span class="hljs-keyword">new</span> Deviation());
+
+    [<span class="hljs-meta">HttpPost, ValidateAntiForgeryToken</span>]
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ActionResult <span class="hljs-title">Create</span>(<span class="hljs-params">Deviation model</span>)</span>
+    {
+        <span class="hljs-keyword">if</span> (!ModelState.IsValid) <span class="hljs-keyword">return</span> View(model);
+        <span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> ctx = CreateContext())
+        {
+            <span class="hljs-keyword">try</span>
+            {
+                <span class="hljs-built_in">int</span> id = <span class="hljs-keyword">new</span> DeviationRepository(ctx).Create(model);
+                TempData[<span class="hljs-string">&quot;Message&quot;</span>] = <span class="hljs-string">$&quot;Deviation #<span class="hljs-subst">{id}</span> created.&quot;</span>;
+                <span class="hljs-keyword">return</span> RedirectToAction(<span class="hljs-string">&quot;Index&quot;</span>, <span class="hljs-keyword">new</span> { SPHostUrl = Request.QueryString[<span class="hljs-string">&quot;SPHostUrl&quot;</span>] });
+            }
+            <span class="hljs-keyword">catch</span> (ServerException ex)   <span class="hljs-comment">// SharePoint-side error (permissions, validation, threshold)</span>
+            {
+                ModelState.AddModelError(<span class="hljs-string">&quot;&quot;</span>, <span class="hljs-string">$&quot;SharePoint error: <span class="hljs-subst">{ex.Message}</span>&quot;</span>);
+                <span class="hljs-keyword">return</span> View(model);
+            }
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ActionResult <span class="hljs-title">Edit</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> id</span>)</span>
+    {
+        <span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> ctx = CreateContext())
+            <span class="hljs-keyword">return</span> View(<span class="hljs-keyword">new</span> DeviationRepository(ctx).Get(id));
+    }
+
+    [<span class="hljs-meta">HttpPost, ValidateAntiForgeryToken</span>]
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ActionResult <span class="hljs-title">Edit</span>(<span class="hljs-params">Deviation model, DateTime originalModified</span>)</span>
+    {
+        <span class="hljs-keyword">if</span> (!ModelState.IsValid) <span class="hljs-keyword">return</span> View(model);
+        <span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> ctx = CreateContext())
+        {
+            <span class="hljs-keyword">try</span>
+            {
+                <span class="hljs-keyword">new</span> DeviationRepository(ctx).Update(model, originalModified);
+                <span class="hljs-keyword">return</span> RedirectToAction(<span class="hljs-string">&quot;Index&quot;</span>, <span class="hljs-keyword">new</span> { SPHostUrl = Request.QueryString[<span class="hljs-string">&quot;SPHostUrl&quot;</span>] });
+            }
+            <span class="hljs-keyword">catch</span> (InvalidOperationException conflict)
+            {
+                ModelState.AddModelError(<span class="hljs-string">&quot;&quot;</span>, conflict.Message);
+                <span class="hljs-keyword">return</span> View(model);
+            }
+        }
+    }
+
+    [<span class="hljs-meta">HttpPost, ValidateAntiForgeryToken</span>]
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ActionResult <span class="hljs-title">Delete</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> id</span>)</span>
+    {
+        <span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> ctx = CreateContext())
+            <span class="hljs-keyword">new</span> DeviationRepository(ctx).Delete(id);
+        <span class="hljs-keyword">return</span> RedirectToAction(<span class="hljs-string">&quot;Index&quot;</span>, <span class="hljs-keyword">new</span> { SPHostUrl = Request.QueryString[<span class="hljs-string">&quot;SPHostUrl&quot;</span>] });
+    }
+}</code></pre></div>
+<aside class="callout callout-important"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg><span>Always carry SPHostUrl</span></div><div class="callout-body"><p><code>SharePointContextFilter</code> needs <code>SPHostUrl</code> (and friends) on every request to find the cached context. Generated templates add it through <code>?{StandardTokens}</code> on the start page. Your redirects and links must keep passing it (or store it in session/cookie). Missing it is the most common &quot;redirect loop&quot; bug.</p>
+</div></aside>
+<h2 id="4-a-razor-view-index"><a class="h-anchor" href="#4-a-razor-view-index" aria-hidden="true" tabindex="-1">#</a>4. A Razor view (Index)</h2>
+<div class="code-block"><div class="code-head"><span class="code-title">Views/Deviations/Index.cshtml</span><span class="code-lang">HTML</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><pre><code class="hljs language-xml">@model IList<span class="hljs-tag">&lt;<span class="hljs-name">Deviation</span>&gt;</span>
+@{ var host = Request.QueryString[&quot;SPHostUrl&quot;]; }
+<span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Deviations<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+@if (TempData[&quot;Message&quot;] != null) { <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;alert alert-success&quot;</span>&gt;</span>@TempData[&quot;Message&quot;]<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span> }
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>@Html.ActionLink(&quot;New deviation&quot;, &quot;Create&quot;, new { SPHostUrl = host }, new { @class = &quot;btn btn-primary&quot; })<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">table</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;table&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">thead</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>ID<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Area<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Status<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Due<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Owner<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">thead</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">tbody</span>&gt;</span>
+  @foreach (var d in Model) {
+    <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>@d.Id<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>@d.Title<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>@d.Area<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>@d.Status<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>@(d.DueDate?.ToString(&quot;dd MMM yyyy&quot;))<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>@d.OwnerName<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>
+        @Html.ActionLink(&quot;Edit&quot;, &quot;Edit&quot;, new { id = d.Id, SPHostUrl = host })
+        @using (Html.BeginForm(&quot;Delete&quot;, &quot;Deviations&quot;, new { id = d.Id, SPHostUrl = host }, FormMethod.Post, new { style = &quot;display:inline&quot; })) {
+          @Html.AntiForgeryToken()
+          <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-link text-danger&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;return confirm(&#x27;Delete?&#x27;)&quot;</span>&gt;</span>Delete<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        }
+      <span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+  }
+  <span class="hljs-tag">&lt;/<span class="hljs-name">tbody</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span>
+@if (ViewBag.NextPage != null) {
+  @Html.ActionLink(&quot;Next page →&quot;, &quot;Index&quot;, new { page = ViewBag.NextPage, status = ViewBag.Status, SPHostUrl = host })
+}</code></pre></div>
+<h2 id="5-the-same-crud-with-rest-from-the-remote-web"><a class="h-anchor" href="#5-the-same-crud-with-rest-from-the-remote-web" aria-hidden="true" tabindex="-1">#</a>5. The same CRUD with REST from the remote web</h2>
+<p>When you prefer REST (for example from a Web API controller), take the access token from the SharePoint context:</p>
+<div class="code-block"><div class="code-head"><span class="code-title">REST with HttpClient and the add-in access token</span><span class="code-lang">C#</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><pre><code class="hljs language-csharp"><span class="hljs-keyword">var</span> spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
+<span class="hljs-built_in">string</span> token = spContext.UserAccessTokenForSPHost;
+<span class="hljs-built_in">string</span> host = spContext.SPHostUrl.ToString().TrimEnd(<span class="hljs-string">&#x27;/&#x27;</span>);
+
+<span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> http = <span class="hljs-keyword">new</span> HttpClient())
+{
+    http.DefaultRequestHeaders.Authorization = <span class="hljs-keyword">new</span> AuthenticationHeaderValue(<span class="hljs-string">&quot;Bearer&quot;</span>, token);
+    http.DefaultRequestHeaders.Accept.ParseAdd(<span class="hljs-string">&quot;application/json;odata=nometadata&quot;</span>);
+
+    <span class="hljs-comment">// READ</span>
+    <span class="hljs-keyword">var</span> json = <span class="hljs-keyword">await</span> http.GetStringAsync(<span class="hljs-string">$&quot;<span class="hljs-subst">{host}</span>/_api/web/lists/getbytitle(&#x27;Deviations&#x27;)/items?$select=Id,Title,Status&amp;$top=50&quot;</span>);
+
+    <span class="hljs-comment">// CREATE (no X-RequestDigest needed with a bearer token)</span>
+    <span class="hljs-keyword">var</span> body = <span class="hljs-keyword">new</span> StringContent(<span class="hljs-string">&quot;{\&quot;Title\&quot;:\&quot;Created via REST\&quot;,\&quot;Area\&quot;:\&quot;Lab\&quot;}&quot;</span>, Encoding.UTF8, <span class="hljs-string">&quot;application/json&quot;</span>);
+    body.Headers.ContentType.Parameters.Add(<span class="hljs-keyword">new</span> NameValueHeaderValue(<span class="hljs-string">&quot;odata&quot;</span>, <span class="hljs-string">&quot;nometadata&quot;</span>));
+    <span class="hljs-keyword">var</span> created = <span class="hljs-keyword">await</span> http.PostAsync(<span class="hljs-string">$&quot;<span class="hljs-subst">{host}</span>/_api/web/lists/getbytitle(&#x27;Deviations&#x27;)/items&quot;</span>, body);
+
+    <span class="hljs-comment">// UPDATE</span>
+    <span class="hljs-keyword">var</span> upd = <span class="hljs-keyword">new</span> HttpRequestMessage(HttpMethod.Post, <span class="hljs-string">$&quot;<span class="hljs-subst">{host}</span>/_api/web/lists/getbytitle(&#x27;Deviations&#x27;)/items(42)&quot;</span>)
+    { Content = <span class="hljs-keyword">new</span> StringContent(<span class="hljs-string">&quot;{\&quot;Status\&quot;:\&quot;Closed\&quot;}&quot;</span>, Encoding.UTF8, <span class="hljs-string">&quot;application/json&quot;</span>) };
+    upd.Headers.Add(<span class="hljs-string">&quot;X-HTTP-Method&quot;</span>, <span class="hljs-string">&quot;MERGE&quot;</span>);
+    upd.Headers.Add(<span class="hljs-string">&quot;IF-MATCH&quot;</span>, <span class="hljs-string">&quot;*&quot;</span>);
+    <span class="hljs-keyword">await</span> http.SendAsync(upd);
+
+    <span class="hljs-comment">// DELETE</span>
+    <span class="hljs-keyword">var</span> del = <span class="hljs-keyword">new</span> HttpRequestMessage(HttpMethod.Post, <span class="hljs-string">$&quot;<span class="hljs-subst">{host}</span>/_api/web/lists/getbytitle(&#x27;Deviations&#x27;)/items(42)&quot;</span>);
+    del.Headers.Add(<span class="hljs-string">&quot;X-HTTP-Method&quot;</span>, <span class="hljs-string">&quot;DELETE&quot;</span>);
+    del.Headers.Add(<span class="hljs-string">&quot;IF-MATCH&quot;</span>, <span class="hljs-string">&quot;*&quot;</span>);
+    <span class="hljs-keyword">await</span> http.SendAsync(del);
+}</code></pre></div>
+<h2 id="6-app-only-context-no-user-e-g-for-a-nightly-job"><a class="h-anchor" href="#6-app-only-context-no-user-e-g-for-a-nightly-job" aria-hidden="true" tabindex="-1">#</a>6. App-only context (no user), e.g. for a nightly job</h2>
+<div class="code-block"><div class="code-head"><span class="code-title">App-only ClientContext (low-trust) and high-trust equivalents</span><span class="code-lang">C#</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><pre><code class="hljs language-csharp"><span class="hljs-comment">// LOW-TRUST (ACS): requires AllowAppOnlyPolicy=&quot;true&quot; + ClientId/ClientSecret in config</span>
+Uri site = <span class="hljs-keyword">new</span> Uri(<span class="hljs-string">&quot;https://contoso.sharepoint.com/sites/quality&quot;</span>);
+<span class="hljs-built_in">string</span> realm = TokenHelper.GetRealmFromTargetUrl(site);
+<span class="hljs-built_in">string</span> appOnlyToken = TokenHelper.GetAppOnlyAccessToken(TokenHelper.SharePointPrincipal, site.Authority, realm).AccessToken;
+<span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> ctx = TokenHelper.GetClientContextWithAccessToken(site.ToString(), appOnlyToken))
+{
+    <span class="hljs-keyword">new</span> DeviationRepository(ctx).GetPage(<span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>);
+}
+
+<span class="hljs-comment">// HIGH-TRUST (on-prem S2S): token signed with the certificate, no user identity</span>
+<span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> ctx = TokenHelper.GetS2SClientContextWithWindowsIdentity(site, <span class="hljs-literal">null</span>))   <span class="hljs-comment">// null = app-only</span>
+{
+    <span class="hljs-comment">/* ... */</span>
+}</code></pre></div>
+<aside class="callout callout-warning"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>SharePoint Online in 2026</span></div><div class="callout-body"><p>The low-trust (ACS) code above <strong>no longer works in SharePoint Online</strong> since ACS retired on 2 April 2026. For SPO, use an <strong>Entra ID app registration</strong> with a certificate and Microsoft Graph or SharePoint permissions (ideally <code>Sites.Selected</code>), and call CSOM through <strong>PnP Framework / PnP Core SDK</strong> with MSAL tokens. See <a href="../../articles/sharepoint-onprem/provider-hosted-challenges.html">Provider-hosted challenges &amp; migration</a> and <a href="../../articles/azure/sites-selected.html">Sites.Selected</a>.</p>
+</div></aside>
+<h2 id="testing-checklist"><a class="h-anchor" href="#testing-checklist" aria-hidden="true" tabindex="-1">#</a>Testing checklist</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Install in a test site as a non-admin user; verify the permission prompt matches the manifest.</li>
+<li><input disabled="" type="checkbox"> CRUD as a user with <strong>Contribute</strong> (works) and <strong>Read</strong> (should fail gracefully).</li>
+<li><input disabled="" type="checkbox"> Item with an ampersand and quotes in Title (CAML escaping).</li>
+<li><input disabled="" type="checkbox"> List with more than 5,000 items (paging and indexed filter on Status).</li>
+<li><input disabled="" type="checkbox"> Two browsers editing the same item (concurrency message).</li>
+<li><input disabled="" type="checkbox"> Session timeout or app pool recycle (context re-acquired, no redirect loop).</li>
+<li><input disabled="" type="checkbox"> Remote web certificate renewal (high-trust): update the trusted issuer cert <strong>before</strong> expiry.</li>
+</ul>
+<h2 id="interview-questions"><a class="h-anchor" href="#interview-questions" aria-hidden="true" tabindex="-1">#</a>Interview questions</h2>
+<details class="qa" id="how-does-a-provider-hosted-mvc-controller-get-a-clientcontext-for-the-host-web"><summary><span class="qa-n">Q1</span><span class="qa-q">How does a provider-hosted MVC controller get a ClientContext for the host web?</span><span class="qa-chev" aria-hidden="true"></span></summary><div class="qa-a">
+<p>Decorate the controller with <code>[SharePointContextFilter]</code>, then call <code>SharePointContextProvider.Current.GetSharePointContext(HttpContext)</code> and <code>CreateUserClientContextForSPHost()</code> for user+app, or <code>CreateAppOnlyClientContextForSPHost()</code> for app-only. The provider caches context and access tokens in session.</p>
+</div></details>
+<details class="qa" id="why-don-t-rest-calls-from-a-provider-hosted-add-in-need-x-requestdigest"><summary><span class="qa-n">Q2</span><span class="qa-q">Why don&#39;t REST calls from a provider-hosted add-in need X-RequestDigest?</span><span class="qa-chev" aria-hidden="true"></span></summary><div class="qa-a">
+<p>The digest protects <strong>cookie-based</strong> authentication against CSRF. Add-ins authenticate with an OAuth <strong>bearer token</strong> in the Authorization header, so no form digest is required.</p>
+</div></details>
+<details class="qa" id="how-do-you-implement-paging-over-a-large-list-in-csom"><summary><span class="qa-n">Q3</span><span class="qa-q">How do you implement paging over a large list in CSOM?</span><span class="qa-chev" aria-hidden="true"></span></summary><div class="qa-a">
+<p>Use <code>RowLimit Paged=&#39;TRUE&#39;</code> with an indexed sort (e.g. <code>ID</code>), read <code>ListItemCollectionPosition.PagingInfo</code> from the result, and pass it back as <code>CamlQuery.ListItemCollectionPosition</code> on the next request. Store it in the &quot;next page&quot; link.</p>
+</div></details>
+
+    </div>
+    <section class="resources"><h2 id="references"><a class="h-anchor" href="#references" aria-hidden="true" tabindex="-1">#</a>Sources &amp; further reading</h2><ol class="ref-list"><li><a href="https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/get-started-creating-provider-hosted-sharepoint-add-ins" target="_blank" rel="noopener"><span class="ref-t">Get started creating provider-hosted SharePoint Add-ins</span><span class="ref-h">learn.microsoft.com</span></a></li><li><a href="https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/complete-basic-operations-using-sharepoint-client-library-code" target="_blank" rel="noopener"><span class="ref-t">Complete basic operations using SharePoint client library code</span><span class="ref-h">learn.microsoft.com</span></a></li></ol></section>
+    <section class="videos"><h2 id="watch"><a class="h-anchor" href="#watch" aria-hidden="true" tabindex="-1">#</a>Watch &amp; learn</h2><div class="video-grid"><a class="video-card" href="https://www.youtube.com/results?search_query=sharepoint%20provider%20hosted%20add-in%20mvc%20crud%20csom" target="_blank" rel="noopener"><span class="vc-thumb"><svg viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><rect width="800" height="450" fill="#215951"/><rect x="0" y="442" width="800" height="8" fill="#d26a3c"/><text x="48" y="70" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="700" fill="#a8d2cc" letter-spacing="2">WATCH · YOUTUBE SEARCH</text><text x="48" y="170" font-family="Georgia, Times New Roman, serif" font-size="32" font-weight="600" fill="#ffffff">Provider hosted add-in CRUD MVC</text><text x="48" y="210" font-family="Georgia, Times New Roman, serif" font-size="32" font-weight="600" fill="#ffffff">CSOM</text></svg><span class="vc-play"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></span></span><span class="vc-t">Provider hosted add-in CRUD MVC CSOM</span><span class="vc-s">YouTube · topic search</span></a></div><p class="fine">Video links open a YouTube search for the topic. Prefer sessions from official channels such as Microsoft 365 Developer, Microsoft Power Platform, Microsoft Mechanics and the PnP community calls, because they track the current product.</p></section>
+    <div class="tag-row"><a class="tag" href="../../search.html?q=provider-hosted">provider-hosted</a><a class="tag" href="../../search.html?q=crud">crud</a><a class="tag" href="../../search.html?q=csom">csom</a><a class="tag" href="../../search.html?q=mvc">mvc</a><a class="tag" href="../../search.html?q=csharp">csharp</a><a class="tag" href="../../search.html?q=rest">rest</a><a class="tag" href="../../search.html?q=tokenhelper">tokenhelper</a><a class="tag" href="../../search.html?q=app-only">app-only</a></div>
+    <div class="read-mark"><button type="button" class="btn btn-ghost" data-mark-read><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>Mark as read</span></button><span class="fine">1,761 words · updated 8 Oct 2026</span></div>
+    <nav class="prev-next" aria-label="Article navigation"><a class="pn prev" href="../../articles/sharepoint-onprem/provider-hosted-addins.html"><small><svg class="i i-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Previous</small><span>How Provider-Hosted Add-ins Work – Architecture, Tokens, Low-Trust vs High-Trust</span></a><a class="pn next" href="../../articles/sharepoint-onprem/provider-hosted-challenges.html"><small>Next <svg class="i i-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></small><span>Provider-Hosted Add-ins – Major Difficulties, Fixes &amp; Migration to SPFx + Entra ID</span></a></nav>
+  </article>
+  <aside class="post-rail side-nav" data-side-nav aria-label="SharePoint On-Premises articles">
+    <p class="rail-h">In this topic</p>
+    <a class="rail-cat" href="../../categories/sharepoint-onprem/index.html" style="--c:#2f7d72">SharePoint On-Premises<span>29 articles</span></a>
+    <details class="rail-sec"><summary>Fundamentals<b>2</b></summary><ul><li><a href="../../articles/sharepoint-onprem/overview.html" data-key="sharepoint-onprem/overview">What is SharePoint On-Premises? Overview &amp; When to Use It</a></li><li><a href="../../articles/sharepoint-onprem/logical-architecture.html" data-key="sharepoint-onprem/logical-architecture">Logical Architecture – Web Applications, Zones, AAM, Content Databases &amp; Site Collections</a></li></ul></details><details class="rail-sec"><summary>Architecture &amp; Administration<b>8</b></summary><ul><li><a href="../../articles/sharepoint-onprem/farm-architecture.html" data-key="sharepoint-onprem/farm-architecture">SharePoint Farm Architecture, Tiers, MinRole &amp; High Availability</a></li><li><a href="../../articles/sharepoint-onprem/service-applications.html" data-key="sharepoint-onprem/service-applications">Service Applications – Architecture, Proxies &amp; the Full Catalog</a></li><li><a href="../../articles/sharepoint-onprem/central-admin-powershell.html" data-key="sharepoint-onprem/central-admin-powershell">Central Administration &amp; SharePoint Management Shell – Admin Essentials</a></li><li><a href="../../articles/sharepoint-onprem/authentication-claims.html" data-key="sharepoint-onprem/authentication-claims">Authentication in SharePoint Server – Claims, Kerberos, SAML &amp; OpenID Connect</a></li><li><a href="../../articles/sharepoint-onprem/search-architecture.html" data-key="sharepoint-onprem/search-architecture">Search Architecture – Crawl, Content Processing, Index &amp; Query Components</a></li><li><a href="../../articles/sharepoint-onprem/user-profiles-managed-metadata.html" data-key="sharepoint-onprem/user-profiles-managed-metadata">User Profile Service &amp; Managed Metadata – Profiles, Sync, Term Store &amp; Taxonomy</a></li><li><a href="../../articles/sharepoint-onprem/bcs-external-content.html" data-key="sharepoint-onprem/bcs-external-content">Business Connectivity Services (BCS) – External Content Types &amp; External Lists</a></li><li><a href="../../articles/sharepoint-onprem/boundaries-limits.html" data-key="sharepoint-onprem/boundaries-limits">Boundaries, Limits &amp; the 5,000-Item List View Threshold</a></li></ul></details><details class="rail-sec"><summary>Server-Side Development<b>6</b></summary><ul><li><a href="../../articles/sharepoint-onprem/server-object-model.html" data-key="sharepoint-onprem/server-object-model">Server Object Model (SSOM) – C# CRUD with SPSite, SPWeb &amp; SPList</a></li><li><a href="../../articles/sharepoint-onprem/farm-solutions-features.html" data-key="sharepoint-onprem/farm-solutions-features">Farm Solutions (WSP) &amp; Features – Packaging, Scopes, Receivers &amp; Upgrades</a></li><li><a href="../../articles/sharepoint-onprem/event-receivers.html" data-key="sharepoint-onprem/event-receivers">Event Receivers (Classic) – Synchronous &amp; Asynchronous Handlers in C#</a></li><li><a href="../../articles/sharepoint-onprem/timer-jobs.html" data-key="sharepoint-onprem/timer-jobs">Custom Timer Jobs – Scheduling Background Work on the Farm</a></li><li><a href="../../articles/sharepoint-onprem/sandboxed-solutions.html" data-key="sharepoint-onprem/sandboxed-solutions">Sandboxed Solutions – What They Were, Why They Died, and No-Code Sandbox Today</a></li><li><a href="../../articles/sharepoint-onprem/classic-branding.html" data-key="sharepoint-onprem/classic-branding">Classic Branding – Master Pages, Page Layouts, Design Manager &amp; JSLink</a></li></ul></details><details class="rail-sec" open><summary>Client-Side &amp; Add-in Development<b>6</b></summary><ul><li><a href="../../articles/sharepoint-onprem/csom-jsom-rest.html" data-key="sharepoint-onprem/csom-jsom-rest">CSOM, JSOM &amp; REST – Client-Side CRUD in C# and JavaScript</a></li><li><a href="../../articles/sharepoint-onprem/sharepoint-hosted-addins.html" data-key="sharepoint-onprem/sharepoint-hosted-addins">SharePoint-Hosted Add-ins – App Web, Host Web &amp; Cross-Domain Calls</a></li><li><a href="../../articles/sharepoint-onprem/provider-hosted-addins.html" data-key="sharepoint-onprem/provider-hosted-addins">How Provider-Hosted Add-ins Work – Architecture, Tokens, Low-Trust vs High-Trust</a></li><li><a href="../../articles/sharepoint-onprem/provider-hosted-crud.html" data-key="sharepoint-onprem/provider-hosted-crud" class="active" aria-current="page">Provider-Hosted Add-in CRUD – Read, Create, Update &amp; Delete Code Templates (MVC + CSOM)</a></li><li><a href="../../articles/sharepoint-onprem/provider-hosted-challenges.html" data-key="sharepoint-onprem/provider-hosted-challenges">Provider-Hosted Add-ins – Major Difficulties, Fixes &amp; Migration to SPFx + Entra ID</a></li><li><a href="../../articles/sharepoint-onprem/remote-event-receivers.html" data-key="sharepoint-onprem/remote-event-receivers">Remote Event Receivers (RER) – How They Work, Code &amp; Retirement</a></li></ul></details><details class="rail-sec"><summary>Workflow &amp; Forms<b>2</b></summary><ul><li><a href="../../articles/sharepoint-onprem/sharepoint-designer.html" data-key="sharepoint-onprem/sharepoint-designer">What is SharePoint Designer? Architecture, Workflows, Data Views &amp; End of Support</a></li><li><a href="../../articles/sharepoint-onprem/workflow-manager.html" data-key="sharepoint-onprem/workflow-manager">Workflow Manager &amp; SharePoint Workflow Manager – Installing the 2013 Workflow Platform</a></li></ul></details><details class="rail-sec"><summary>Upgrade &amp; Lifecycle<b>5</b></summary><ul><li><a href="../../articles/sharepoint-onprem/upgrade-paths.html" data-key="sharepoint-onprem/upgrade-paths">Upgrade Paths – 2010 → 2013 → 2016 → 2019 → Subscription Edition (Database Attach)</a></li><li><a href="../../articles/sharepoint-onprem/patching-cumulative-updates.html" data-key="sharepoint-onprem/patching-cumulative-updates">Patching SharePoint – Cumulative Updates, PSConfig &amp; Zero-Downtime Patching</a></li><li><a href="../../articles/sharepoint-onprem/backup-dr.html" data-key="sharepoint-onprem/backup-dr">Backup, Restore &amp; Disaster Recovery for SharePoint Server</a></li><li><a href="../../articles/sharepoint-onprem/subscription-edition.html" data-key="sharepoint-onprem/subscription-edition">SharePoint Server Subscription Edition (SE) – What&#39;s New and How to Adopt It</a></li><li><a href="../../articles/sharepoint-onprem/hybrid.html" data-key="sharepoint-onprem/hybrid">SharePoint Hybrid – Search, OneDrive, Sites &amp; App Launcher with Microsoft 365</a></li></ul></details>
+  </aside>
+</div>
+<section class="band related"><div class="container"><header class="band-head"><h2 id="related">Keep reading</h2><a class="more" href="../../categories/sharepoint-onprem/index.html">More in SharePoint On-Premises <svg class="i i-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></header><div class="tile-grid"><article class="story story-tile reveal" data-key="sharepoint-onprem/csom-jsom-rest"><div class="story-media"><img class="cover" src="../../assets/covers/sharepoint-onprem/csom-jsom-rest.svg" alt="" width="800" height="450" loading="lazy" decoding="async"></div><div class="story-body"><span class="kicker" style="--c:#2f7d72">SP On-Prem</span><h3 class="story-t"><a href="../../articles/sharepoint-onprem/csom-jsom-rest.html">CSOM, JSOM &amp; REST – Client-Side CRUD in C# and JavaScript</a></h3><p class="story-dek">The three classic client APIs side by side, with the same create, read, update and delete operations in C# CSOM, JavaScript JSOM and REST (fetch), plus request digests, ETags, batching and when to pick which.</p><span class="meta"><span class="lvl lvl-intermediate">Intermediate</span><span class="sep" aria-hidden="true">·</span><span>6 min read</span><span class="read-badge"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Read</span></span></div></article><article class="story story-tile reveal" data-key="sharepoint-onprem/provider-hosted-addins"><div class="story-media"><img class="cover" src="../../assets/covers/sharepoint-onprem/provider-hosted-addins.svg" alt="" width="800" height="450" loading="lazy" decoding="async"></div><div class="story-body"><span class="kicker" style="--c:#2f7d72">SP On-Prem</span><h3 class="story-t"><a href="../../articles/sharepoint-onprem/provider-hosted-addins.html">How Provider-Hosted Add-ins Work – Architecture, Tokens, Low-Trust vs High-Trust</a></h3><p class="story-dek">A deep, diagram-first explanation of provider-hosted add-ins, covering the remote web, context and access tokens, Azure ACS (low-trust) vs S2S certificates (high-trust), app-only vs user+app policy, registration with AppRegNew and the install flow.</p><span class="meta"><span class="lvl lvl-advanced">Advanced</span><span class="sep" aria-hidden="true">·</span><span>6 min read</span><span class="read-badge"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Read</span></span></div></article><article class="story story-tile reveal" data-key="sharepoint-onprem/remote-event-receivers"><div class="story-media"><img class="cover" src="../../assets/covers/sharepoint-onprem/remote-event-receivers.svg" alt="" width="800" height="450" loading="lazy" decoding="async"></div><div class="story-body"><span class="kicker" style="--c:#2f7d72">SP On-Prem</span><h3 class="story-t"><a href="../../articles/sharepoint-onprem/remote-event-receivers.html">Remote Event Receivers (RER) – How They Work, Code &amp; Retirement</a></h3><p class="story-dek">How SharePoint calls out to a remote WCF service when list, item or add-in events fire, with sync vs async handling, registration, full C# code, and the modern webhook replacement.</p><span class="meta"><span class="lvl lvl-advanced">Advanced</span><span class="sep" aria-hidden="true">·</span><span>11 min read</span><span class="read-badge"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Read</span></span></div></article><article class="story story-tile reveal" data-key="sharepoint-onprem/server-object-model"><div class="story-media"><img class="cover" src="../../assets/covers/sharepoint-onprem/server-object-model.svg" alt="" width="800" height="450" loading="lazy" decoding="async"></div><div class="story-body"><span class="kicker" style="--c:#2f7d72">SP On-Prem</span><h3 class="story-t"><a href="../../articles/sharepoint-onprem/server-object-model.html">Server Object Model (SSOM) – C# CRUD with SPSite, SPWeb &amp; SPList</a></h3><p class="story-dek">The full-trust C# API that runs inside SharePoint, covering the object hierarchy, disposal rules, create/read/update/delete code, CAML queries, elevated privileges, batch updates and when (not) to use SSOM.</p><span class="meta"><span class="lvl lvl-intermediate">Intermediate</span><span class="sep" aria-hidden="true">·</span><span>5 min read</span><span class="read-badge"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Read</span></span></div></article></div></div></section>
+</main>
+<footer class="site-foot">
+  <div class="container">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <a class="brand" href="../../index.html"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect class="logo-bg" width="32" height="32" rx="8"/><path class="logo-fg" d="M11.5 10.5 7 16l4.5 5.5M20.5 10.5 25 16l-4.5 5.5" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path class="logo-slash" d="M17.6 8.5l-3.2 15" fill="none" stroke-width="2.4" stroke-linecap="round"/></svg><span class="brand-name">SP Codex</span></a>
+        <p>A hands-on knowledge base for SharePoint On-Premises and Online, SPFx, Power Apps, Power Automate, Dataverse, Dataflows, Nintex, InfoPath, ShareGate migration, Azure, Microsoft Graph and Copilot, with architecture diagrams, code and interview prep.</p>
+        <p class="ft-stats">279 articles · 360 diagrams · 480 code samples · 990 interview Q&amp;As</p>
+      </div>
+      <div class="ft-cols">
+        <div class="ft-g"><p class="ft-h">SharePoint</p><ul><li><a href="../../categories/history/index.html">History &amp; Roadmap</a></li><li><a href="../../categories/sharepoint-onprem/index.html">SharePoint On-Premises</a></li><li><a href="../../categories/sharepoint-online/index.html">SharePoint Online &amp; Microsoft 365</a></li><li><a href="../../categories/spfx/index.html">SharePoint Framework (SPFx)</a></li></ul></div><div class="ft-g"><p class="ft-h">Power Platform</p><ul><li><a href="../../categories/power-apps/index.html">Power Apps</a></li><li><a href="../../categories/power-automate/index.html">Power Automate</a></li><li><a href="../../categories/dataverse/index.html">Dataverse</a></li><li><a href="../../categories/dataflows/index.html">Dataflows &amp; Power Query</a></li></ul></div><div class="ft-g"><p class="ft-h">Workflow &amp; Forms</p><ul><li><a href="../../categories/nintex/index.html">Nintex</a></li><li><a href="../../categories/infopath-legacy/index.html">InfoPath &amp; Legacy Workflows</a></li></ul></div><div class="ft-g"><p class="ft-h">Migration</p><ul><li><a href="../../categories/migration/index.html">Migration &amp; ShareGate</a></li></ul></div><div class="ft-g"><p class="ft-h">Azure &amp; APIs</p><ul><li><a href="../../categories/azure/index.html">Azure for Microsoft 365 Devs</a></li><li><a href="../../categories/apis/index.html">Graph, REST &amp; PnP</a></li></ul></div><div class="ft-g"><p class="ft-h">Copilot &amp; AI</p><ul><li><a href="../../categories/ai-copilot/index.html">Copilot &amp; AI</a></li></ul></div><div class="ft-g"><p class="ft-h">Design &amp; Docs</p><ul><li><a href="../../categories/architecture-docs/index.html">Solution Design &amp; Documentation</a></li></ul></div><div class="ft-g"><p class="ft-h">Interview Q&amp;A</p><ul><li><a href="../../categories/interview/index.html">Interview Q&amp;A</a></li></ul></div>
+        <div class="ft-g"><p class="ft-h">Explore</p><ul><li><a href="../../paths.html">Learning paths</a></li><li><a href="../../library.html">Full library</a></li><li><a href="../../search.html">Search</a></li><li><a href="../../about.html">About the author</a></li></ul></div>
+        <div class="ft-g"><p class="ft-h">Author</p><ul><li><a href="https://www.linkedin.com/in/vishnumuralikrishnan" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://vishnumurali.github.io/" target="_blank" rel="noopener">GitHub</a></li><li><a href="mailto:vishnu.m70@gmail.com">Email</a></li></ul></div>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <p>© 2026 Vishnu Muralikrishnan. Independent community content, not affiliated with or endorsed by Microsoft, Nintex or ShareGate. Product names are trademarks of their respective owners.</p>
+      <p>Built 9 Oct 2026 · <a href="#main" data-scroll-top>Back to top ↑</a></p>
+    </div>
+  </div>
+</footer>
+<div class="cmdk" data-cmdk hidden>
+  <div class="cmdk-backdrop" data-close-search></div>
+  <div class="cmdk-panel" role="dialog" aria-modal="true" aria-label="Search articles">
+    <div class="cmdk-input"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="search" placeholder="Search articles, code, diagrams…" aria-label="Search" autocomplete="off" spellcheck="false" data-cmdk-input><button class="kbd-btn" type="button" data-close-search>Esc</button></div>
+    <div class="cmdk-scopes" data-cmdk-scopes></div>
+    <div class="cmdk-results" role="listbox" data-cmdk-results></div>
+    <div class="cmdk-foot"><span><kbd>↑</kbd><kbd>↓</kbd> navigate</span><span><kbd>↵</kbd> open</span><span><kbd>Esc</kbd> close</span><a data-cmdk-all href="#">See all results →</a></div>
+  </div>
+</div>
+<div class="zoom-modal" data-zoom hidden>
+  <div class="zoom-bar"><span data-zoom-title>Diagram</span><span class="zoom-tools"><button type="button" class="kbd-btn" data-zoom-out aria-label="Zoom out">−</button><button type="button" class="kbd-btn" data-zoom-reset>100%</button><button type="button" class="kbd-btn" data-zoom-in aria-label="Zoom in">+</button><button type="button" class="kbd-btn" data-zoom-close>Close ✕</button></span></div>
+  <div class="zoom-stage" data-zoom-stage></div>
+</div>
+<div class="toast" data-toast role="status" aria-live="polite"></div>
+<button class="to-top" type="button" aria-label="Back to top" data-to-top><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></button>
+<script>window.SPC_ROOT="../../";</script>
+<script src="../../assets/js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Remote Event Receivers (RER) – How They Work, Code &amp; Retirement · SP Codex</title>
+<meta name="description" content="How SharePoint calls out to a remote WCF service when list, item or add-in events fire, with sync vs async handling, registration, full C# code, and the modern webhook replacement.">
+<meta name="author" content="Vishnu Muralikrishnan">
+<meta name="theme-color" content="#faf8f3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Remote Event Receivers (RER) – How They Work, Code &amp; Retirement · SP Codex">
+<meta property="og:description" content="How SharePoint calls out to a remote WCF service when list, item or add-in events fire, with sync vs async handling, registration, full C# code, and the modern webhook replacement.">
+<meta property="og:site_name" content="SP Codex">
+<link rel="icon" type="image/svg+xml" href="../../assets/img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&display=swap">
+<link rel="stylesheet" href="../../assets/css/main.css">
+<script>(function(){var t=null;try{t=localStorage.getItem('spc-theme')}catch(e){}var q=location.search.match(/[?&]theme=(light|dark)/);if(q)t=q[1];if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)})()</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Remote Event Receivers (RER) – How They Work, Code & Retirement","description":"How SharePoint calls out to a remote WCF service when list, item or add-in events fire, with sync vs async handling, registration, full C# code, and the modern webhook replacement.","author":{"@type":"Person","name":"Vishnu Muralikrishnan"},"dateModified":"2026-10-08T11:04:52.856Z","keywords":"event receivers, remote event receivers, add-ins, wcf, csom, webhooks, provider-hosted","articleSection":"SharePoint On-Premises"}</script>
+</head>
+<body class="page-article">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head" data-header>
+  <div class="mast">
+    <div class="container mast-inner">
+      <a class="brand" href="../../index.html" aria-label="SP Codex home"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect class="logo-bg" width="32" height="32" rx="8"/><path class="logo-fg" d="M11.5 10.5 7 16l4.5 5.5M20.5 10.5 25 16l-4.5 5.5" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path class="logo-slash" d="M17.6 8.5l-3.2 15" fill="none" stroke-width="2.4" stroke-linecap="round"/></svg><span class="brand-name">SP Codex</span></a>
+      <span class="mast-tag">SharePoint, Power Platform &amp; Microsoft 365, from 2001 to 2026</span>
+      <nav class="util-nav" aria-label="Site"><a href="../../paths.html">Learning paths</a><a href="../../library.html">Library</a><a href="../../about.html">About</a></nav>
+      <div class="mast-actions">
+        <button class="search-btn" type="button" data-open-search aria-label="Search articles"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="sb-label">Search</span><kbd>Ctrl K</kbd></button>
+        <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch between light and dark theme"><svg class="i i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="i i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+        <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-label="Open menu" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      </div>
+    </div>
+  </div>
+  <nav class="sections" aria-label="Topics">
+    <div class="container"><ul class="sec-list"><li class="nav-mega"><button class="sec-link active" type="button" aria-expanded="false" data-mega-toggle>SharePoint<svg class="i i-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button><div class="dd" data-mega><div class="dd-list"><a class="dd-item" href="../../categories/history/index.html" style="--c:#a8781a"><span class="dd-t"><span class="dot"></span>History &amp; Roadmap<b>6</b></span><span class="dd-d">25 years of SharePoint and its ecosystem: every version, every platform shift, and what Microsoft retired along the way.</span></a><a class="dd-item active" href="../../categories/sharepoint-onprem/index.html" style="--c:#2f7d72"><span class="dd-t"><span class="dot"></span>SharePoint On-Premises<b>29</b></span><span class="dd-d">Farm architecture, service applications, SSOM/CSOM, event receivers, add-ins, workflows, upgrades and Subscription Edition.</span></a><a class="dd-item" href="../../categories/sharepoint-online/index.html" style="--c:#2b6f9e"><span class="dd-t"><span class="dot"></span>SharePoint Online &amp; Microsoft 365<b>31</b></span><span class="dd-d">Modern sites, hubs, web parts, lists, formatting JSON, provisioning, permissions, search, governance and tenant administration.</span></a><a class="dd-item" href="../../categories/spfx/index.html" style="--c:#4f56a6"><span class="dd-t"><span class="dot"></span>SharePoint Framework (SPFx)<b>32</b></span><span class="dd-d">Web parts, extensions, ACEs, PnPjs, Graph, and SPFx connected to Dataverse, Azure Functions, Table Storage and SQL, plus CI/CD and upgrades.</span></a></div><a class="dd-feat" href="../../articles/history/sharepoint-timeline.html"><span class="dd-media"><img class="cover" src="../../assets/covers/history/sharepoint-timeline.svg" alt="" width="800" height="450" loading="lazy" decoding="async"></span><span class="kicker">Featured</span><span class="dd-ft">SharePoint &amp; Microsoft 365 Timeline, 2001–2026</span></a></div></li><li class="nav-mega"><button class="sec-link" type="button" aria-expanded="false" data-mega-toggle>Power Platform<svg class="i i-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button><div class="dd" data-mega><div class="dd-list"><a class="dd-item" href="../../categories/power-apps/index.html" style="--c:#8e4a8f"><span class="dd-t"><span class="dot"></span>Power Apps<b>26</b></span><span class="dd-d">Canvas apps, model-driven apps, Power Fx, delegation, components, PCF, custom pages, Power Pages and ALM.</span></a><a class="dd-item" href="../../categories/power-automate/index.html" style="--c:#2f62b0"><span class="dd-t"><span class="dot"></span>Power Automate<b>22</b></span><span class="dd-d">Cloud flows, SharePoint automation, approvals, expressions, error handling, Graph via HTTP, desktop flows and enterprise ALM.</span></a><a class="dd-item" href="../../categories/dataverse/index.html" style="--c:#2f8059"><span class="dd-t"><span class="dot"></span>Dataverse<b>16</b></span><span class="dd-d">Tables, relationships, the security model, Web API and SDK CRUD, plug-ins, formula columns, solutions and integration.</span></a><a class="dd-item" href="../../categories/dataflows/index.html" style="--c:#5a7f2b"><span class="dd-t"><span class="dot"></span>Dataflows &amp; Power Query<b>8</b></span><span class="dd-d">Power Query M, standard and analytical dataflows, loading SharePoint and on-prem data into Dataverse, gateways, incremental refresh and Fabric Gen2.</span></a></div><a class="dd-feat" href="../../articles/power-apps/overview.html"><span class="dd-media"><img class="cover" src="../../assets/covers/power-apps/overview.svg" alt="" width="800" height="450" loading="lazy" decoding="async"></span><span class="kicker">Featured</span><span class="dd-ft">What is Power Apps? Canvas, Model-Driven, Power Pages and How They Fit Together</span></a></div></li><li class="nav-mega"><button class="sec-link" type="button" aria-expanded="false" data-mega-toggle>Workflow &amp; Forms<svg class="i i-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button><div class="dd" data-mega><div class="dd-list"><a class="dd-item" href="../../categories/nintex/index.html" style="--c:#c0622b"><span class="dd-t"><span class="dot"></span>Nintex<b>18</b></span><span class="dd-d">Nintex Workflow &amp; Forms on-prem, Nintex for Office 365, Nintex Automation Cloud (NAC), Xtensions, DocGen and migration to NAC.</span></a><a class="dd-item" href="../../categories/infopath-legacy/index.html" style="--c:#7a5aa6"><span class="dd-t"><span class="dot"></span>InfoPath &amp; Legacy Workflows<b>11</b></span><span class="dd-d">InfoPath forms, data connections and code-behind, SharePoint 2010/2013 workflows, SharePoint Designer, retirement dates and migration paths.</span></a></div><a class="dd-feat" href="../../articles/nintex/history-platforms.html"><span class="dd-media"><img class="cover" src="../../assets/covers/nintex/history-platforms.svg" alt="" width="800" height="450" loading="lazy" decoding="async"></span><span class="kicker">Featured</span><span class="dd-ft">Nintex Explained – History and Product Family from Workflow 2007 to Nintex Automation Cloud</span></a></div></li><li><a class="sec-link" href="../../categories/migration/index.html">Migration</a></li><li class="nav-mega"><button class="sec-link" type="button" aria-expanded="false" data-mega-toggle>Azure &amp; APIs<svg class="i i-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button><div class="dd" data-mega><div class="dd-list"><a class="dd-item" href="../../categories/azure/index.html" style="--c:#1f7fa8"><span class="dd-t"><span class="dot"></span>Azure for Microsoft 365 Devs<b>15</b></span><span class="dd-d">Entra ID app registrations, Sites.Selected, Azure Functions, webhooks, Table and Blob storage, SQL, Key Vault, APIM, messaging and monitoring.</span></a><a class="dd-item" href="../../categories/apis/index.html" style="--c:#8f7414"><span class="dd-t"><span class="dot"></span>Graph, REST &amp; PnP<b>12</b></span><span class="dd-d">SSOM vs CSOM vs REST vs Graph, REST and Graph cheat sheets, batching, delta, change notifications, auth flows, throttling and the PnP ecosystem.</span></a></div><a class="dd-feat" href="../../articles/azure/entra-app-registration.html"><span class="dd-media"><img class="cover" src="../../assets/covers/azure/entra-app-registration.svg" alt="" width="800" height="450" loading="lazy" decoding="async"></span><span class="kicker">Featured</span><span class="dd-ft">Microsoft Entra ID App Registrations – Delegated vs Application Permissions, Certificates and Consent</span></a></div></li><li><a class="sec-link" href="../../categories/ai-copilot/index.html">Copilot &amp; AI</a></li><li><a class="sec-link" href="../../categories/architecture-docs/index.html">Design &amp; Docs</a></li><li><a class="sec-link" href="../../categories/interview/index.html">Interview Q&amp;A</a></li></ul><ul class="sec-flat"><li><a class="sec-link" href="../../categories/history/index.html">History</a></li><li><a class="sec-link active" href="../../categories/sharepoint-onprem/index.html">SP On-Prem</a></li><li><a class="sec-link" href="../../categories/sharepoint-online/index.html">SP Online</a></li><li><a class="sec-link" href="../../categories/spfx/index.html">SPFx</a></li><li><a class="sec-link" href="../../categories/power-apps/index.html">Power Apps</a></li><li><a class="sec-link" href="../../categories/power-automate/index.html">Power Automate</a></li><li><a class="sec-link" href="../../categories/dataverse/index.html">Dataverse</a></li><li><a class="sec-link" href="../../categories/dataflows/index.html">Dataflows</a></li><li><a class="sec-link" href="../../categories/nintex/index.html">Nintex</a></li><li><a class="sec-link" href="../../categories/infopath-legacy/index.html">InfoPath &amp; Legacy</a></li><li><a class="sec-link" href="../../categories/migration/index.html">Migration</a></li><li><a class="sec-link" href="../../categories/azure/index.html">Azure</a></li><li><a class="sec-link" href="../../categories/apis/index.html">APIs &amp; PnP</a></li><li><a class="sec-link" href="../../categories/ai-copilot/index.html">Copilot &amp; AI</a></li><li><a class="sec-link" href="../../categories/architecture-docs/index.html">Design &amp; Docs</a></li><li><a class="sec-link" href="../../categories/interview/index.html">Interview</a></li></ul></div>
+  </nav>
+</header>
+<div class="mnav" data-mnav>
+  <div class="container">
+    <ul class="mnav-links"><li><a href="../../paths.html">Learning paths</a></li><li><a href="../../library.html">Library</a></li><li><a href="../../about.html">About</a></li><li><a href="../../search.html">Search</a></li></ul>
+    <div class="mnav-g"><p class="mnav-h">SharePoint</p><ul><li><a href="../../categories/history/index.html" style="--c:#a8781a"><span class="dot"></span>History &amp; Roadmap<b>6</b></a></li><li><a href="../../categories/sharepoint-onprem/index.html" style="--c:#2f7d72"><span class="dot"></span>SharePoint On-Premises<b>29</b></a></li><li><a href="../../categories/sharepoint-online/index.html" style="--c:#2b6f9e"><span class="dot"></span>SharePoint Online &amp; Microsoft 365<b>31</b></a></li><li><a href="../../categories/spfx/index.html" style="--c:#4f56a6"><span class="dot"></span>SharePoint Framework (SPFx)<b>32</b></a></li></ul></div><div class="mnav-g"><p class="mnav-h">Power Platform</p><ul><li><a href="../../categories/power-apps/index.html" style="--c:#8e4a8f"><span class="dot"></span>Power Apps<b>26</b></a></li><li><a href="../../categories/power-automate/index.html" style="--c:#2f62b0"><span class="dot"></span>Power Automate<b>22</b></a></li><li><a href="../../categories/dataverse/index.html" style="--c:#2f8059"><span class="dot"></span>Dataverse<b>16</b></a></li><li><a href="../../categories/dataflows/index.html" style="--c:#5a7f2b"><span class="dot"></span>Dataflows &amp; Power Query<b>8</b></a></li></ul></div><div class="mnav-g"><p class="mnav-h">Workflow &amp; Forms</p><ul><li><a href="../../categories/nintex/index.html" style="--c:#c0622b"><span class="dot"></span>Nintex<b>18</b></a></li><li><a href="../../categories/infopath-legacy/index.html" style="--c:#7a5aa6"><span class="dot"></span>InfoPath &amp; Legacy Workflows<b>11</b></a></li></ul></div><div class="mnav-g"><p class="mnav-h">Migration</p><ul><li><a href="../../categories/migration/index.html" style="--c:#b8434b"><span class="dot"></span>Migration &amp; ShareGate<b>20</b></a></li></ul></div><div class="mnav-g"><p class="mnav-h">Azure &amp; APIs</p><ul><li><a href="../../categories/azure/index.html" style="--c:#1f7fa8"><span class="dot"></span>Azure for Microsoft 365 Devs<b>15</b></a></li><li><a href="../../categories/apis/index.html" style="--c:#8f7414"><span class="dot"></span>Graph, REST &amp; PnP<b>12</b></a></li></ul></div><div class="mnav-g"><p class="mnav-h">Copilot &amp; AI</p><ul><li><a href="../../categories/ai-copilot/index.html" style="--c:#b24a7c"><span class="dot"></span>Copilot &amp; AI<b>6</b></a></li></ul></div><div class="mnav-g"><p class="mnav-h">Design &amp; Docs</p><ul><li><a href="../../categories/architecture-docs/index.html" style="--c:#5d5aa0"><span class="dot"></span>Solution Design &amp; Documentation<b>14</b></a></li></ul></div><div class="mnav-g"><p class="mnav-h">Interview Q&amp;A</p><ul><li><a href="../../categories/interview/index.html" style="--c:#5f7f1f"><span class="dot"></span>Interview Q&amp;A<b>13</b></a></li></ul></div>
+  </div>
+</div>
+<main id="main">
+
+<div class="read-progress" aria-hidden="true"><i data-read-progress></i></div>
+<header class="post-head">
+  <div class="container narrow">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span>/</span><a href="../../categories/sharepoint-onprem/index.html">SharePoint On-Premises</a><span>/</span><span>Client-Side &amp; Add-in Development</span></nav>
+    <p class="kicker" style="--c:#2f7d72">SP On-Prem<span class="kicker-sub">22 of 29</span></p>
+    <h1 class="post-title">Remote Event Receivers (RER) – How They Work, Code &amp; Retirement</h1>
+    <p class="post-dek">How SharePoint calls out to a remote WCF service when list, item or add-in events fire, with sync vs async handling, registration, full C# code, and the modern webhook replacement.</p>
+    <div class="byline">
+      <span class="avatar sm" aria-hidden="true">VM</span>
+      <span class="by-text"><span class="by-name">By <a href="../../about.html">Vishnu Muralikrishnan</a></span><span class="by-meta">Updated 8 Oct 2026 · 11 min read</span></span>
+      <span class="by-facts"><span class="lvl lvl-advanced">Advanced</span><span><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><polyline points="12 7 12 12 15 15"/></svg>2013–2026 (retired in SPO Apr 2026)</span><span><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="9" y="15" width="6" height="6" rx="1"/><path d="M6 9v3h12V9M12 12v3"/></svg>3 diagrams</span><span><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>6 code samples</span><span><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>5 Q&amp;As</span></span>
+    </div>
+  </div>
+  <div class="container"><figure class="post-cover"><img class="cover" src="../../assets/covers/sharepoint-onprem/remote-event-receivers.svg" alt="" width="800" height="450" decoding="async"></figure></div>
+</header>
+<div class="container post-layout" data-article="sharepoint-onprem/remote-event-receivers">
+  <aside class="toc-wrap"><nav class="toc" aria-label="On this page"><p class="rail-h">On this page</p><ul><li class="toc-l2"><a href="#how-a-remote-event-receiver-works">How a remote event receiver works</a></li><li class="toc-l2"><a href="#synchronous-vs-asynchronous-events">Synchronous vs asynchronous events</a></li><li class="toc-l2"><a href="#writing-the-receiver-c">Writing the receiver (C#)</a></li><li class="toc-l3"><a href="#registering-an-rer-on-a-host-web-list">Registering an RER on a host-web list</a></li><li class="toc-l2"><a href="#classic-vs-remote-vs-webhooks-vs-power-automate">Classic vs remote vs webhooks vs Power Automate</a></li><li class="toc-l2"><a href="#the-modern-replacement-webhooks-azure-functions">The modern replacement: webhooks + Azure Functions</a></li><li class="toc-l2"><a href="#common-problems-and-fixes">Common problems and fixes</a></li><li class="toc-l2"><a href="#interview-questions">Interview questions</a></li><li class="toc-l2"><a href="#references">Sources &amp; further reading</a></li><li class="toc-l2"><a href="#watch">Watch &amp; learn</a></li></ul></nav></aside>
+  <article class="post-body art-body" data-art-body>
+    <div class="art-tools">
+      <button type="button" class="tool-btn" data-toggle-sidenav><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg><span>Topic contents</span></button>
+      <button type="button" class="tool-btn" data-qa-toggle><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Expand all answers</span></button>
+      <button type="button" class="tool-btn" data-copy-link><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span>Copy link</span></button>
+      <button type="button" class="tool-btn" data-print><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span>Print / PDF</span></button>
+    </div>
+    <details class="toc-m"><summary>On this page <span>10 sections</span></summary><ul><li class="toc-l2"><a href="#how-a-remote-event-receiver-works">How a remote event receiver works</a></li><li class="toc-l2"><a href="#synchronous-vs-asynchronous-events">Synchronous vs asynchronous events</a></li><li class="toc-l2"><a href="#writing-the-receiver-c">Writing the receiver (C#)</a></li><li class="toc-l3"><a href="#registering-an-rer-on-a-host-web-list">Registering an RER on a host-web list</a></li><li class="toc-l2"><a href="#classic-vs-remote-vs-webhooks-vs-power-automate">Classic vs remote vs webhooks vs Power Automate</a></li><li class="toc-l2"><a href="#the-modern-replacement-webhooks-azure-functions">The modern replacement: webhooks + Azure Functions</a></li><li class="toc-l2"><a href="#common-problems-and-fixes">Common problems and fixes</a></li><li class="toc-l2"><a href="#interview-questions">Interview questions</a></li><li class="toc-l2"><a href="#references">Sources &amp; further reading</a></li><li class="toc-l2"><a href="#watch">Watch &amp; learn</a></li></ul></details>
+    <div class="prose">
+<p>A <strong>remote event receiver (RER)</strong> is an event handler whose code does <em>not</em> run inside SharePoint. When something happens in a list, library, web or add-in, SharePoint makes a <strong>SOAP call to a web service you host</strong> (on IIS or Azure App Service) and passes the event details. Your service reacts: it can validate data and cancel the change, update other items, call other systems, or log.</p>
+<p>RERs arrived with the <strong>SharePoint 2013 add-in (app) model</strong>. Microsoft wanted custom code <em>out</em> of the SharePoint process (farm solutions) so SharePoint Online could stay stable, and RERs were the answer for event-driven logic.</p>
+<aside class="callout callout-history"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><polyline points="12 7 12 12 15 15"/></svg><span>Where RERs sit in the timeline</span></div><div class="callout-body"><p><strong>2007–2010:</strong> classic event receivers ran inside <code>w3wp.exe</code> as farm or sandboxed code. <strong>2013:</strong> RERs moved that code to remote web services. <strong>2016+:</strong> SharePoint <strong>webhooks</strong> became the recommended pattern for SharePoint Online. <strong>April 2, 2026:</strong> SharePoint Add-ins and Azure ACS were retired in SharePoint Online, so ACS-based RERs there stopped working. On-premises (2016, 2019, Subscription Edition), RERs still work with high-trust (S2S) add-ins.</p>
+</div></aside>
+<h2 id="how-a-remote-event-receiver-works"><a class="h-anchor" href="#how-a-remote-event-receiver-works" aria-hidden="true" tabindex="-1">#</a>How a remote event receiver works</h2>
+<figure class="diagram arch-fig reveal"><button class="zoom-btn" type="button" aria-label="Open diagram full screen" title="Full screen"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button><div class="diagram-scroll"><svg class="arch-svg" viewBox="0 0 820 680" role="img" aria-label="Remote event receiver – runtime architecture"><defs><marker id="ad19-e" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="arch-arrow" d="M0 0 10 5 0 10z"/></marker><marker id="ad19-s" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="arch-arrow" d="M10 0 0 5 10 10z"/></marker></defs><text class="arch-title" x="410" y="36" text-anchor="middle">Remote event receiver – runtime architecture</text><g class="arch-layer arch-l0" style="--d:0ms"><rect class="arch-band" x="16" y="62" width="788" height="104" rx="16"/><text class="arch-layer-name" x="34" y="84">USER &amp; CLIENT</text><g class="arch-node-g"><rect class="arch-node" x="32.0" y="94" width="180.0" height="56" rx="11"/><text class="arch-node-text" x="122.0" y="127" text-anchor="middle">Browser</text></g><g class="arch-node-g"><rect class="arch-node" x="224.0" y="94" width="180.0" height="56" rx="11"/><text class="arch-node-text" x="314.0" y="127" text-anchor="middle">Office client</text></g><g class="arch-node-g"><rect class="arch-node" x="416.0" y="94" width="180.0" height="56" rx="11"/><text class="arch-node-text" x="506.0" y="127" text-anchor="middle">Power Automate</text></g><g class="arch-node-g"><rect class="arch-node" x="608.0" y="94" width="180.0" height="56" rx="11"/><text class="arch-node-text" x="698.0" y="127" text-anchor="middle">CSOM/REST caller</text></g></g><line class="arch-flow" x1="410" y1="172" x2="410" y2="222" marker-end="url(#ad19-e)"/><g class="arch-pill-g"><rect class="arch-pill" x="426" y="184" width="279.5" height="26" rx="13"/><text class="arch-pill-text" x="438" y="201">creates / updates / deletes an item</text></g><g class="arch-layer arch-l1" style="--d:140ms"><rect class="arch-band" x="16" y="228" width="788" height="104" rx="16"/><text class="arch-layer-name" x="34" y="250">SHAREPOINT (HOST WEB)</text><g class="arch-node-g"><rect class="arch-node" x="53.0" y="260" width="230.0" height="56" rx="11"/><text class="arch-node-text" x="168.0" y="293" text-anchor="middle">List or library</text></g><g class="arch-node-g"><rect class="arch-node" x="295.0" y="260" width="230.0" height="56" rx="11"/><text class="arch-node-text" x="410.0" y="284" text-anchor="middle">Event receiver registration</text><text class="arch-node-text" x="410.0" y="301" text-anchor="middle">(ReceiverUrl)</text></g><g class="arch-node-g"><rect class="arch-node" x="537.0" y="260" width="230.0" height="56" rx="11"/><text class="arch-node-text" x="652.0" y="293" text-anchor="middle">Event pipeline</text></g></g><line class="arch-flow" x1="410" y1="338" x2="410" y2="388" marker-end="url(#ad19-e)"/><g class="arch-pill-g"><rect class="arch-pill" x="426" y="350" width="380.0" height="26" rx="13"/><text class="arch-pill-text" x="438" y="367">SOAP POST: SPRemoteEventProperties + context token</text></g><g class="arch-layer arch-l2" style="--d:280ms"><rect class="arch-band" x="16" y="394" width="788" height="104" rx="16"/><text class="arch-layer-name" x="34" y="416">REMOTE WEB (IIS / AZURE APP SERVICE)</text><g class="arch-node-g"><rect class="arch-node" x="53.0" y="426" width="230.0" height="56" rx="11"/><text class="arch-node-text" x="168.0" y="459" text-anchor="middle">WCF service (.svc)</text></g><g class="arch-node-g"><rect class="arch-node" x="295.0" y="426" width="230.0" height="56" rx="11"/><text class="arch-node-text" x="410.0" y="459" text-anchor="middle">IRemoteEventService</text></g><g class="arch-node-g"><rect class="arch-node" x="537.0" y="426" width="230.0" height="56" rx="11"/><text class="arch-node-text" x="652.0" y="459" text-anchor="middle">TokenHelper.cs</text></g></g><line class="arch-flow" x1="410" y1="504" x2="410" y2="554" marker-start="url(#ad19-s)" marker-end="url(#ad19-e)"/><g class="arch-pill-g"><rect class="arch-pill" x="426" y="516" width="380.0" height="26" rx="13"/><text class="arch-pill-text" x="438" y="533">CSOM / REST calls back with an OAuth access token</text></g><g class="arch-layer arch-l3" style="--d:420ms"><rect class="arch-band" x="16" y="560" width="788" height="104" rx="16"/><text class="arch-layer-name" x="34" y="582">IDENTITY</text><g class="arch-node-g"><rect class="arch-node" x="174.0" y="592" width="230.0" height="56" rx="11"/><text class="arch-node-text" x="289.0" y="616" text-anchor="middle">Azure ACS (low-trust, SPO –</text><text class="arch-node-text" x="289.0" y="633" text-anchor="middle">retired)</text></g><g class="arch-node-g"><rect class="arch-node" x="416.0" y="592" width="230.0" height="56" rx="11"/><text class="arch-node-text" x="531.0" y="616" text-anchor="middle">Certificate S2S (high-trust,</text><text class="arch-node-text" x="531.0" y="633" text-anchor="middle">on-prem)</text></g></g></svg></div><figcaption>Remote event receiver – runtime architecture</figcaption></figure>
+<p>The flow:</p>
+<ol>
+<li>A user (or code) changes an item in a list that has an RER registered on it.</li>
+<li>SharePoint&#39;s event pipeline finds the registration and sees a <code>ReceiverUrl</code> pointing at your <code>.svc</code> endpoint.</li>
+<li>SharePoint serializes the event into <code>SPRemoteEventProperties</code>: event type, list ID, item ID, before and after properties, and a <strong>context token</strong>. It then POSTs that object to your service.</li>
+<li>Your service implements <code>IRemoteEventService</code>:<ul>
+<li><strong><code>ProcessEvent</code></strong> for <strong>synchronous (&quot;-ing&quot;)</strong> events. SharePoint <em>waits</em> for your response, which can cancel the operation or change field values.</li>
+<li><strong><code>ProcessOneWayEvent</code></strong> for <strong>asynchronous (&quot;-ed&quot;)</strong> events. SharePoint fires and forgets.</li>
+</ul>
+</li>
+<li>If you need to read or write SharePoint, <code>TokenHelper.CreateRemoteEventReceiverClientContext(properties)</code> turns the context token into an access token and gives you a CSOM <code>ClientContext</code>.</li>
+</ol>
+<figure class="diagram mermaid-fig reveal"><button class="zoom-btn" type="button" aria-label="Open diagram full screen" title="Full screen"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button><div class="diagram-scroll"><pre class="mermaid">sequenceDiagram
+  autonumber
+  actor U as User
+  participant SP as SharePoint list
+  participant R as Remote web (WCF .svc)
+  participant ID as ACS / S2S
+  U-&gt;&gt;SP: Save new item
+  SP-&gt;&gt;R: ProcessEvent(ItemAdding, AfterProperties)
+  Note over R: Validate Title, compute fields
+  alt invalid
+    R--&gt;&gt;SP: Status = CancelWithError + message
+    SP--&gt;&gt;U: Error shown, item NOT saved
+  else valid
+    R--&gt;&gt;SP: Status = Continue (+ ChangedItemProperties)
+    SP--&gt;&gt;U: Item saved
+    SP-)R: ProcessOneWayEvent(ItemAdded)
+    R-&gt;&gt;ID: Exchange context token
+    ID--&gt;&gt;R: Access token
+    R-&gt;&gt;SP: CSOM: update related items
+  end</pre></div></figure>
+<h2 id="synchronous-vs-asynchronous-events"><a class="h-anchor" href="#synchronous-vs-asynchronous-events" aria-hidden="true" tabindex="-1">#</a>Synchronous vs asynchronous events</h2>
+<figure class="poster reveal"><div class="poster-head"><span class="poster-kicker">Cheat sheet</span><p class="poster-title">RER event types at a glance</p><p class="poster-sub">&quot;-ing&quot; = before the change (sync) · &quot;-ed&quot; = after the change (async)</p></div><div class="poster-grid"><div class="poster-tile pt0"><span class="pt-n">01</span><p class="pt-h">Synchronous (-ing)</p><div class="pt-b"><code>ItemAdding</code>, <code>ItemUpdating</code>, <code>ItemDeleting</code>, <code>ItemCheckingIn</code>, <code>FieldAdding</code>, <code>ListDeleting</code>. SharePoint <strong>waits</strong> for <code>ProcessEvent</code>. Can <strong>cancel</strong> or <strong>change values</strong>.</div></div><div class="poster-tile pt1"><span class="pt-n">02</span><p class="pt-h">Asynchronous (-ed)</p><div class="pt-b"><code>ItemAdded</code>, <code>ItemUpdated</code>, <code>ItemDeleted</code>, <code>ItemAttachmentAdded</code>, <code>ListAdded</code>. Handled by <code>ProcessOneWayEvent</code>. <strong>No return value</strong>, so it cannot cancel.</div></div><div class="poster-tile pt2"><span class="pt-n">03</span><p class="pt-h">Add-in events</p><div class="pt-b"><code>AppInstalled</code>, <code>AppUpgraded</code>, <code>AppUninstalling</code> go through <code>ProcessEvent</code>. They are used to provision lists and <strong>register RERs on the host web</strong>.</div></div><div class="poster-tile pt3"><span class="pt-n">04</span><p class="pt-h">Result object</p><div class="pt-b"><code>SPRemoteEventResult.Status</code> = <code>Continue</code>, <code>CancelNoError</code>, <code>CancelWithError</code>, <code>CancelWithRedirectUrl</code>, plus <code>ErrorMessage</code> and <code>ChangedItemProperties</code>.</div></div><div class="poster-tile pt4"><span class="pt-n">05</span><p class="pt-h">Timeouts</p><div class="pt-b">Sync calls block the user&#39;s save, so keep them <strong>well under a few seconds</strong>. Slow or failed sync calls surface as save errors.</div></div><div class="poster-tile pt5"><span class="pt-n">06</span><p class="pt-h">Reliability</p><div class="pt-b">There is <strong>no guaranteed delivery or retry queue</strong>. Treat async RERs as best-effort and build reconciliation jobs.</div></div></div></figure>
+<h2 id="writing-the-receiver-c"><a class="h-anchor" href="#writing-the-receiver-c" aria-hidden="true" tabindex="-1">#</a>Writing the receiver (C#)</h2>
+<p>Create a provider-hosted add-in in Visual Studio (2013 to 2019 templates). Then use <strong>Add → New Item → Remote Event Receiver</strong>. Visual Studio generates a <code>.svc</code> file, a class that implements <code>IRemoteEventService</code>, and an <code>Elements.xml</code> registration.</p>
+<div class="code-block" data-tab="C# – WCF receiver"><div class="code-head"><span class="code-title">Services/DeviationReceiver.svc.cs</span><span class="code-lang">C#</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><pre><code class="hljs language-csharp"><span class="hljs-keyword">using</span> System;
+<span class="hljs-keyword">using</span> Microsoft.SharePoint.Client;
+<span class="hljs-keyword">using</span> Microsoft.SharePoint.Client.EventReceivers;
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">Contoso.DeviationsWeb.Services</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">DeviationReceiver</span> : <span class="hljs-title">IRemoteEventService</span>
+    {
+        <span class="hljs-comment">// SYNCHRONOUS: runs BEFORE the change is committed. Can cancel or modify.</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> SPRemoteEventResult <span class="hljs-title">ProcessEvent</span>(<span class="hljs-params">SPRemoteEventProperties properties</span>)</span>
+        {
+            <span class="hljs-keyword">var</span> result = <span class="hljs-keyword">new</span> SPRemoteEventResult { Status = SPRemoteEventServiceStatus.Continue };
+
+            <span class="hljs-keyword">switch</span> (properties.EventType)
+            {
+                <span class="hljs-keyword">case</span> SPRemoteEventType.ItemAdding:
+                <span class="hljs-keyword">case</span> SPRemoteEventType.ItemUpdating:
+                    <span class="hljs-keyword">var</span> after = properties.ItemEventProperties.AfterProperties;
+                    <span class="hljs-keyword">var</span> title = after.ContainsKey(<span class="hljs-string">&quot;Title&quot;</span>) ? after[<span class="hljs-string">&quot;Title&quot;</span>] <span class="hljs-keyword">as</span> <span class="hljs-built_in">string</span> : <span class="hljs-literal">null</span>;
+
+                    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">string</span>.IsNullOrWhiteSpace(title) || title.Trim().Length &lt; <span class="hljs-number">5</span>)
+                    {
+                        result.Status = SPRemoteEventServiceStatus.CancelWithError;
+                        result.ErrorMessage = <span class="hljs-string">&quot;Deviation title must be at least 5 characters.&quot;</span>;
+                        <span class="hljs-keyword">return</span> result;
+                    }
+                    <span class="hljs-comment">// Stamp a value before it is saved (no extra round trip needed)</span>
+                    result.ChangedItemProperties.Add(<span class="hljs-string">&quot;Status&quot;</span>, <span class="hljs-string">&quot;Submitted&quot;</span>);
+                    <span class="hljs-keyword">break</span>;
+
+                <span class="hljs-keyword">case</span> SPRemoteEventType.ItemDeleting:
+                    result.Status = SPRemoteEventServiceStatus.CancelWithError;
+                    result.ErrorMessage = <span class="hljs-string">&quot;Deviations cannot be deleted. Close them instead.&quot;</span>;
+                    <span class="hljs-keyword">break</span>;
+            }
+            <span class="hljs-keyword">return</span> result;
+        }
+
+        <span class="hljs-comment">// ASYNCHRONOUS: runs AFTER the change. Fire-and-forget, cannot cancel.</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ProcessOneWayEvent</span>(<span class="hljs-params">SPRemoteEventProperties properties</span>)</span>
+        {
+            <span class="hljs-keyword">if</span> (properties.EventType != SPRemoteEventType.ItemAdded) <span class="hljs-keyword">return</span>;
+
+            <span class="hljs-keyword">using</span> (ClientContext ctx = TokenHelper.CreateRemoteEventReceiverClientContext(properties))
+            {
+                <span class="hljs-keyword">if</span> (ctx == <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span>; <span class="hljs-comment">// token could not be issued (check trust / ACS)</span>
+
+                <span class="hljs-keyword">var</span> props = properties.ItemEventProperties;
+                List audit = ctx.Web.Lists.GetByTitle(<span class="hljs-string">&quot;DeviationAudit&quot;</span>);
+                ListItem log = audit.AddItem(<span class="hljs-keyword">new</span> ListItemCreationInformation());
+                log[<span class="hljs-string">&quot;Title&quot;</span>] = <span class="hljs-string">$&quot;Deviation <span class="hljs-subst">{props.ListItemId}</span> created&quot;</span>;
+                log[<span class="hljs-string">&quot;DeviationId&quot;</span>] = props.ListItemId;
+                log[<span class="hljs-string">&quot;CreatedBy&quot;</span>] = props.UserLoginName;
+                log.Update();
+                ctx.ExecuteQuery();
+            }
+        }
+    }
+}</code></pre></div>
+<div class="code-block" data-tab="Elements.xml"><div class="code-head"><span class="code-title">DeviationReceiver/Elements.xml (declarative registration)</span><span class="code-lang">XML</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><pre><code class="hljs language-xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;utf-8&quot;</span>?&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">Elements</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://schemas.microsoft.com/sharepoint/&quot;</span>&gt;</span>
+  <span class="hljs-comment">&lt;!-- ListTemplateId 100 = Custom List. Declarative RERs bind to lists in the ADD-IN WEB. --&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">Receivers</span> <span class="hljs-attr">ListTemplateId</span>=<span class="hljs-string">&quot;100&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Receiver</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Name</span>&gt;</span>DeviationItemAdding<span class="hljs-tag">&lt;/<span class="hljs-name">Name</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Type</span>&gt;</span>ItemAdding<span class="hljs-tag">&lt;/<span class="hljs-name">Type</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">SequenceNumber</span>&gt;</span>10000<span class="hljs-tag">&lt;/<span class="hljs-name">SequenceNumber</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Url</span>&gt;</span>~remoteAppUrl/Services/DeviationReceiver.svc<span class="hljs-tag">&lt;/<span class="hljs-name">Url</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Receiver</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Receiver</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Name</span>&gt;</span>DeviationItemAdded<span class="hljs-tag">&lt;/<span class="hljs-name">Name</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Type</span>&gt;</span>ItemAdded<span class="hljs-tag">&lt;/<span class="hljs-name">Type</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">SequenceNumber</span>&gt;</span>10000<span class="hljs-tag">&lt;/<span class="hljs-name">SequenceNumber</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Url</span>&gt;</span>~remoteAppUrl/Services/DeviationReceiver.svc<span class="hljs-tag">&lt;/<span class="hljs-name">Url</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Receiver</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">Receivers</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">Elements</span>&gt;</span></code></pre></div>
+<h3 id="registering-an-rer-on-a-host-web-list"><a class="h-anchor" href="#registering-an-rer-on-a-host-web-list" aria-hidden="true" tabindex="-1">#</a>Registering an RER on a host-web list</h3>
+<p>Declarative <code>Elements.xml</code> registrations attach only to lists in the <strong>add-in web</strong>. Most real solutions need the receiver on a list in the <strong>host web</strong> (the user&#39;s site). To do that, handle <strong><code>AppInstalled</code></strong> and register the receiver with CSOM:</p>
+<div class="code-block"><div class="code-head"><span class="code-title">Services/AppEventReceiver.svc.cs</span><span class="code-lang">C#</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><pre><code class="hljs language-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> SPRemoteEventResult <span class="hljs-title">ProcessEvent</span>(<span class="hljs-params">SPRemoteEventProperties properties</span>)</span>
+{
+    <span class="hljs-keyword">var</span> result = <span class="hljs-keyword">new</span> SPRemoteEventResult();
+    <span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span> receiverName = <span class="hljs-string">&quot;DeviationItemAdded&quot;</span>;
+
+    <span class="hljs-keyword">using</span> (ClientContext ctx = TokenHelper.CreateAppEventClientContext(properties, useAppWeb: <span class="hljs-literal">false</span>))
+    {
+        <span class="hljs-keyword">if</span> (ctx == <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> result;
+        List list = ctx.Web.Lists.GetByTitle(<span class="hljs-string">&quot;Deviations&quot;</span>);
+        ctx.Load(list.EventReceivers);
+        ctx.ExecuteQuery();
+
+        <span class="hljs-keyword">if</span> (properties.EventType == SPRemoteEventType.AppInstalled)
+        {
+            <span class="hljs-comment">// Build the receiver URL from the URL this service was called on</span>
+            <span class="hljs-built_in">string</span> svcUrl = System.ServiceModel.OperationContext.Current.Channel.LocalAddress.Uri.AbsoluteUri
+                                .Replace(<span class="hljs-string">&quot;AppEventReceiver.svc&quot;</span>, <span class="hljs-string">&quot;DeviationReceiver.svc&quot;</span>);
+
+            <span class="hljs-built_in">bool</span> exists = list.EventReceivers.Any(r =&gt; r.ReceiverName == receiverName);
+            <span class="hljs-keyword">if</span> (!exists)
+            {
+                list.EventReceivers.Add(<span class="hljs-keyword">new</span> EventReceiverDefinitionCreationInformation
+                {
+                    EventType = EventReceiverType.ItemAdded,
+                    ReceiverName = receiverName,
+                    ReceiverUrl = svcUrl,
+                    SequenceNumber = <span class="hljs-number">1000</span>,
+                    Synchronization = EventReceiverSynchronization.Asynchronous
+                });
+                ctx.ExecuteQuery();
+            }
+        }
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (properties.EventType == SPRemoteEventType.AppUninstalling)
+        {
+            <span class="hljs-comment">// Clean up, otherwise SharePoint keeps calling a dead endpoint</span>
+            <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> r <span class="hljs-keyword">in</span> list.EventReceivers.ToList().Where(r =&gt; r.ReceiverName == receiverName))
+                r.DeleteObject();
+            ctx.ExecuteQuery();
+        }
+    }
+    <span class="hljs-keyword">return</span> result;
+}</code></pre></div>
+<p>You can also inspect and manage registrations from PowerShell, which helps a lot when cleaning up orphaned receivers before a migration:</p>
+<div class="code-block"><div class="code-head"><span class="code-title">Inspect / add / remove event receivers with PnP PowerShell</span><span class="code-lang">PowerShell</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><pre><code class="hljs language-powershell"><span class="hljs-built_in">Connect-PnPOnline</span> <span class="hljs-literal">-Url</span> <span class="hljs-string">&quot;https://contoso.sharepoint.com/sites/quality&quot;</span> <span class="hljs-literal">-Interactive</span> <span class="hljs-literal">-ClientId</span> <span class="hljs-variable">$clientId</span>
+
+<span class="hljs-comment"># List every receiver on a list (look for ReceiverUrl pointing to retired add-in hosts)</span>
+<span class="hljs-built_in">Get-PnPEventReceiver</span> <span class="hljs-literal">-List</span> <span class="hljs-string">&quot;Deviations&quot;</span> | <span class="hljs-built_in">Select-Object</span> ReceiverName, EventType, Synchronization, ReceiverUrl
+
+<span class="hljs-comment"># Register a receiver manually (on-prem high-trust scenarios / testing)</span>
+<span class="hljs-built_in">Add-PnPEventReceiver</span> <span class="hljs-literal">-List</span> <span class="hljs-string">&quot;Deviations&quot;</span> <span class="hljs-literal">-Name</span> <span class="hljs-string">&quot;DeviationItemAdded&quot;</span> `
+  <span class="hljs-literal">-Url</span> <span class="hljs-string">&quot;https://apps.contoso.com/Services/DeviationReceiver.svc&quot;</span> `
+  <span class="hljs-literal">-EventReceiverType</span> ItemAdded <span class="hljs-literal">-Synchronization</span> Asynchronous
+
+<span class="hljs-comment"># Remove an orphaned receiver</span>
+<span class="hljs-built_in">Get-PnPEventReceiver</span> <span class="hljs-literal">-List</span> <span class="hljs-string">&quot;Deviations&quot;</span> |
+  <span class="hljs-built_in">Where-Object</span> ReceiverName <span class="hljs-operator">-eq</span> <span class="hljs-string">&quot;DeviationItemAdded&quot;</span> |
+  <span class="hljs-built_in">ForEach-Object</span> { <span class="hljs-built_in">Remove-PnPEventReceiver</span> <span class="hljs-literal">-List</span> <span class="hljs-string">&quot;Deviations&quot;</span> <span class="hljs-literal">-Identity</span> <span class="hljs-variable">$_</span>.ReceiverId <span class="hljs-literal">-Force</span> }</code></pre></div>
+<aside class="callout callout-warning"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>The infinite-loop trap</span></div><div class="callout-body"><p>SSOM event receivers can call <code>EventFiringEnabled = false</code>. <strong>RERs cannot.</strong> If <code>ItemUpdated</code> updates the same item, it fires <code>ItemUpdated</code> again. Guard every update: compare the current value before writing, or write to a <em>different</em> list (as the audit example does).</p>
+</div></aside>
+<h2 id="classic-vs-remote-vs-webhooks-vs-power-automate"><a class="h-anchor" href="#classic-vs-remote-vs-webhooks-vs-power-automate" aria-hidden="true" tabindex="-1">#</a>Classic vs remote vs webhooks vs Power Automate</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Capability</th>
+<th>Classic event receiver (SSOM)</th>
+<th>Remote event receiver</th>
+<th>SharePoint webhook</th>
+<th>Power Automate trigger</th>
+</tr>
+</thead><tbody><tr>
+<td>Runs where</td>
+<td>Inside SharePoint (<code>w3wp</code>, timer)</td>
+<td>Your web service</td>
+<td>Your HTTPS endpoint</td>
+<td>Microsoft cloud</td>
+</tr>
+<tr>
+<td>Platforms</td>
+<td>On-prem only</td>
+<td>On-prem; SPO until Apr 2026</td>
+<td>SPO (and lists/libraries only)</td>
+<td>SPO, on-prem via gateway (limited)</td>
+</tr>
+<tr>
+<td>Sync (cancel / modify)</td>
+<td>✅</td>
+<td>✅ (<code>ProcessEvent</code>)</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Payload</td>
+<td>Full properties</td>
+<td>Before/after properties</td>
+<td><strong>Only &quot;something changed&quot;</strong>, so you call <code>GetChanges</code></td>
+<td>Item fields</td>
+</tr>
+<tr>
+<td>Retries</td>
+<td>n/a</td>
+<td>❌ none</td>
+<td>✅ retries 5 min apart (up to 5)</td>
+<td>✅ built-in</td>
+</tr>
+<tr>
+<td>Auth</td>
+<td>Farm trust</td>
+<td>ACS (SPO) / S2S cert</td>
+<td>Entra app (Graph/SP)</td>
+<td>Connector</td>
+</tr>
+<tr>
+<td>Recommended in 2026</td>
+<td>Legacy on-prem only</td>
+<td>Legacy on-prem only</td>
+<td>✅ <strong>Yes for SPO code</strong></td>
+<td>✅ <strong>Yes for low-code</strong></td>
+</tr>
+</tbody></table></div>
+<h2 id="the-modern-replacement-webhooks-azure-functions"><a class="h-anchor" href="#the-modern-replacement-webhooks-azure-functions" aria-hidden="true" tabindex="-1">#</a>The modern replacement: webhooks + Azure Functions</h2>
+<p>For SharePoint Online the replacement pattern is a <strong>webhook subscription</strong> plus a small <strong>Azure Function</strong>. The function acknowledges the notification within 5 seconds, then queues the work. A second function calls <strong><code>GetChanges</code></strong> with a stored change token to find out <em>what</em> actually changed. The full implementation is in <a href="../../articles/azure/sharepoint-webhooks.html">SharePoint webhooks with Azure Functions</a>.</p>
+<div class="code-block" data-tab="TypeScript – webhook receiver"><div class="code-head"><span class="code-title">src/functions/spWebhook.ts (Azure Functions v4, Node)</span><span class="code-lang">TypeScript</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><pre><code class="hljs language-typescript"><span class="hljs-keyword">import</span> { app, output, <span class="hljs-title class_">HttpRequest</span>, <span class="hljs-title class_">HttpResponseInit</span>, <span class="hljs-title class_">InvocationContext</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@azure/functions&#x27;</span>;
+
+<span class="hljs-keyword">const</span> changesQueue = output.<span class="hljs-title function_">storageQueue</span>({ <span class="hljs-attr">queueName</span>: <span class="hljs-string">&#x27;sp-changes&#x27;</span>, <span class="hljs-attr">connection</span>: <span class="hljs-string">&#x27;AzureWebJobsStorage&#x27;</span> });
+
+app.<span class="hljs-title function_">http</span>(<span class="hljs-string">&#x27;spWebhook&#x27;</span>, {
+  <span class="hljs-attr">methods</span>: [<span class="hljs-string">&#x27;POST&#x27;</span>],
+  <span class="hljs-attr">authLevel</span>: <span class="hljs-string">&#x27;function&#x27;</span>,
+  <span class="hljs-attr">extraOutputs</span>: [changesQueue],
+  <span class="hljs-attr">handler</span>: <span class="hljs-title function_">async</span> (<span class="hljs-attr">req</span>: <span class="hljs-title class_">HttpRequest</span>, <span class="hljs-attr">ctx</span>: <span class="hljs-title class_">InvocationContext</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">HttpResponseInit</span>&gt; =&gt; {
+    <span class="hljs-comment">// 1) Subscription handshake: echo the validation token (must answer within 5 seconds)</span>
+    <span class="hljs-keyword">const</span> validationToken = req.<span class="hljs-property">query</span>.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;validationtoken&#x27;</span>);
+    <span class="hljs-keyword">if</span> (validationToken) {
+      <span class="hljs-keyword">return</span> { <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>, <span class="hljs-attr">headers</span>: { <span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&#x27;text/plain&#x27;</span> }, <span class="hljs-attr">body</span>: validationToken };
+    }
+
+    <span class="hljs-comment">// 2) Notification: payload only tells you WHICH list changed, not what changed</span>
+    <span class="hljs-keyword">const</span> payload = (<span class="hljs-keyword">await</span> req.<span class="hljs-title function_">json</span>()) <span class="hljs-keyword">as</span> { <span class="hljs-attr">value</span>: <span class="hljs-title class_">Array</span>&lt;{ <span class="hljs-attr">subscriptionId</span>: <span class="hljs-built_in">string</span>; <span class="hljs-attr">resource</span>: <span class="hljs-built_in">string</span>; <span class="hljs-attr">siteUrl</span>: <span class="hljs-built_in">string</span>; <span class="hljs-attr">clientState</span>?: <span class="hljs-built_in">string</span> }&gt; };
+    <span class="hljs-keyword">const</span> valid = payload.<span class="hljs-property">value</span>.<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> n.<span class="hljs-property">clientState</span> === process.<span class="hljs-property">env</span>.<span class="hljs-property">WEBHOOK_CLIENT_STATE</span>);
+    ctx.<span class="hljs-property">extraOutputs</span>.<span class="hljs-title function_">set</span>(changesQueue, valid);   <span class="hljs-comment">// hand off and return fast</span>
+    <span class="hljs-keyword">return</span> { <span class="hljs-attr">status</span>: <span class="hljs-number">200</span> };
+  },
+});</code></pre></div>
+<div class="code-block" data-tab="C# – webhook receiver"><div class="code-head"><span class="code-title">Equivalent receiver in C# (isolated worker, multi-output)</span><span class="code-lang">C#</span><button class="code-copy" type="button" aria-label="Copy code"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button></div><pre><code class="hljs language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WebhookOutput</span>
+{
+    [<span class="hljs-meta">QueueOutput(<span class="hljs-string">&quot;sp-changes&quot;</span>)</span>]
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span>[]? Messages { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }      <span class="hljs-comment">// each string becomes a queue message</span>
+    <span class="hljs-keyword">public</span> HttpResponseData Response { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">default</span>!;
+}
+
+[<span class="hljs-meta">Function(<span class="hljs-string">&quot;SpWebhook&quot;</span>)</span>]
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task&lt;WebhookOutput&gt; <span class="hljs-title">Run</span>(<span class="hljs-params">
+    [HttpTrigger(AuthorizationLevel.Function, <span class="hljs-string">&quot;post&quot;</span></span>)] HttpRequestData req)</span>
+{
+    <span class="hljs-keyword">var</span> response = req.CreateResponse(HttpStatusCode.OK);
+
+    <span class="hljs-comment">// 1) Subscription handshake: echo validationtoken as plain text</span>
+    <span class="hljs-keyword">var</span> token = System.Web.HttpUtility.ParseQueryString(req.Url.Query)[<span class="hljs-string">&quot;validationtoken&quot;</span>];
+    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">string</span>.IsNullOrEmpty(token))
+    {
+        response.Headers.Add(<span class="hljs-string">&quot;Content-Type&quot;</span>, <span class="hljs-string">&quot;text/plain&quot;</span>);
+        <span class="hljs-keyword">await</span> response.WriteStringAsync(token);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> WebhookOutput { Response = response };
+    }
+
+    <span class="hljs-comment">// 2) Notification: validate clientState, queue, return 200 quickly</span>
+    <span class="hljs-keyword">var</span> payload = <span class="hljs-keyword">await</span> JsonSerializer.DeserializeAsync&lt;WebhookPayload&gt;(req.Body,
+        <span class="hljs-keyword">new</span> JsonSerializerOptions { PropertyNameCaseInsensitive = <span class="hljs-literal">true</span> });
+    <span class="hljs-keyword">var</span> messages = payload!.Value
+        .Where(n =&gt; n.ClientState == Environment.GetEnvironmentVariable(<span class="hljs-string">&quot;WEBHOOK_CLIENT_STATE&quot;</span>))
+        .Select(n =&gt; JsonSerializer.Serialize(n))
+        .ToArray();
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> WebhookOutput { Response = response, Messages = messages };
+}</code></pre></div>
+<h2 id="common-problems-and-fixes"><a class="h-anchor" href="#common-problems-and-fixes" aria-hidden="true" tabindex="-1">#</a>Common problems and fixes</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead><tbody><tr>
+<td>Receiver never fires</td>
+<td>Registered on the add-in web instead of the host web; wrong <code>ListTemplateId</code></td>
+<td>Register via <code>AppInstalled</code> + CSOM, then verify with <code>Get-PnPEventReceiver</code></td>
+</tr>
+<tr>
+<td><code>CreateRemoteEventReceiverClientContext</code> returns <code>null</code></td>
+<td>Missing or invalid context token, add-in lacks permission, clock skew, ACS retired</td>
+<td>Check <code>AppManifest.xml</code> permissions, server time, and the trust model (S2S on-prem)</td>
+</tr>
+<tr>
+<td>Users see &quot;Sorry, something went wrong&quot; on save</td>
+<td>Sync receiver threw or timed out</td>
+<td>Wrap <code>ProcessEvent</code> in try/catch, return <code>Continue</code> on non-critical errors, and log</td>
+</tr>
+<tr>
+<td>Duplicate processing</td>
+<td>Async event retried by the client, or the receiver is registered twice</td>
+<td>Make handlers idempotent; check for existing receivers before adding</td>
+</tr>
+<tr>
+<td>Works in dev, fails in prod</td>
+<td>Endpoint not reachable from SharePoint (firewall, TLS, self-signed cert)</td>
+<td>Use a public HTTPS endpoint with a valid certificate; for on-prem allow SharePoint → app server traffic</td>
+</tr>
+<tr>
+<td>Calls continue after uninstall</td>
+<td>Receivers were not removed in <code>AppUninstalling</code></td>
+<td>Clean up in <code>AppUninstalling</code> or with PnP PowerShell</td>
+</tr>
+</tbody></table></div>
+<aside class="callout callout-tip"><div class="callout-title"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.74V17h8v-2.26A7 7 0 0 0 12 2z"/></svg><span>Migration checklist</span></div><div class="callout-body"><p>Before you migrate a farm or tenant, <strong>inventory every event receiver</strong> that has a non-empty <code>ReceiverUrl</code>. Each one is a dependency on an external host that will not move with the content. In practice: on-prem RERs move to <strong>webhooks + Azure Functions</strong>; simple validations move to <strong>column / list validation formulas</strong> or <strong>Power Automate</strong>; and complex sync validation moves to an <strong>SPFx form customizer</strong>.</p>
+</div></aside>
+<h2 id="interview-questions"><a class="h-anchor" href="#interview-questions" aria-hidden="true" tabindex="-1">#</a>Interview questions</h2>
+<details class="qa" id="what-is-the-difference-between-processevent-and-processonewayevent"><summary><span class="qa-n">Q1</span><span class="qa-q">What is the difference between <code>ProcessEvent</code> and <code>ProcessOneWayEvent</code>?</span><span class="qa-chev" aria-hidden="true"></span></summary><div class="qa-a">
+<p><code>ProcessEvent</code> handles <strong>synchronous</strong> events (<code>ItemAdding</code>, <code>ItemUpdating</code>, <code>AppInstalled</code> and so on). SharePoint waits for the returned <code>SPRemoteEventResult</code>, which can cancel the operation (<code>CancelWithError</code>) or change values (<code>ChangedItemProperties</code>). <code>ProcessOneWayEvent</code> handles <strong>asynchronous</strong> &quot;-ed&quot; events after the change is committed. It returns <code>void</code> and cannot cancel.</p>
+</div></details>
+<details class="qa" id="how-do-you-attach-a-remote-event-receiver-to-a-list-in-the-host-web"><summary><span class="qa-n">Q2</span><span class="qa-q">How do you attach a remote event receiver to a list in the host web?</span><span class="qa-chev" aria-hidden="true"></span></summary><div class="qa-a">
+<p>Declarative <code>Elements.xml</code> registration targets the <strong>add-in web</strong> only. For host-web lists, handle the <code>AppInstalled</code> add-in event, create a <code>ClientContext</code> with <code>TokenHelper.CreateAppEventClientContext(properties, false)</code>, and call <code>list.EventReceivers.Add(new EventReceiverDefinitionCreationInformation { ... })</code>. Remove the receiver in <code>AppUninstalling</code>.</p>
+</div></details>
+<details class="qa" id="how-do-you-prevent-an-infinite-loop-in-an-itemupdated-rer"><summary><span class="qa-n">Q3</span><span class="qa-q">How do you prevent an infinite loop in an <code>ItemUpdated</code> RER?</span><span class="qa-chev" aria-hidden="true"></span></summary><div class="qa-a">
+<p>RERs have no <code>EventFiringEnabled</code> switch. Compare the current value with the intended value before updating, use a marker field, or perform the update in the synchronous <code>ItemUpdating</code> through <code>ChangedItemProperties</code>, which does not cause a second event.</p>
+</div></details>
+<details class="qa" id="why-were-rers-replaced-by-webhooks-in-sharepoint-online"><summary><span class="qa-n">Q4</span><span class="qa-q">Why were RERs replaced by webhooks in SharePoint Online?</span><span class="qa-chev" aria-hidden="true"></span></summary><div class="qa-a">
+<p>RERs depend on the add-in model and <strong>Azure ACS</strong> for tokens, and both were retired in SPO on <strong>2 April 2026</strong>. They also have no retry or delivery guarantee. Webhooks are standards-based HTTPS callbacks with retries and work with modern Entra ID app auth. Because the payload is minimal, you call <code>GetChanges</code> to fetch the details.</p>
+</div></details>
+<details class="qa" id="can-a-webhook-cancel-an-item-update-like-an-ing-rer"><summary><span class="qa-n">Q5</span><span class="qa-q">Can a webhook cancel an item update like an <code>-ing</code> RER?</span><span class="qa-chev" aria-hidden="true"></span></summary><div class="qa-a">
+<p>No. Webhooks are notification-only and asynchronous. For blocking validation in SPO, use column or list validation, required fields with conditional formulas, or a custom <strong>SPFx form customizer</strong> or Power Apps form that validates before saving.</p>
+</div></details>
+
+    </div>
+    <section class="resources"><h2 id="references"><a class="h-anchor" href="#references" aria-hidden="true" tabindex="-1">#</a>Sources &amp; further reading</h2><ol class="ref-list"><li><a href="https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/handle-events-in-sharepoint-add-ins" target="_blank" rel="noopener"><span class="ref-t">Handle events in SharePoint Add-ins</span><span class="ref-h">learn.microsoft.com</span></a></li><li><a href="https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/create-a-remote-event-receiver-in-sharepoint-add-ins" target="_blank" rel="noopener"><span class="ref-t">Create a remote event receiver in SharePoint Add-ins</span><span class="ref-h">learn.microsoft.com</span></a></li><li><a href="https://learn.microsoft.com/en-us/sharepoint/dev/apis/webhooks/overview-sharepoint-webhooks" target="_blank" rel="noopener"><span class="ref-t">Overview of SharePoint webhooks</span><span class="ref-h">learn.microsoft.com</span></a></li><li><a href="https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/retirement-announcement-for-add-ins" target="_blank" rel="noopener"><span class="ref-t">SharePoint Add-In retirement in Microsoft 365</span><span class="ref-h">learn.microsoft.com</span></a></li></ol></section>
+    <section class="videos"><h2 id="watch"><a class="h-anchor" href="#watch" aria-hidden="true" tabindex="-1">#</a>Watch &amp; learn</h2><div class="video-grid"><a class="video-card" href="https://www.youtube.com/results?search_query=sharepoint%20remote%20event%20receiver%20provider%20hosted%20add-in" target="_blank" rel="noopener"><span class="vc-thumb"><svg viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><rect width="800" height="450" fill="#215951"/><rect x="0" y="442" width="800" height="8" fill="#d26a3c"/><text x="48" y="70" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="700" fill="#a8d2cc" letter-spacing="2">WATCH · YOUTUBE SEARCH</text><text x="48" y="170" font-family="Georgia, Times New Roman, serif" font-size="32" font-weight="600" fill="#ffffff">Remote event receivers explained</text></svg><span class="vc-play"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></span></span><span class="vc-t">Remote event receivers explained</span><span class="vc-s">YouTube · topic search</span></a><a class="video-card" href="https://www.youtube.com/results?search_query=sharepoint%20webhooks%20azure%20functions%20pnp" target="_blank" rel="noopener"><span class="vc-thumb"><svg viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><rect width="800" height="450" fill="#215951"/><rect x="0" y="442" width="800" height="8" fill="#d26a3c"/><text x="48" y="70" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="700" fill="#a8d2cc" letter-spacing="2">WATCH · YOUTUBE SEARCH</text><text x="48" y="170" font-family="Georgia, Times New Roman, serif" font-size="32" font-weight="600" fill="#ffffff">SharePoint webhooks with Azure</text><text x="48" y="210" font-family="Georgia, Times New Roman, serif" font-size="32" font-weight="600" fill="#ffffff">Functions</text></svg><span class="vc-play"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></span></span><span class="vc-t">SharePoint webhooks with Azure Functions</span><span class="vc-s">YouTube · topic search</span></a></div><p class="fine">Video links open a YouTube search for the topic. Prefer sessions from official channels such as Microsoft 365 Developer, Microsoft Power Platform, Microsoft Mechanics and the PnP community calls, because they track the current product.</p></section>
+    <div class="tag-row"><a class="tag" href="../../search.html?q=event%20receivers">event receivers</a><a class="tag" href="../../search.html?q=remote%20event%20receivers">remote event receivers</a><a class="tag" href="../../search.html?q=add-ins">add-ins</a><a class="tag" href="../../search.html?q=wcf">wcf</a><a class="tag" href="../../search.html?q=csom">csom</a><a class="tag" href="../../search.html?q=webhooks">webhooks</a><a class="tag" href="../../search.html?q=provider-hosted">provider-hosted</a></div>
+    <div class="read-mark"><button type="button" class="btn btn-ghost" data-mark-read><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>Mark as read</span></button><span class="fine">2,391 words · updated 8 Oct 2026</span></div>
+    <nav class="prev-next" aria-label="Article navigation"><a class="pn prev" href="../../articles/sharepoint-onprem/provider-hosted-challenges.html"><small><svg class="i i-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Previous</small><span>Provider-Hosted Add-ins – Major Difficulties, Fixes &amp; Migration to SPFx + Entra ID</span></a><a class="pn next" href="../../articles/sharepoint-onprem/sharepoint-designer.html"><small>Next <svg class="i i-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></small><span>What is SharePoint Designer? Architecture, Workflows, Data Views &amp; End of Support</span></a></nav>
+  </article>
+  <aside class="post-rail side-nav" data-side-nav aria-label="SharePoint On-Premises articles">
+    <p class="rail-h">In this topic</p>
+    <a class="rail-cat" href="../../categories/sharepoint-onprem/index.html" style="--c:#2f7d72">SharePoint On-Premises<span>29 articles</span></a>
+    <details class="rail-sec"><summary>Fundamentals<b>2</b></summary><ul><li><a href="../../articles/sharepoint-onprem/overview.html" data-key="sharepoint-onprem/overview">What is SharePoint On-Premises? Overview &amp; When to Use It</a></li><li><a href="../../articles/sharepoint-onprem/logical-architecture.html" data-key="sharepoint-onprem/logical-architecture">Logical Architecture – Web Applications, Zones, AAM, Content Databases &amp; Site Collections</a></li></ul></details><details class="rail-sec"><summary>Architecture &amp; Administration<b>8</b></summary><ul><li><a href="../../articles/sharepoint-onprem/farm-architecture.html" data-key="sharepoint-onprem/farm-architecture">SharePoint Farm Architecture, Tiers, MinRole &amp; High Availability</a></li><li><a href="../../articles/sharepoint-onprem/service-applications.html" data-key="sharepoint-onprem/service-applications">Service Applications – Architecture, Proxies &amp; the Full Catalog</a></li><li><a href="../../articles/sharepoint-onprem/central-admin-powershell.html" data-key="sharepoint-onprem/central-admin-powershell">Central Administration &amp; SharePoint Management Shell – Admin Essentials</a></li><li><a href="../../articles/sharepoint-onprem/authentication-claims.html" data-key="sharepoint-onprem/authentication-claims">Authentication in SharePoint Server – Claims, Kerberos, SAML &amp; OpenID Connect</a></li><li><a href="../../articles/sharepoint-onprem/search-architecture.html" data-key="sharepoint-onprem/search-architecture">Search Architecture – Crawl, Content Processing, Index &amp; Query Components</a></li><li><a href="../../articles/sharepoint-onprem/user-profiles-managed-metadata.html" data-key="sharepoint-onprem/user-profiles-managed-metadata">User Profile Service &amp; Managed Metadata – Profiles, Sync, Term Store &amp; Taxonomy</a></li><li><a href="../../articles/sharepoint-onprem/bcs-external-content.html" data-key="sharepoint-onprem/bcs-external-content">Business Connectivity Services (BCS) – External Content Types &amp; External Lists</a></li><li><a href="../../articles/sharepoint-onprem/boundaries-limits.html" data-key="sharepoint-onprem/boundaries-limits">Boundaries, Limits &amp; the 5,000-Item List View Threshold</a></li></ul></details><details class="rail-sec"><summary>Server-Side Development<b>6</b></summary><ul><li><a href="../../articles/sharepoint-onprem/server-object-model.html" data-key="sharepoint-onprem/server-object-model">Server Object Model (SSOM) – C# CRUD with SPSite, SPWeb &amp; SPList</a></li><li><a href="../../articles/sharepoint-onprem/farm-solutions-features.html" data-key="sharepoint-onprem/farm-solutions-features">Farm Solutions (WSP) &amp; Features – Packaging, Scopes, Receivers &amp; Upgrades</a></li><li><a href="../../articles/sharepoint-onprem/event-receivers.html" data-key="sharepoint-onprem/event-receivers">Event Receivers (Classic) – Synchronous &amp; Asynchronous Handlers in C#</a></li><li><a href="../../articles/sharepoint-onprem/timer-jobs.html" data-key="sharepoint-onprem/timer-jobs">Custom Timer Jobs – Scheduling Background Work on the Farm</a></li><li><a href="../../articles/sharepoint-onprem/sandboxed-solutions.html" data-key="sharepoint-onprem/sandboxed-solutions">Sandboxed Solutions – What They Were, Why They Died, and No-Code Sandbox Today</a></li><li><a href="../../articles/sharepoint-onprem/classic-branding.html" data-key="sharepoint-onprem/classic-branding">Classic Branding – Master Pages, Page Layouts, Design Manager &amp; JSLink</a></li></ul></details><details class="rail-sec" open><summary>Client-Side &amp; Add-in Development<b>6</b></summary><ul><li><a href="../../articles/sharepoint-onprem/csom-jsom-rest.html" data-key="sharepoint-onprem/csom-jsom-rest">CSOM, JSOM &amp; REST – Client-Side CRUD in C# and JavaScript</a></li><li><a href="../../articles/sharepoint-onprem/sharepoint-hosted-addins.html" data-key="sharepoint-onprem/sharepoint-hosted-addins">SharePoint-Hosted Add-ins – App Web, Host Web &amp; Cross-Domain Calls</a></li><li><a href="../../articles/sharepoint-onprem/provider-hosted-addins.html" data-key="sharepoint-onprem/provider-hosted-addins">How Provider-Hosted Add-ins Work – Architecture, Tokens, Low-Trust vs High-Trust</a></li><li><a href="../../articles/sharepoint-onprem/provider-hosted-crud.html" data-key="sharepoint-onprem/provider-hosted-crud">Provider-Hosted Add-in CRUD – Read, Create, Update &amp; Delete Code Templates (MVC + CSOM)</a></li><li><a href="../../articles/sharepoint-onprem/provider-hosted-challenges.html" data-key="sharepoint-onprem/provider-hosted-challenges">Provider-Hosted Add-ins – Major Difficulties, Fixes &amp; Migration to SPFx + Entra ID</a></li><li><a href="../../articles/sharepoint-onprem/remote-event-receivers.html" data-key="sharepoint-onprem/remote-event-receivers" class="active" aria-current="page">Remote Event Receivers (RER) – How They Work, Code &amp; Retirement</a></li></ul></details><details class="rail-sec"><summary>Workflow &amp; Forms<b>2</b></summary><ul><li><a href="../../articles/sharepoint-onprem/sharepoint-designer.html" data-key="sharepoint-onprem/sharepoint-designer">What is SharePoint Designer? Architecture, Workflows, Data Views &amp; End of Support</a></li><li><a href="../../articles/sharepoint-onprem/workflow-manager.html" data-key="sharepoint-onprem/workflow-manager">Workflow Manager &amp; SharePoint Workflow Manager – Installing the 2013 Workflow Platform</a></li></ul></details><details class="rail-sec"><summary>Upgrade &amp; Lifecycle<b>5</b></summary><ul><li><a href="../../articles/sharepoint-onprem/upgrade-paths.html" data-key="sharepoint-onprem/upgrade-paths">Upgrade Paths – 2010 → 2013 → 2016 → 2019 → Subscription Edition (Database Attach)</a></li><li><a href="../../articles/sharepoint-onprem/patching-cumulative-updates.html" data-key="sharepoint-onprem/patching-cumulative-updates">Patching SharePoint – Cumulative Updates, PSConfig &amp; Zero-Downtime Patching</a></li><li><a href="../../articles/sharepoint-onprem/backup-dr.html" data-key="sharepoint-onprem/backup-dr">Backup, Restore &amp; Disaster Recovery for SharePoint Server</a></li><li><a href="../../articles/sharepoint-onprem/subscription-edition.html" data-key="sharepoint-onprem/subscription-edition">SharePoint Server Subscription Edition (SE) – What&#39;s New and How to Adopt It</a></li><li><a href="../../articles/sharepoint-onprem/hybrid.html" data-key="sharepoint-onprem/hybrid">SharePoint Hybrid – Search, OneDrive, Sites &amp; App Launcher with Microsoft 365</a></li></ul></details>
+  </aside>
+</div>
+<section class="band related"><div class="container"><header class="band-head"><h2 id="related">Keep reading</h2><a class="more" href="../../categories/sharepoint-onprem/index.html">More in SharePoint On-Premises <svg class="i i-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></header><div class="tile-grid"><article class="story story-tile reveal" data-key="sharepoint-onprem/provider-hosted-addins"><div class="story-media"><img class="cover" src="../../assets/covers/sharepoint-onprem/provider-hosted-addins.svg" alt="" width="800" height="450" loading="lazy" decoding="async"></div><div class="story-body"><span class="kicker" style="--c:#2f7d72">SP On-Prem</span><h3 class="story-t"><a href="../../articles/sharepoint-onprem/provider-hosted-addins.html">How Provider-Hosted Add-ins Work – Architecture, Tokens, Low-Trust vs High-Trust</a></h3><p class="story-dek">A deep, diagram-first explanation of provider-hosted add-ins, covering the remote web, context and access tokens, Azure ACS (low-trust) vs S2S certificates (high-trust), app-only vs user+app policy, registration with AppRegNew and the install flow.</p><span class="meta"><span class="lvl lvl-advanced">Advanced</span><span class="sep" aria-hidden="true">·</span><span>6 min read</span><span class="read-badge"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Read</span></span></div></article><article class="story story-tile reveal" data-key="sharepoint-onprem/provider-hosted-crud"><div class="story-media"><img class="cover" src="../../assets/covers/sharepoint-onprem/provider-hosted-crud.svg" alt="" width="800" height="450" loading="lazy" decoding="async"></div><div class="story-body"><span class="kicker" style="--c:#2f7d72">SP On-Prem</span><h3 class="story-t"><a href="../../articles/sharepoint-onprem/provider-hosted-crud.html">Provider-Hosted Add-in CRUD – Read, Create, Update &amp; Delete Code Templates (MVC + CSOM)</a></h3><p class="story-dek">Copy-ready templates for a provider-hosted add-in, covering an MVC controller with SharePointContext, a repository with full CSOM CRUD, REST and app-only variants, Razor views, validation, paging and error handling.</p><span class="meta"><span class="lvl lvl-advanced">Advanced</span><span class="sep" aria-hidden="true">·</span><span>8 min read</span><span class="read-badge"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Read</span></span></div></article><article class="story story-tile reveal" data-key="sharepoint-onprem/provider-hosted-challenges"><div class="story-media"><img class="cover" src="../../assets/covers/sharepoint-onprem/provider-hosted-challenges.svg" alt="" width="800" height="450" loading="lazy" decoding="async"></div><div class="story-body"><span class="kicker" style="--c:#2f7d72">SP On-Prem</span><h3 class="story-t"><a href="../../articles/sharepoint-onprem/provider-hosted-challenges.html">Provider-Hosted Add-ins – Major Difficulties, Fixes &amp; Migration to SPFx + Entra ID</a></h3><p class="story-dek">The real problems teams hit with provider-hosted add-ins (token errors, redirect loops, iframes, certificates, ACS retirement, hosting costs), how to fix each one, and a step-by-step plan to migrate add-ins to SPFx, Azure Functions and Entra ID apps.</p><span class="meta"><span class="lvl lvl-advanced">Advanced</span><span class="sep" aria-hidden="true">·</span><span>6 min read</span><span class="read-badge"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Read</span></span></div></article><article class="story story-tile reveal" data-key="sharepoint-onprem/csom-jsom-rest"><div class="story-media"><img class="cover" src="../../assets/covers/sharepoint-onprem/csom-jsom-rest.svg" alt="" width="800" height="450" loading="lazy" decoding="async"></div><div class="story-body"><span class="kicker" style="--c:#2f7d72">SP On-Prem</span><h3 class="story-t"><a href="../../articles/sharepoint-onprem/csom-jsom-rest.html">CSOM, JSOM &amp; REST – Client-Side CRUD in C# and JavaScript</a></h3><p class="story-dek">The three classic client APIs side by side, with the same create, read, update and delete operations in C# CSOM, JavaScript JSOM and REST (fetch), plus request digests, ETags, batching and when to pick which.</p><span class="meta"><span class="lvl lvl-intermediate">Intermediate</span><span class="sep" aria-hidden="true">·</span><span>6 min read</span><span class="read-badge"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Read</span></span></div></article></div></div></section>
+</main>
+<footer class="site-foot">
+  <div class="container">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <a class="brand" href="../../index.html"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect class="logo-bg" width="32" height="32" rx="8"/><path class="logo-fg" d="M11.5 10.5 7 16l4.5 5.5M20.5 10.5 25 16l-4.5 5.5" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path class="logo-slash" d="M17.6 8.5l-3.2 15" fill="none" stroke-width="2.4" stroke-linecap="round"/></svg><span class="brand-name">SP Codex</span></a>
+        <p>A hands-on knowledge base for SharePoint On-Premises and Online, SPFx, Power Apps, Power Automate, Dataverse, Dataflows, Nintex, InfoPath, ShareGate migration, Azure, Microsoft Graph and Copilot, with architecture diagrams, code and interview prep.</p>
+        <p class="ft-stats">279 articles · 360 diagrams · 480 code samples · 990 interview Q&amp;As</p>
+      </div>
+      <div class="ft-cols">
+        <div class="ft-g"><p class="ft-h">SharePoint</p><ul><li><a href="../../categories/history/index.html">History &amp; Roadmap</a></li><li><a href="../../categories/sharepoint-onprem/index.html">SharePoint On-Premises</a></li><li><a href="../../categories/sharepoint-online/index.html">SharePoint Online &amp; Microsoft 365</a></li><li><a href="../../categories/spfx/index.html">SharePoint Framework (SPFx)</a></li></ul></div><div class="ft-g"><p class="ft-h">Power Platform</p><ul><li><a href="../../categories/power-apps/index.html">Power Apps</a></li><li><a href="../../categories/power-automate/index.html">Power Automate</a></li><li><a href="../../categories/dataverse/index.html">Dataverse</a></li><li><a href="../../categories/dataflows/index.html">Dataflows &amp; Power Query</a></li></ul></div><div class="ft-g"><p class="ft-h">Workflow &amp; Forms</p><ul><li><a href="../../categories/nintex/index.html">Nintex</a></li><li><a href="../../categories/infopath-legacy/index.html">InfoPath &amp; Legacy Workflows</a></li></ul></div><div class="ft-g"><p class="ft-h">Migration</p><ul><li><a href="../../categories/migration/index.html">Migration &amp; ShareGate</a></li></ul></div><div class="ft-g"><p class="ft-h">Azure &amp; APIs</p><ul><li><a href="../../categories/azure/index.html">Azure for Microsoft 365 Devs</a></li><li><a href="../../categories/apis/index.html">Graph, REST &amp; PnP</a></li></ul></div><div class="ft-g"><p class="ft-h">Copilot &amp; AI</p><ul><li><a href="../../categories/ai-copilot/index.html">Copilot &amp; AI</a></li></ul></div><div class="ft-g"><p class="ft-h">Design &amp; Docs</p><ul><li><a href="../../categories/architecture-docs/index.html">Solution Design &amp; Documentation</a></li></ul></div><div class="ft-g"><p class="ft-h">Interview Q&amp;A</p><ul><li><a href="../../categories/interview/index.html">Interview Q&amp;A</a></li></ul></div>
+        <div class="ft-g"><p class="ft-h">Explore</p><ul><li><a href="../../paths.html">Learning paths</a></li><li><a href="../../library.html">Full library</a></li><li><a href="../../search.html">Search</a></li><li><a href="../../about.html">About the author</a></li></ul></div>
+        <div class="ft-g"><p class="ft-h">Author</p><ul><li><a href="https://www.linkedin.com/in/vishnumuralikrishnan" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://vishnumurali.github.io/" target="_blank" rel="noopener">GitHub</a></li><li><a href="mailto:vishnu.m70@gmail.com">Email</a></li></ul></div>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <p>© 2026 Vishnu Muralikrishnan. Independent community content, not affiliated with or endorsed by Microsoft, Nintex or ShareGate. Product names are trademarks of their respective owners.</p>
+      <p>Built 9 Oct 2026 · <a href="#main" data-scroll-top>Back to top ↑</a></p>
+    </div>
+  </div>
+</footer>
+<div class="cmdk" data-cmdk hidden>
+  <div class="cmdk-backdrop" data-close-search></div>
+  <div class="cmdk-panel" role="dialog" aria-modal="true" aria-label="Search articles">
+    <div class="cmdk-input"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="search" placeholder="Search articles, code, diagrams…" aria-label="Search" autocomplete="off" spellcheck="false" data-cmdk-input><button class="kbd-btn" type="button" data-close-search>Esc</button></div>
+    <div class="cmdk-scopes" data-cmdk-scopes></div>
+    <div class="cmdk-results" role="listbox" data-cmdk-results></div>
+    <div class="cmdk-foot"><span><kbd>↑</kbd><kbd>↓</kbd> navigate</span><span><kbd>↵</kbd> open</span><span><kbd>Esc</kbd> close</span><a data-cmdk-all href="#">See all results →</a></div>
+  </div>
+</div>
+<div class="zoom-modal" data-zoom hidden>
+  <div class="zoom-bar"><span data-zoom-title>Diagram</span><span class="zoom-tools"><button type="button" class="kbd-btn" data-zoom-out aria-label="Zoom out">−</button><button type="button" class="kbd-btn" data-zoom-reset>100%</button><button type="button" class="kbd-btn" data-zoom-in aria-label="Zoom in">+</button><button type="button" class="kbd-btn" data-zoom-close>Close ✕</button></span></div>
+  <div class="zoom-stage" data-zoom-stage></div>
+</div>
+<div class="toast" data-toast role="status" aria-live="polite"></div>
+<button class="to-top" type="button" aria-label="Back to top" data-to-top><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></button>
+<script>window.SPC_ROOT="../../";</script>
+<script src="../../assets/js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450"><rect width="800" height="450" fill="#f2f1f4"/><rect x="0" y="0" width="800" height="6" fill="#7a5aa6"/><rect x="40" y="18" width="131.2" height="46" rx="23" fill="#ffffff" stroke="#e0d9cc"/><rect x="49" y="26" width="30" height="30" rx="8" fill="#7a5aa6"/><g transform="translate(53 30) scale(.92)" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></g><text x="88" y="47" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="600" fill="#1d1a16">InfoPath</text><rect x="181.2" y="18" width="148" height="46" rx="23" fill="#ffffff" stroke="#e0d9cc"/><svg x="190.2" y="26" width="30" height="30" viewBox="0 0 96 96">
+<g clip-path="url(#v181-clip0_4303_1230)">
+<g clip-path="url(#v181-clip1_4303_1230)">
+<path d="M44.1553 9.77196L62.9254 42.6196C64.8305 45.9536 64.8305 50.0464 62.9254 53.3804L44.1553 86.228C38.7808 95.6334 25.219 95.6335 19.8445 86.228L2.2525 55.4421C-0.382637 50.8306 -0.382645 45.1694 2.25249 40.5579L19.8445 9.77196C25.219 0.366551 38.7808 0.366549 44.1553 9.77196Z" fill="url(#v181-paint0_linear_4303_1230)"/>
+<path d="M44.1553 9.77196L62.9254 42.6196C64.8305 45.9536 64.8305 50.0464 62.9254 53.3804L44.1553 86.228C38.7808 95.6334 25.219 95.6335 19.8445 86.228L2.2525 55.4421C-0.382637 50.8306 -0.382645 45.1694 2.25249 40.5579L19.8445 9.77196C25.219 0.366551 38.7808 0.366549 44.1553 9.77196Z" fill="url(#v181-paint1_radial_4303_1230)"/>
+<path d="M65.9999 48L44.1553 86.228C38.7808 95.6334 25.219 95.6334 19.8445 86.228L1.99988 55C7.30568 64.2852 20.6941 64.2852 25.9999 55L47.9999 16.5L65.9999 48Z" fill="url(#v181-paint2_linear_4303_1230)"/>
+<path d="M65.9999 48L44.1553 86.228C38.7808 95.6334 25.219 95.6334 19.8445 86.228L1.99988 55C7.30568 64.2852 20.6941 64.2852 25.9999 55L47.9999 16.5L65.9999 48Z" fill="url(#v181-paint3_linear_4303_1230)"/>
+<path d="M54.9458 28.6554L81.9999 76L93.3881 56.0705C96.2458 51.0696 96.2458 44.9304 93.3881 39.9295L76.1553 9.77196C70.7808 0.366554 57.219 0.366554 51.8445 9.77197L41.0539 28.6554C44.1251 23.2809 51.8747 23.2809 54.9458 28.6554Z" fill="url(#v181-paint4_linear_4303_1230)"/>
+<path d="M54.9458 28.6554L81.9999 76L93.3881 56.0705C96.2458 51.0696 96.2458 44.9304 93.3881 39.9295L76.1553 9.77196C70.7808 0.366554 57.219 0.366554 51.8445 9.77197L41.0539 28.6554C44.1251 23.2809 51.8747 23.2809 54.9458 28.6554Z" fill="url(#v181-paint5_linear_4303_1230)"/>
+<path d="M79.7318 23.9691L47.9999 79.5L51.8445 86.228C57.219 95.6334 70.7808 95.6335 76.1553 86.228L94.0308 54.9459C96.4902 50.6419 96.4902 45.3581 94.0308 41.0541L79.7318 16.0309C81.1372 18.4903 81.1372 21.5096 79.7318 23.9691Z" fill="url(#v181-paint6_linear_4303_1230)"/>
+<path d="M51.8445 86.228L47.9999 79.5L65.9999 48L81.9999 76L76.1553 86.228C70.7808 95.6334 57.219 95.6334 51.8445 86.228Z" fill="url(#v181-paint7_linear_4303_1230)"/>
+</g>
+</g>
+<defs>
+<linearGradient id="v181-paint0_linear_4303_1230" x1="15.9999" y1="60.5" x2="27.9994" y2="5.00001" gradientUnits="userSpaceOnUse">
+<stop stop-color="#520B56"/>
+<stop offset="1" stop-color="#742774"/>
+</linearGradient>
+<radialGradient id="v181-paint1_radial_4303_1230" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(31.4999 8.00002) rotate(123.811) scale(65.5935 20.3157)">
+<stop offset="0.512391" stop-color="#4C1E4C" stop-opacity="0"/>
+<stop offset="1" stop-color="#4C1E4C"/>
+</radialGradient>
+<linearGradient id="v181-paint2_linear_4303_1230" x1="11.9999" y1="71" x2="59.4999" y2="41.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D467B9"/>
+<stop offset="0.308079" stop-color="#982F90"/>
+<stop offset="1" stop-color="#742774"/>
+</linearGradient>
+<linearGradient id="v181-paint3_linear_4303_1230" x1="43.9999" y1="53.4998" x2="67.5" y2="50.9998" gradientUnits="userSpaceOnUse">
+<stop stop-color="#742774" stop-opacity="0"/>
+<stop offset="1" stop-color="#520B56"/>
+</linearGradient>
+<linearGradient id="v181-paint4_linear_4303_1230" x1="42.9999" y1="29" x2="82.4999" y2="56" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E9A1CB"/>
+<stop offset="0.40829" stop-color="#D467B9"/>
+<stop offset="1" stop-color="#BB35A4"/>
+</linearGradient>
+<linearGradient id="v181-paint5_linear_4303_1230" x1="67.4999" y1="23.5" x2="80.9999" y2="26.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E48CC7" stop-opacity="0"/>
+<stop offset="1" stop-color="#BB35A4"/>
+</linearGradient>
+<linearGradient id="v181-paint6_linear_4303_1230" x1="89.2565" y1="77.1621" x2="76.4515" y2="41.3836" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E48CC7"/>
+<stop offset="1" stop-color="#F7C4E2"/>
+</linearGradient>
+<linearGradient id="v181-paint7_linear_4303_1230" x1="75.1999" y1="77.5801" x2="54.869" y2="32.0777" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E48CC7" stop-opacity="0"/>
+<stop offset="0.67724" stop-color="#D467B9" stop-opacity="0.5"/>
+<stop offset="1" stop-color="#BB35A4"/>
+</linearGradient>
+<clipPath id="v181-clip0_4303_1230">
+<rect width="96" height="96" fill="white"/>
+</clipPath>
+<clipPath id="v181-clip1_4303_1230">
+<rect width="96" height="96" fill="white"/>
+</clipPath>
+</defs>
+</svg><text x="229.2" y="47" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="600" fill="#1d1a16">Power Apps</text><rect x="339.2" y="18" width="181.6" height="46" rx="23" fill="#ffffff" stroke="#e0d9cc"/><svg x="348.2" y="26" width="30" height="30" viewBox="0 0 96 96">
+<g clip-path="url(#v182-clip0_4303_1230)">
+<g clip-path="url(#v182-clip1_4303_1230)">
+<path d="M52.5093 3C55.3657 3 58.0858 4.22148 59.9834 6.35636L82.6577 31.8649C88.9106 38.8995 85.0005 50.0661 75.7251 51.6632L21.5 61L28.2997 53.3134C30.9819 50.2813 30.9765 45.7235 28.287 42.6979L7.79435 19.6436C2.06189 13.1946 6.63995 3 15.2684 3H52.5093Z" fill="url(#v182-paint0_linear_4303_1230)"/>
+<path d="M15.2684 93C6.63995 93 2.0619 82.8054 7.79436 76.3563L59.0945 18.6436C62.4624 14.8548 62.4624 9.14522 59.0945 5.35636L57 3L91.0945 41.3564C94.4624 45.1453 94.4624 50.8548 91.0945 54.6437L59.9834 89.6436C58.0858 91.7785 55.3657 93 52.5093 93H15.2684Z" fill="url(#v182-paint1_linear_4303_1230)"/>
+<path d="M15.2684 93C6.63995 93 2.0619 82.8054 7.79436 76.3563L59.0945 18.6436C62.4624 14.8548 62.4624 9.14522 59.0945 5.35636L57 3L91.0945 41.3564C94.4624 45.1453 94.4624 50.8548 91.0945 54.6437L59.9834 89.6436C58.0858 91.7785 55.3657 93 52.5093 93H15.2684Z" fill="url(#v182-paint2_linear_4303_1230)"/>
+<path d="M38.3611 93C33.184 93 30.4371 86.8833 33.8766 83.0139L75.0945 36.6436C78.4624 32.8548 78.4624 27.1452 75.0945 23.3563L71 18.75L91.0945 41.3563C94.4624 45.1452 94.4624 50.8547 91.0946 54.6436L59.9834 89.6437C58.0858 91.7785 55.3657 93 52.5093 93H38.3611Z" fill="url(#v182-paint3_linear_4303_1230)"/>
+</g>
+</g>
+<defs>
+<linearGradient id="v182-paint0_linear_4303_1230" x1="48" y1="31.5" x2="14" y2="-2.50001" gradientUnits="userSpaceOnUse">
+<stop stop-color="#102784"/>
+<stop offset="0.274053" stop-color="#1B44B1"/>
+<stop offset="1" stop-color="#2764E7"/>
+</linearGradient>
+<linearGradient id="v182-paint1_linear_4303_1230" x1="76.5" y1="25" x2="11.5" y2="91.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#0FAFFF"/>
+<stop offset="0.177827" stop-color="#4894FE"/>
+<stop offset="1" stop-color="#2764E7"/>
+</linearGradient>
+<linearGradient id="v182-paint2_linear_4303_1230" x1="28.5" y1="72" x2="38.5" y2="83.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#2764E7" stop-opacity="0"/>
+<stop offset="1" stop-color="#2052CB"/>
+</linearGradient>
+<linearGradient id="v182-paint3_linear_4303_1230" x1="89" y1="38.5" x2="43" y2="90.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#6CE0FF"/>
+<stop offset="0.211723" stop-color="#66C0FF"/>
+<stop offset="1" stop-color="#58AAFE"/>
+</linearGradient>
+<clipPath id="v182-clip0_4303_1230">
+<rect width="96" height="96" fill="white"/>
+</clipPath>
+<clipPath id="v182-clip1_4303_1230">
+<rect width="96" height="96" fill="white"/>
+</clipPath>
+</defs>
+</svg><text x="387.2" y="47" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="600" fill="#1d1a16">Power Automate</text><text x="760" y="47" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="700" fill="#3a2b50" text-anchor="end" letter-spacing="2">MIGRATION PATH</text><rect x="40" y="110" width="270" height="180" rx="16" fill="#ffffff" stroke="#9079af" stroke-width="1.5"/><text x="175" y="140" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" fill="#3a2b50" text-anchor="middle" letter-spacing="2">FROM</text><text x="175" y="205" font-family="Georgia, Times New Roman, serif" font-size="24" font-weight="700" fill="#1d1a16" text-anchor="middle">InfoPath</text><rect x="490" y="110" width="270" height="180" rx="16" fill="#7a5aa6" stroke="#9079af" stroke-width="1.5"/><text x="625" y="140" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="2">TO</text><text x="625" y="205" font-family="Georgia, Times New Roman, serif" font-size="24" font-weight="700" fill="#ffffff" text-anchor="middle">Power Apps</text><path d="M326 200H465" stroke="#d26a3c" stroke-width="2.5" fill="none"/><path d="M463 193L474 200L463 207Z" fill="#d26a3c"/><path d="M330 200H470" stroke="#d26a3c" stroke-width="10" stroke-dasharray="2 14" stroke-linecap="round" fill="none" opacity=".35"/><circle cx="54" cy="350" r="14" fill="#3a2b50"/><text x="54" y="355" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">1</text><text x="76" y="346" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#4a443c">Concept mapping</text><circle cx="236" cy="350" r="14" fill="#3a2b50"/><text x="236" y="355" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">2</text><text x="258" y="346" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#4a443c">Worked example:</text><text x="258" y="363" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#4a443c">purchase request…</text><circle cx="418" cy="350" r="14" fill="#3a2b50"/><text x="418" y="355" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">3</text><text x="440" y="346" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" fill="#4a443c">Interview questions</text></svg>

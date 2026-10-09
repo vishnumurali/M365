@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450"><rect width="800" height="450" fill="#f3f5f0"/><rect x="0" y="0" width="800" height="6" fill="#5f7f1f"/><rect x="40" y="18" width="97.6" height="46" rx="23" fill="#ffffff" stroke="#e0d9cc"/><rect x="49" y="26" width="30" height="30" rx="8" fill="#4f56a6"/><g transform="translate(53 30) scale(.92)" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></g><text x="88" y="47" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="600" fill="#1d1a16">SPFx</text><rect x="147.6" y="18" width="148" height="46" rx="23" fill="#ffffff" stroke="#e0d9cc"/><svg x="156.6" y="26" width="30" height="30" viewBox="0 0 96 96">
+<g clip-path="url(#v252-clip0_4303_1230)">
+<g clip-path="url(#v252-clip1_4303_1230)">
+<path d="M44.1553 9.77196L62.9254 42.6196C64.8305 45.9536 64.8305 50.0464 62.9254 53.3804L44.1553 86.228C38.7808 95.6334 25.219 95.6335 19.8445 86.228L2.2525 55.4421C-0.382637 50.8306 -0.382645 45.1694 2.25249 40.5579L19.8445 9.77196C25.219 0.366551 38.7808 0.366549 44.1553 9.77196Z" fill="url(#v252-paint0_linear_4303_1230)"/>
+<path d="M44.1553 9.77196L62.9254 42.6196C64.8305 45.9536 64.8305 50.0464 62.9254 53.3804L44.1553 86.228C38.7808 95.6334 25.219 95.6335 19.8445 86.228L2.2525 55.4421C-0.382637 50.8306 -0.382645 45.1694 2.25249 40.5579L19.8445 9.77196C25.219 0.366551 38.7808 0.366549 44.1553 9.77196Z" fill="url(#v252-paint1_radial_4303_1230)"/>
+<path d="M65.9999 48L44.1553 86.228C38.7808 95.6334 25.219 95.6334 19.8445 86.228L1.99988 55C7.30568 64.2852 20.6941 64.2852 25.9999 55L47.9999 16.5L65.9999 48Z" fill="url(#v252-paint2_linear_4303_1230)"/>
+<path d="M65.9999 48L44.1553 86.228C38.7808 95.6334 25.219 95.6334 19.8445 86.228L1.99988 55C7.30568 64.2852 20.6941 64.2852 25.9999 55L47.9999 16.5L65.9999 48Z" fill="url(#v252-paint3_linear_4303_1230)"/>
+<path d="M54.9458 28.6554L81.9999 76L93.3881 56.0705C96.2458 51.0696 96.2458 44.9304 93.3881 39.9295L76.1553 9.77196C70.7808 0.366554 57.219 0.366554 51.8445 9.77197L41.0539 28.6554C44.1251 23.2809 51.8747 23.2809 54.9458 28.6554Z" fill="url(#v252-paint4_linear_4303_1230)"/>
+<path d="M54.9458 28.6554L81.9999 76L93.3881 56.0705C96.2458 51.0696 96.2458 44.9304 93.3881 39.9295L76.1553 9.77196C70.7808 0.366554 57.219 0.366554 51.8445 9.77197L41.0539 28.6554C44.1251 23.2809 51.8747 23.2809 54.9458 28.6554Z" fill="url(#v252-paint5_linear_4303_1230)"/>
+<path d="M79.7318 23.9691L47.9999 79.5L51.8445 86.228C57.219 95.6334 70.7808 95.6335 76.1553 86.228L94.0308 54.9459C96.4902 50.6419 96.4902 45.3581 94.0308 41.0541L79.7318 16.0309C81.1372 18.4903 81.1372 21.5096 79.7318 23.9691Z" fill="url(#v252-paint6_linear_4303_1230)"/>
+<path d="M51.8445 86.228L47.9999 79.5L65.9999 48L81.9999 76L76.1553 86.228C70.7808 95.6334 57.219 95.6334 51.8445 86.228Z" fill="url(#v252-paint7_linear_4303_1230)"/>
+</g>
+</g>
+<defs>
+<linearGradient id="v252-paint0_linear_4303_1230" x1="15.9999" y1="60.5" x2="27.9994" y2="5.00001" gradientUnits="userSpaceOnUse">
+<stop stop-color="#520B56"/>
+<stop offset="1" stop-color="#742774"/>
+</linearGradient>
+<radialGradient id="v252-paint1_radial_4303_1230" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(31.4999 8.00002) rotate(123.811) scale(65.5935 20.3157)">
+<stop offset="0.512391" stop-color="#4C1E4C" stop-opacity="0"/>
+<stop offset="1" stop-color="#4C1E4C"/>
+</radialGradient>
+<linearGradient id="v252-paint2_linear_4303_1230" x1="11.9999" y1="71" x2="59.4999" y2="41.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D467B9"/>
+<stop offset="0.308079" stop-color="#982F90"/>
+<stop offset="1" stop-color="#742774"/>
+</linearGradient>
+<linearGradient id="v252-paint3_linear_4303_1230" x1="43.9999" y1="53.4998" x2="67.5" y2="50.9998" gradientUnits="userSpaceOnUse">
+<stop stop-color="#742774" stop-opacity="0"/>
+<stop offset="1" stop-color="#520B56"/>
+</linearGradient>
+<linearGradient id="v252-paint4_linear_4303_1230" x1="42.9999" y1="29" x2="82.4999" y2="56" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E9A1CB"/>
+<stop offset="0.40829" stop-color="#D467B9"/>
+<stop offset="1" stop-color="#BB35A4"/>
+</linearGradient>
+<linearGradient id="v252-paint5_linear_4303_1230" x1="67.4999" y1="23.5" x2="80.9999" y2="26.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E48CC7" stop-opacity="0"/>
+<stop offset="1" stop-color="#BB35A4"/>
+</linearGradient>
+<linearGradient id="v252-paint6_linear_4303_1230" x1="89.2565" y1="77.1621" x2="76.4515" y2="41.3836" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E48CC7"/>
+<stop offset="1" stop-color="#F7C4E2"/>
+</linearGradient>
+<linearGradient id="v252-paint7_linear_4303_1230" x1="75.1999" y1="77.5801" x2="54.869" y2="32.0777" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E48CC7" stop-opacity="0"/>
+<stop offset="0.67724" stop-color="#D467B9" stop-opacity="0.5"/>
+<stop offset="1" stop-color="#BB35A4"/>
+</linearGradient>
+<clipPath id="v252-clip0_4303_1230">
+<rect width="96" height="96" fill="white"/>
+</clipPath>
+<clipPath id="v252-clip1_4303_1230">
+<rect width="96" height="96" fill="white"/>
+</clipPath>
+</defs>
+</svg><text x="195.6" y="47" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="600" fill="#1d1a16">Power Apps</text><rect x="305.6" y="18" width="148" height="46" rx="23" fill="#ffffff" stroke="#e0d9cc"/><svg x="314.6" y="26" width="30" height="30" viewBox="0 0 18 18"><defs><linearGradient id="v253-a24f9983-911f-4df7-920f-f964c8c10f82" x1="9" y1="15.834" x2="9" y2="5.788" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#32bedd" /><stop offset="0.175" stop-color="#32caea" /><stop offset="0.41" stop-color="#32d2f2" /><stop offset="0.775" stop-color="#32d4f5" /></linearGradient></defs><g id="v253-a7ef0482-71f2-4b7e-b916-b1c754245bf1"><g><path d="M.5,5.788h17a0,0,0,0,1,0,0v9.478a.568.568,0,0,1-.568.568H1.068A.568.568,0,0,1,.5,15.266V5.788A0,0,0,0,1,.5,5.788Z" fill="url(#v253-a24f9983-911f-4df7-920f-f964c8c10f82)" /><path d="M1.071,2.166H16.929a.568.568,0,0,1,.568.568V5.788a0,0,0,0,1,0,0H.5a0,0,0,0,1,0,0V2.734A.568.568,0,0,1,1.071,2.166Z" fill="#0078d4" /><path d="M4.292,7.153h.523a.167.167,0,0,1,.167.167v3.858a.335.335,0,0,1-.335.335H4.125a0,0,0,0,1,0,0V7.321a.167.167,0,0,1,.167-.167Z" transform="translate(-5.271 5.967) rotate(-45.081)" fill="#f2f2f2" /><path d="M4.32,9.647h.523a.167.167,0,0,1,.167.167v4.131a0,0,0,0,1,0,0H4.488a.335.335,0,0,1-.335-.335v-3.8a.167.167,0,0,1,.167-.167Z" transform="translate(-0.504 23.385) rotate(-135.081)" fill="#e6e6e6" /><rect x="7.221" y="12.64" width="4.771" height="1.011" rx="0.291" fill="#f2f2f2" /></g></g></svg><text x="353.6" y="47" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="600" fill="#1d1a16">PowerShell</text><text x="760" y="47" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="700" fill="#49611a" text-anchor="end" letter-spacing="2">INTERVIEW Q&amp;A</text><text x="40" y="132" font-family="Georgia, Times New Roman, serif" font-size="64" font-weight="700" fill="#5f7f1f">12</text><text x="40" y="162" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="600" fill="#49611a">questions</text><text x="40" y="184" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="600" fill="#49611a">with answers</text><text x="210" y="118" font-family="Consolas, SF Mono, Menlo, monospace" font-size="17" font-weight="700" fill="#d26a3c">Q1</text><text x="262" y="118" font-family="Georgia, Times New Roman, serif" font-size="21" fill="#1d1a16">Write a REST call that returns the 10 most</text><text x="262" y="145" font-family="Georgia, Times New Roman, serif" font-size="21" fill="#1d1a16">recently modified open items with the owner&#39;s…</text><line x1="210" y1="182" x2="760" y2="182" stroke="#c6d8a2" stroke-width="1.5"/><text x="210" y="222" font-family="Consolas, SF Mono, Menlo, monospace" font-size="17" font-weight="700" fill="#d26a3c">Q2</text><text x="262" y="222" font-family="Georgia, Times New Roman, serif" font-size="21" fill="#1d1a16">With PnPjs, add an item and then update it in</text><text x="262" y="249" font-family="Georgia, Times New Roman, serif" font-size="21" fill="#1d1a16">one batch with another item.</text><line x1="210" y1="286" x2="760" y2="286" stroke="#c6d8a2" stroke-width="1.5"/><text x="210" y="326" font-family="Consolas, SF Mono, Menlo, monospace" font-size="17" font-weight="700" fill="#d26a3c">Q3</text><text x="262" y="326" font-family="Georgia, Times New Roman, serif" font-size="21" fill="#1d1a16">Write CAML for Status = Open AND DueDate</text><text x="262" y="353" font-family="Georgia, Times New Roman, serif" font-size="21" fill="#1d1a16">before today, ordered by DueDate.</text><line x1="185" y1="88" x2="185" y2="392" stroke="#c6d8a2" stroke-width="1.5"/></svg>
